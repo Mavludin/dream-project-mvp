@@ -21,7 +21,9 @@
       "@typescript-eslint"
   ],
   "rules": {
+    
       "no-use-before-define": "off",
+      "linebreak-style": "off",
       "@typescript-eslint/no-use-before-define": "off",
       "no-unused-vars": "off",
       "@typescript-eslint/no-unused-vars": "off",
@@ -35,6 +37,7 @@
               ]
           }
       ],
+      "react/button-has-type": "off",
       "react/react-in-jsx-scope": "off",
       "react/function-component-definition": "off",
       "import/prefer-default-export": "off",
