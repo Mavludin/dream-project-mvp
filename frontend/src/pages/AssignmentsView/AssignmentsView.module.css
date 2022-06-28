@@ -1,0 +1,37 @@
+.assignList {
+  max-width: 900px;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+
+.item {
+  border: 1px solid #f0f0f0;
+  margin-bottom: 10px;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.filter li {
+  list-style-type: none;
+}
+
+.filter ul {
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.filter button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  margin-top: 5px;
+}
+
+ul.subMenu {
+  padding-left: 10px;
+}
