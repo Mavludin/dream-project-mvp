@@ -5,7 +5,7 @@ import {
 } from '@ant-design/icons';
 import { List, Space } from 'antd';
 import React, { useState } from 'react';
-import { AssigmentsData, Difficulty } from '../../App';
+import { AssigmentsData, Difficulty, FILTER_METHODS } from '../../models';
 import styles from './AssignmentsView.module.css';
 
 const IconText = ({ icon, text }: { icon: React.FC; text: string }) => (
@@ -18,50 +18,6 @@ const IconText = ({ icon, text }: { icon: React.FC; text: string }) => (
 type Props = {
   assignmentsData: AssigmentsData[];
 };
-
-type ItemChildren = {
-  id: number;
-  name: string;
-  type: Difficulty;
-};
-
-type ListItem = {
-  id: number;
-  name: string;
-  children?: ItemChildren[];
-};
-
-const list: ListItem[] = [
-  {
-    id: 1,
-    name: 'по завершенности',
-  },
-  {
-    id: 2,
-    name: 'по сложности',
-    children: [
-      {
-        id: 1,
-        name: 'показать легкие',
-        type: 'easy',
-      },
-      {
-        id: 2,
-        name: 'показать средние',
-        type: 'medium',
-      },
-      {
-        id: 3,
-        name: 'показать сложные',
-        type: 'hard',
-      },
-    ],
-  },
-  {
-    id: 3,
-    name: 'по дедлайну',
-  },
-];
 
 export const AssignmentsView = ({ assignmentsData }: Props) => {
   const [filteredData, setFilteredData] = useState<AssigmentsData[]>([]);
@@ -88,7 +44,7 @@ export const AssignmentsView = ({ assignmentsData }: Props) => {
             <li>
               <button onClick={resetFilterList}>Показать все</button>
             </li>
-            {list.map((item) => (
+            {FILTER_METHODS.map((item) => (
               <>
                 <li key={item.id}>
                   <button>{item.name}</button>
@@ -119,11 +75,6 @@ export const AssignmentsView = ({ assignmentsData }: Props) => {
           pageSize: 5,
         }}
         dataSource={finalData}
-        // footer={
-        //   <div>
-        //     <b>ant design</b> footer part
-        //   </div>
-        // }
         renderItem={(item, index) => (
           <List.Item
             className={styles.item}
@@ -134,16 +85,6 @@ export const AssignmentsView = ({ assignmentsData }: Props) => {
                 text="Оценка: --"
                 key="list-vertical-star-o"
               />,
-              //   <IconText
-              //     icon={LikeOutlined}
-              //     text="156"
-              //     key="list-vertical-like-o"
-              //   />,
-              //   <IconText
-              //     icon={MessageOutlined}
-              //     text="2"
-              //     key="list-vertical-message"
-              //   />,
             ]}
           >
             <List.Item.Meta
