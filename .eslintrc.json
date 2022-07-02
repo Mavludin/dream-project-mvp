@@ -19,13 +19,16 @@
     },
     "plugins": [
         "react",
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "react-hooks"
     ],
     "rules": {
 
         //react rules
 
         "react/no-array-index-key": "error",
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
 
         //typescript rules
         "@typescript-eslint/no-explicit-any": "off",
@@ -34,6 +37,7 @@
         "@typescript-eslint/no-use-before-define": "off",
         "@typescript-eslint/no-empty-function": "off",
         "@typescript-eslint/no-var-requires": "off",
+        
 
         //common rules
         "no-else-return": "error",

@@ -5,8 +5,8 @@ import {
 } from '@ant-design/icons';
 import { List, Space } from 'antd';
 import React, { useState } from 'react';
-import { AssigmentsData, Difficulty, FILTER_METHODS } from '../../models';
-import styles from './AssignmentsView.module.css';
+import { AssigmentsData, Difficulty, FILTER_METHODS } from '../models';
+import styles from './AssignmentsListView.module.css';
 
 const IconText = ({ icon, text }: { icon: React.FC; text: string }) => (
   <Space>
@@ -19,7 +19,7 @@ type Props = {
   assignmentsData: AssigmentsData[];
 };
 
-export const AssignmentsView = ({ assignmentsData }: Props) => {
+export const AssignmentsListView = ({ assignmentsData }: Props) => {
   const [filteredData, setFilteredData] = useState<AssigmentsData[]>([]);
 
   const filterDifficulty = (difficulty: Difficulty) => {

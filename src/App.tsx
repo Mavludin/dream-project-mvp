@@ -1,7 +1,7 @@
 import './App.css';
 import { useEffect, useState } from 'react';
 import { AssigmentsData } from './models';
-import { AssignmentsView } from './pages/AssignmentsView/AssignmentsView';
+import { AssignmentsListView } from './modules/student/views/AssignmentsListView';
 
 function App() {
   const [assignmentsData, setAssignmentsData] = useState<AssigmentsData[]>([]);
@@ -14,7 +14,7 @@ function App() {
 
   return (
     <div className="App">
-      <AssignmentsView assignmentsData={assignmentsData} />
+      <AssignmentsListView assignmentsData={assignmentsData} />
     </div>
   );
 }
