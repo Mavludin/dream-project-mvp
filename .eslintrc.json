@@ -43,6 +43,8 @@
         "no-else-return": "error",
         "no-multi-spaces": "error",
         "no-trailing-spaces": "error",
+
+        "eol-last": ["error", "always"],
       
         "prefer-destructuring": [
             "error",
