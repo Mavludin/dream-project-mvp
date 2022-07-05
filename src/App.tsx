@@ -2,6 +2,7 @@ import './App.css';
 import { useEffect, useState } from 'react';
 import { AssigmentsData } from './models';
 import { AssignmentsListView } from './modules/student/views/AssignmentsListView';
+import { AuthView } from './modules/auth/views/AuthView';
 
 function App() {
   const [assignmentsData, setAssignmentsData] = useState<AssigmentsData[]>([]);
@@ -14,7 +15,8 @@ function App() {
 
   return (
     <div className="App">
-      <AssignmentsListView assignmentsData={assignmentsData} />
+      {/* <AssignmentsListView assignmentsData={assignmentsData} /> */}
+      <AuthView />
     </div>
   );
 }
