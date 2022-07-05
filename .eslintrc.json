@@ -43,6 +43,7 @@
         "no-else-return": "error",
         "no-multi-spaces": "error",
         "no-trailing-spaces": "error",
+        "comma-dangle": "warn",
 
         "eol-last": ["error", "always"],
       
