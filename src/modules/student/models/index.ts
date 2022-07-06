@@ -28,10 +28,14 @@ type FilterItem = {
 export const FILTER_METHODS: FilterItem[] = [
   {
     id: 1,
-    name: 'по завершенности',
+    name: 'Показать все',
   },
   {
     id: 2,
+    name: 'по завершенности',
+  },
+  {
+    id: 3,
     name: 'по сложности',
     children: [
       {
@@ -50,9 +54,5 @@ export const FILTER_METHODS: FilterItem[] = [
         type: 'hard',
       },
     ],
-  },
-  {
-    id: 3,
-    name: 'по дедлайну',
   },
 ];
