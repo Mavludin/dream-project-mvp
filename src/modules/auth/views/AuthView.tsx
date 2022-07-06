@@ -2,9 +2,8 @@ import { Checkbox, Radio, RadioChangeEvent } from "antd";
 import { CheckboxChangeEvent } from "antd/lib/checkbox";
 import { FormEvent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { logIn, logOut } from "../../../store/slices/auth";
-import { userTypeList } from "../helpers/auth-data";
+import { logIn } from "../../../store/slices/auth";
+import { USER_TYPES } from "../modules/auth-data";
 import { UsersData } from "../models";
 import s from "./AuthView.module.css";
 
@@ -68,7 +67,7 @@ export const AuthView = () => {
         </Checkbox>
         <div>
           <Radio.Group onChange={handleUserChange} value={userId}>
-            {userTypeList.map((value, id) => (
+            {USER_TYPES.map((value, id) => (
               <Radio value={id + 1} key={value}>
                 {value}
               </Radio>
