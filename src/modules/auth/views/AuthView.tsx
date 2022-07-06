@@ -3,9 +3,9 @@ import { CheckboxChangeEvent } from "antd/lib/checkbox";
 import { FormEvent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { logIn, logOut } from "../../../store/slices/auth";
+import { logIn } from "../../../store/slices/auth";
 import { userTypeList } from "../helpers/auth-data";
-import { UserData } from "../models";
+import { UsersData } from "../models";
 import s from "./AuthView.module.css";
 
 export const AuthView = () => {
@@ -23,7 +23,7 @@ export const AuthView = () => {
     setUserId(e.target.value);
   };
 
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<UsersData[]>([]);
 
   useEffect(() => {
     fetch("/api/users")
@@ -38,7 +38,7 @@ export const AuthView = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    users.forEach((user: UserData) => {
+    users.forEach((user: UsersData) => {
       if (user.userName === loginValue && user.password === passwordValue) {
         if (isRemembered && userId === 1) {
           dispatch(logIn());
