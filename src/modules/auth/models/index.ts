@@ -1,3 +1,1 @@
-export type Types = {
-    id: number
-}
+export type UserData = { userName: string; password: string };
