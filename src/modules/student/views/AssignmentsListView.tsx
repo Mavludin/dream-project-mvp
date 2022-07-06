@@ -2,6 +2,7 @@ import { BarChartOutlined, StockOutlined } from '@ant-design/icons';
 import { List, Space } from 'antd';
 import React, { useState } from 'react';
 import { AssigmentListFilters } from '../components/AssigmentsListFilters/AssigmentListFilters';
+import { Header } from '../components/Header/Header';
 import { AssigmentsData } from '../models';
 import styles from './AssignmentsListView.module.css';
 
@@ -22,45 +23,48 @@ export const AssignmentsListView = ({ assignmentsData }: Props) => {
   const finalData = filteredData.length ? filteredData : assignmentsData;
 
   return (
-    <div className={styles.assignList}>
-      <div className={styles.title}>
-        <h1>Список задач</h1>
-        <AssigmentListFilters
-          assignmentsData={assignmentsData}
-          setFilteredData={setFilteredData}
+    <>
+      <Header />
+      <div className={styles.assignList}>
+        <div className={styles.title}>
+          <h1>Список задач</h1>
+          <AssigmentListFilters
+            assignmentsData={assignmentsData}
+            setFilteredData={setFilteredData}
+          />
+        </div>
+
+        <List
+          itemLayout="vertical"
+          size="large"
+          pagination={{
+            pageSize: 5,
+          }}
+          dataSource={finalData}
+          renderItem={(item, index) => (
+            <List.Item
+              className={styles.item}
+              key={item.id}
+              actions={[
+                <IconText
+                  icon={BarChartOutlined}
+                  text="Оценка: --"
+                  key="list-vertical-star-o"
+                />,
+              ]}
+            >
+              <List.Item.Meta
+                title={
+                  <a href="/">
+                    {index + 1}.{item.name}
+                  </a>
+                }
+              />
+              <StockOutlined /> {item.difficulty}
+            </List.Item>
+          )}
         />
       </div>
-
-      <List
-        itemLayout="vertical"
-        size="large"
-        pagination={{
-          pageSize: 5,
-        }}
-        dataSource={finalData}
-        renderItem={(item, index) => (
-          <List.Item
-            className={styles.item}
-            key={item.id}
-            actions={[
-              <IconText
-                icon={BarChartOutlined}
-                text="Оценка: --"
-                key="list-vertical-star-o"
-              />,
-            ]}
-          >
-            <List.Item.Meta
-              title={
-                <a href="/">
-                  {index + 1}.{item.name}
-                </a>
-              }
-            />
-            <StockOutlined /> {item.difficulty}
-          </List.Item>
-        )}
-      />
-    </div>
+    </>
   );
 };
