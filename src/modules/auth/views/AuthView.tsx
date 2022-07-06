@@ -3,7 +3,7 @@ import { CheckboxChangeEvent } from "antd/lib/checkbox";
 import { FormEvent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { logIn } from "../../../store/slices/auth";
+import { logIn, logOut } from "../../../store/slices/auth";
 import { userTypeList } from "../helpers/auth-data";
 import { UsersData } from "../models";
 import s from "./AuthView.module.css";
@@ -31,23 +31,16 @@ export const AuthView = () => {
       .then(({ data }) => setUsers(data));
   }, []);
 
-  const navigate = useNavigate();
-
   const dispatch = useDispatch();
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    users.forEach((user: UsersData) => {
-      if (user.userName === loginValue && user.password === passwordValue) {
-        if (isRemembered && userId === 1) {
-          dispatch(logIn());
-          navigate("/student");
-        } else if (userId === 1) {
-          navigate("/student");
-        }
-      }
-    });
+    const isUserExists = users.some(user => user.userName === loginValue && user.password === passwordValue);
+
+    if (isUserExists && userId === 1) {
+      dispatch(logIn(isRemembered));
+    }
   };
 
   return (
