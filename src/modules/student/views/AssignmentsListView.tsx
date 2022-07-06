@@ -1,6 +1,6 @@
 import { BarChartOutlined, StockOutlined } from '@ant-design/icons';
 import { List, Space } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AssigmentListFilters } from '../components/AssigmentsListFilters/AssigmentListFilters';
 import { Header } from '../components/Header/Header';
 import { AssigmentsData } from '../models';
@@ -18,9 +18,24 @@ type Props = {
 };
 
 export const AssignmentsListView = ({ assignmentsData }: Props) => {
+  const [openAssignments, setOpenAssignments] = useState<AssigmentsData[]>([]);
   const [filteredData, setFilteredData] = useState<AssigmentsData[]>([]);
+  const [openAssignmentsIds, setOpenAssignmentsIds] = useState<number[]>([]);
 
-  const finalData = filteredData.length ? filteredData : assignmentsData;
+  const finalData = filteredData.length ? filteredData : openAssignments;
+
+  useEffect(() => {
+    fetch('/api/open-assignments')
+      .then((res) => res.json())
+      .then((res) => setOpenAssignmentsIds(res.data));
+  }, []);
+
+  useEffect(() => {
+    const openAssignmentsData = assignmentsData.filter((item) =>
+      openAssignmentsIds.some((id) => id === item.id),
+    );
+    setOpenAssignments(openAssignmentsData);
+  }, [assignmentsData, openAssignmentsIds]);
 
   return (
     <>
@@ -29,7 +44,7 @@ export const AssignmentsListView = ({ assignmentsData }: Props) => {
         <div className={styles.title}>
           <h1>Список задач</h1>
           <AssigmentListFilters
-            assignmentsData={assignmentsData}
+            openAssignments={openAssignments}
             setFilteredData={setFilteredData}
           />
         </div>

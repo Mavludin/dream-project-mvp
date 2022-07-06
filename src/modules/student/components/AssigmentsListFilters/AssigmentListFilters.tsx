@@ -5,16 +5,16 @@ import { AssigmentsData, Difficulty, FILTER_METHODS } from '../../models';
 import s from './AssigmentListFilters.module.css';
 
 type Props = {
-  assignmentsData: AssigmentsData[];
+  openAssignments: AssigmentsData[];
   setFilteredData: (arr: AssigmentsData[]) => void;
 };
 
 export const AssigmentListFilters = ({
-  assignmentsData,
+  openAssignments,
   setFilteredData,
 }: Props) => {
   const filterDifficulty = (difficulty: Difficulty) => {
-    const easy = assignmentsData.filter(
+    const easy = openAssignments.filter(
       (item) => item.difficulty === difficulty,
     );
 
