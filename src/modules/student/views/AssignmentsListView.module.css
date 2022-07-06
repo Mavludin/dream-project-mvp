@@ -1,20 +1,20 @@
 .assignList {
-   max-width: 900px;
-   margin: 0 auto;
-   margin-top: 50px;
+  max-width: 900px;
+  margin: 0 auto;
+  margin-top: 50px;
 }
 
 .item {
-   border: 1px solid #f0f0f0;
-   margin-bottom: 10px;
+  border: 1px solid #f0f0f0;
+  margin-bottom: 10px;
 }
 
 .title {
-   display: flex;
-   align-items: center;
-   justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 ul.subMenu {
-   padding-left: 10px;
+  padding-left: 10px;
 }
