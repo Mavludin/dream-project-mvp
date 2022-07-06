@@ -4,6 +4,7 @@
         "es2021": true
     },
     "extends": [
+        "eslint:recommended",
         "plugin:react/recommended",
         "airbnb",
         "plugin:@typescript-eslint/recommended",
@@ -20,14 +21,14 @@
     "plugins": [
         "react",
         "@typescript-eslint",
-        "react-hooks"
+        "react-hooks",
+        "prettier"
     ],
     "rules": {
         //react rules
         "react/no-array-index-key": "error",
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustive-deps": "warn",
-
         //typescript rules
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/explicit-function-return-type": "off",
@@ -35,7 +36,6 @@
         "@typescript-eslint/no-use-before-define": "off",
         "@typescript-eslint/no-empty-function": "off",
         "@typescript-eslint/no-var-requires": "off",
-
         //common rules
         "no-else-return": "error",
         "no-multi-spaces": "error",
@@ -81,7 +81,6 @@
                 ]
             }
         ],
-        
         // import rules
         "import/extensions": [
             "error",
@@ -89,6 +88,14 @@
             {
                 "ts": "never",
                 "tsx": "never"
+            }
+        ],
+        //prettier rules
+        "prettier/prettier": [
+            "error",
+            {
+                "endOfLine": "auto",
+                "printWidth": 80
             }
         ]
     },
