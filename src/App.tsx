@@ -1,6 +1,6 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { AssigmentsData } from "./models";
 import { AssignmentsListView } from "./modules/student/views/AssignmentsListView";
