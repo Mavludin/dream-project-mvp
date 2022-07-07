@@ -1,4 +1,3 @@
-/* eslint-disable no-shadow */
 export enum UserTypes {
     Student = 'student',
     Teacher = 'teacher'
