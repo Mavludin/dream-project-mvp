@@ -67,9 +67,9 @@ export const AuthView = () => {
         </Checkbox>
         <div>
           <Radio.Group onChange={handleUserChange} value={userId}>
-            {USER_TYPES.map((value, id) => (
-              <Radio value={id + 1} key={value}>
-                {value}
+            {USER_TYPES.map((userType, index) => (
+              <Radio value={index + 1} key={userType}>
+                {userType}
               </Radio>
             ))}
           </Radio.Group>
