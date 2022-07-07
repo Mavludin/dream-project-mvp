@@ -1,4 +1,4 @@
-.error{
+.no_match{
     max-width: 610px;
     margin: 0 auto;
     height: 100vh;
@@ -27,7 +27,7 @@
     background-color: #000;
     animation: cursor 1.5s infinite step-end;
 }
-.error a{
+.no_match a{
     font-size: 40px;
     line-height: 40px;
     color: #40A2D6;
