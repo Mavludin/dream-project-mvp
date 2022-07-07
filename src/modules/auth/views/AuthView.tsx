@@ -3,12 +3,11 @@ import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { FormEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { logIn } from '../../../store/slices/auth';
-import { USER_TYPES } from '../modules/auth-data';
-import { UsersData, UserTypes } from '../models';
+import { UsersData, UserTypes, USER_TYPE_LIST } from '../models';
 import s from './AuthView.module.css';
 
 export const AuthView = () => {
-  const [userRadioType, setUserRadioType] = useState(UserTypes.Student);
+  const [userRadioType, setUserRadioType] = useState<UserTypes>('student');
   const [isRemembered, setIsRemembered] = useState(false);
 
   const [loginValue, setLoginValue] = useState('');
@@ -72,7 +71,7 @@ export const AuthView = () => {
         </Checkbox>
         <div>
           <Radio.Group onChange={handleUserRadioChange} value={userRadioType}>
-            {USER_TYPES.map((userType) => (
+            {USER_TYPE_LIST.map((userType) => (
               <Radio value={userType.type} key={userType.type}>
                 {userType.name}
               </Radio>
