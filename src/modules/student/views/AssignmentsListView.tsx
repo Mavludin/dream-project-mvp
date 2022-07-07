@@ -1,17 +1,10 @@
-import { BarChartOutlined, StockOutlined } from '@ant-design/icons';
-import { List, Space } from 'antd';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { List } from 'antd';
 import { AssigmentListFilters } from '../components/AssigmentsListFilters/AssigmentListFilters';
 import { Header } from '../components/Header/Header';
-import { AssigmentsData } from '../models';
+import { AssigmentsData, StudentStat } from '../models';
 import styles from './AssignmentsListView.module.css';
-
-const IconText = ({ icon, text }: { icon: React.FC; text: string }) => (
-  <Space>
-    {React.createElement(icon)}
-    {text}
-  </Space>
-);
+import { AssignmentsListItem } from '../components/AssignmentsListItem/AssignmentsListItem';
 
 type Props = {
   assignmentsData: AssigmentsData[];
@@ -21,6 +14,7 @@ export const AssignmentsListView = ({ assignmentsData }: Props) => {
   const [openAssignments, setOpenAssignments] = useState<AssigmentsData[]>([]);
   const [filteredData, setFilteredData] = useState<AssigmentsData[]>([]);
   const [openAssignmentsIds, setOpenAssignmentsIds] = useState<number[]>([]);
+  const [studentStat, setStudentStat] = useState<StudentStat>();
 
   const finalData = filteredData.length ? filteredData : openAssignments;
 
@@ -29,6 +23,14 @@ export const AssignmentsListView = ({ assignmentsData }: Props) => {
       .then((res) => res.json())
       .then((res) => setOpenAssignmentsIds(res.data));
   }, []);
+
+  useEffect(() => {
+    fetch('/api/student-stats/1')
+      .then((res) => res.json())
+      .then((res) => setStudentStat(res.data));
+  }, []);
+
+  console.log(studentStat?.completedAssignments);
 
   useEffect(() => {
     const openAssignmentsData = assignmentsData.filter((item) =>
@@ -57,26 +59,11 @@ export const AssignmentsListView = ({ assignmentsData }: Props) => {
           }}
           dataSource={finalData}
           renderItem={(item, index) => (
-            <List.Item
-              className={styles.item}
-              key={item.id}
-              actions={[
-                <IconText
-                  icon={BarChartOutlined}
-                  text="Оценка: --"
-                  key="list-vertical-star-o"
-                />,
-              ]}
-            >
-              <List.Item.Meta
-                title={
-                  <a href="/">
-                    {index + 1}.{item.name}
-                  </a>
-                }
-              />
-              <StockOutlined /> {item.difficulty}
-            </List.Item>
+            <AssignmentsListItem
+              item={item}
+              index={index}
+              studentStat={studentStat}
+            />
           )}
         />
       </div>
