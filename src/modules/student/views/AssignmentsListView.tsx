@@ -5,6 +5,8 @@ import { Header } from '../components/Header/Header';
 import { AssigmentsData, StudentStat } from '../models';
 import styles from './AssignmentsListView.module.css';
 import { AssignmentsListItem } from '../components/AssignmentsListItem/AssignmentsListItem';
+import { useAppSelector } from '../../../store';
+import { selectCurrentUserId } from '../../../store/slices/auth';
 
 type Props = {
   assignmentsData: AssigmentsData[];
@@ -18,6 +20,10 @@ export const AssignmentsListView = ({ assignmentsData }: Props) => {
 
   const finalData = filteredData.length ? filteredData : openAssignments;
 
+  const currentUserId = useAppSelector(selectCurrentUserId);
+
+  console.log(currentUserId);
+
   useEffect(() => {
     fetch('/api/open-assignments')
       .then((res) => res.json())
@@ -25,12 +31,10 @@ export const AssignmentsListView = ({ assignmentsData }: Props) => {
   }, []);
 
   useEffect(() => {
-    fetch('/api/student-stats/1')
+    fetch(`/api/student-stats/${currentUserId}`)
       .then((res) => res.json())
       .then((res) => setStudentStat(res.data));
   }, []);
-
-  console.log(studentStat?.completedAssignments);
 
   useEffect(() => {
     const openAssignmentsData = assignmentsData.filter((item) =>

@@ -2,7 +2,8 @@ import { Checkbox, Radio, RadioChangeEvent } from 'antd';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { FormEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { logIn } from '../../../store/slices/auth';
+import { useAppDispatch } from '../../../store';
+import { logIn, setCurrentUserId } from '../../../store/slices/auth';
 import { UsersData, UserTypes, USER_TYPE_LIST } from '../models';
 import s from './AuthView.module.css';
 
@@ -29,7 +30,7 @@ export const AuthView = () => {
       .then(({ data }) => setUsers(data));
   }, []);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -43,6 +44,15 @@ export const AuthView = () => {
 
     if (isStudentExists) {
       dispatch(logIn(isRemembered));
+
+      users.forEach((user) => {
+        if (
+          user.userName === loginValue &&
+          user.password === passwordValue &&
+          user.type === 'student'
+        )
+          dispatch(setCurrentUserId(user.id));
+      });
     }
   };
 
