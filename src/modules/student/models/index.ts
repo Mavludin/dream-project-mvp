@@ -13,6 +13,18 @@ export type AssigmentsData = {
   examples: Examples[];
 };
 
+export type CompletedAssignment = {
+  id: number;
+  score: number;
+};
+
+export type StudentStat = {
+  id: number;
+  studendId: number;
+  averageScore: number;
+  completedAssignments: CompletedAssignment[];
+};
+
 type FilterItemChildren = {
   id: number;
   name: string;
