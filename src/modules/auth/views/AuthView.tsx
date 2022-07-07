@@ -1,31 +1,31 @@
-import { Checkbox, Radio, RadioChangeEvent } from "antd";
-import { CheckboxChangeEvent } from "antd/lib/checkbox";
-import { FormEvent, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { logIn } from "../../../store/slices/auth";
-import { USER_TYPES } from "../modules/auth-data";
-import { UsersData } from "../models";
-import s from "./AuthView.module.css";
+import { Checkbox, Radio, RadioChangeEvent } from 'antd';
+import { CheckboxChangeEvent } from 'antd/lib/checkbox';
+import { FormEvent, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { logIn } from '../../../store/slices/auth';
+import { USER_TYPES } from '../modules/auth-data';
+import { UsersData, UserTypes } from '../models';
+import s from './AuthView.module.css';
 
 export const AuthView = () => {
-  const [userId, setUserId] = useState(1);
+  const [userRadioType, setUserRadioType] = useState(UserTypes.Student);
   const [isRemembered, setIsRemembered] = useState(false);
 
-  const [loginValue, setLoginValue] = useState("");
-  const [passwordValue, setPasswordValue] = useState("");
+  const [loginValue, setLoginValue] = useState('');
+  const [passwordValue, setPasswordValue] = useState('');
 
   const handleRememberedChange = (e: CheckboxChangeEvent) => {
     setIsRemembered(e.target.checked);
   };
 
-  const handleUserChange = (e: RadioChangeEvent) => {
-    setUserId(e.target.value);
+  const handleUserRadioChange = (e: RadioChangeEvent) => {
+    setUserRadioType(e.target.value);
   };
 
   const [users, setUsers] = useState<UsersData[]>([]);
 
   useEffect(() => {
-    fetch("/api/users")
+    fetch('/api/users')
       .then((res) => res.json())
       .then(({ data }) => setUsers(data));
   }, []);
@@ -35,9 +35,14 @@ export const AuthView = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const isUserExists = users.some(user => user.userName === loginValue && user.password === passwordValue);
+    const isStudentExists = users.some(
+      (user) =>
+        user.userName === loginValue &&
+        user.password === passwordValue &&
+        user.type === userRadioType,
+    );
 
-    if (isUserExists && userId === 1) {
+    if (isStudentExists) {
       dispatch(logIn(isRemembered));
     }
   };
@@ -66,10 +71,10 @@ export const AuthView = () => {
           Запомнить меня
         </Checkbox>
         <div>
-          <Radio.Group onChange={handleUserChange} value={userId}>
-            {USER_TYPES.map((userType, index) => (
-              <Radio value={index + 1} key={userType}>
-                {userType}
+          <Radio.Group onChange={handleUserRadioChange} value={userRadioType}>
+            {USER_TYPES.map((userType) => (
+              <Radio value={userType.type} key={userType.type}>
+                {userType.name}
               </Radio>
             ))}
           </Radio.Group>

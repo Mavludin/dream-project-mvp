@@ -6,7 +6,7 @@ export type AuthState = {
 type SelectIsLoggedIn = { authReducer: { isLoggedIn: boolean } };
 
 const initialState: AuthState = {
-  isLoggedIn: localStorage.getItem("isLoggedIn") === "true" || false,
+  isLoggedIn: localStorage.getItem("isLoggedIn") === "true",
 };
 
 export const authSlice = createSlice({
