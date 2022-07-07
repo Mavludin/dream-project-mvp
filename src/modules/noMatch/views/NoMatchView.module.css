@@ -25,6 +25,7 @@
     width: 29px;
     height: 73px;
     background-color: #000;
+    animation: cursor 1.5s infinite step-end;
 }
 .error a{
     font-size: 40px;
@@ -32,4 +33,10 @@
     color: #40A2D6;
     align-self: start;
     margin-left: 35px;
+}
+
+@keyframes cursor {
+    50% {
+        background-color: transparent;
+    }
 }
