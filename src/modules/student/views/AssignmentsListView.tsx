@@ -46,6 +46,7 @@ export const AssignmentsListView = ({ assignmentsData }: Props) => {
         <div className={styles.title}>
           <h1>Список задач</h1>
           <AssigmentListFilters
+            completedAssignments={studentStat?.completedAssignments}
             openAssignments={openAssignments}
             setFilteredData={setFilteredData}
           />

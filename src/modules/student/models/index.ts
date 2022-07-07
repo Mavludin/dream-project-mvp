@@ -28,7 +28,7 @@ export type StudentStat = {
 type FilterItemChildren = {
   id: number;
   name: string;
-  type: Difficulty;
+  type?: Difficulty;
 };
 
 type FilterItem = {
@@ -45,6 +45,16 @@ export const FILTER_METHODS: FilterItem[] = [
   {
     id: 2,
     name: 'по завершенности',
+    children: [
+      {
+        id: 1,
+        name: 'показать завершенные',
+      },
+      {
+        id: 2,
+        name: 'показать не завершенные',
+      },
+    ],
   },
   {
     id: 3,
