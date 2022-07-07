@@ -1,0 +1,35 @@
+.error{
+    max-width: 610px;
+    margin: 0 auto;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'ArcadeClassic';
+}
+.code,
+.text{
+    font-size: 128px;
+    line-height: 120px;
+    color: #000;
+    margin: 0;
+    text-align: center;
+}
+.text{
+    display: flex;
+    align-items: center;
+}
+.text span{
+    display: block;
+    width: 29px;
+    height: 73px;
+    background-color: #000;
+}
+.error a{
+    font-size: 40px;
+    line-height: 40px;
+    color: #40A2D6;
+    align-self: start;
+    margin-left: 35px;
+}
