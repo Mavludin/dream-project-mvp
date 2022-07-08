@@ -1,15 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { UsersData } from '../../modules/auth/models';
 
 export type AuthState = {
   isLoggedIn: boolean;
-  currentUserId: number;
+  studentData: UsersData | undefined;
 };
 type SelectIsLoggedIn = { authReducer: { isLoggedIn: boolean } };
-type SelectCurrentUserId = { authReducer: { currentUserId: number } };
+type SelectStudentData = {
+  authReducer: { studentData: UsersData | undefined };
+};
 
 const initialState: AuthState = {
   isLoggedIn: localStorage.getItem('isLoggedIn') === 'true',
-  currentUserId: Number(localStorage.getItem('currentUserId')) || 0,
+  studentData: JSON.parse(localStorage.getItem('studentData')!),
 };
 
 export const authSlice = createSlice({
@@ -27,19 +30,19 @@ export const authSlice = createSlice({
       state.isLoggedIn = false;
       localStorage.removeItem('isLoggedIn');
     },
-    setCurrentUserId: (state, action: PayloadAction<number>) => {
-      state.currentUserId = action.payload;
-      localStorage.setItem('currentUserId', String(action.payload));
+    setStudentData: (state, action: PayloadAction<UsersData>) => {
+      state.studentData = action.payload;
+      localStorage.setItem('studentData', JSON.stringify(action.payload));
     },
   },
 });
 
-export const { logIn, logOut, setCurrentUserId } = authSlice.actions;
+export const { logIn, logOut, setStudentData } = authSlice.actions;
 
 export const selectIsLoggedIn = (state: SelectIsLoggedIn) =>
   state.authReducer.isLoggedIn;
 
-export const selectCurrentUserId = (state: SelectCurrentUserId) =>
-  state.authReducer.currentUserId;
+export const selectStudentData = (state: SelectStudentData) =>
+  state.authReducer.studentData;
 
 export default authSlice.reducer;

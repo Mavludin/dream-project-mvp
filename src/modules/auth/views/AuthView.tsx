@@ -1,9 +1,8 @@
 import { Checkbox, Radio, RadioChangeEvent } from 'antd';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { FormEvent, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useAppDispatch } from '../../../store';
-import { logIn, setCurrentUserId } from '../../../store/slices/auth';
+import { logIn, setStudentData } from '../../../store/slices/auth';
 import { UsersData, UserTypes, USER_TYPE_LIST } from '../models';
 import s from './AuthView.module.css';
 
@@ -41,18 +40,18 @@ export const AuthView = () => {
         user.password === passwordValue &&
         user.type === userRadioType,
     );
-
     if (isStudentExists) {
       dispatch(logIn(isRemembered));
+    }
 
-      users.forEach((user) => {
-        if (
-          user.userName === loginValue &&
-          user.password === passwordValue &&
-          user.type === 'student'
-        )
-          dispatch(setCurrentUserId(user.id));
-      });
+    const studentData = users.find(
+      (user) =>
+        user.userName === loginValue &&
+        user.password === passwordValue &&
+        user.type === 'student',
+    );
+    if (studentData) {
+      dispatch(setStudentData(studentData));
     }
   };
 
