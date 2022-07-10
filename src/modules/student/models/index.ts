@@ -52,7 +52,7 @@ export const FILTER_METHODS: FilterItem[] = [
       },
       {
         id: 2,
-        name: 'показать не завершенные',
+        name: 'показать незавершенные',
       },
     ],
   },
