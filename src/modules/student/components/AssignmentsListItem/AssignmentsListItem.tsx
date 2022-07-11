@@ -12,14 +12,16 @@ type Props = {
 };
 
 export const AssignmentsListItem = ({ studentStat, item, index }: Props) => {
-  const data = useMemo(
+  const currentStudentData = useMemo(
     () => studentStat?.completedAssignments.find((stat) => item.id === stat.id),
     [item.id, studentStat?.completedAssignments],
   );
-  const mark = data ? `${data.score}%` : '--';
-  const borderColor = data && (data.score > 50 ? '#58B588' : '#AD3030');
-  const itemStyle = data ? borderColor : '#f0f0f0';
-  const textStyle = data ? borderColor : '#BABABA';
+  const mark = currentStudentData ? `${currentStudentData.score}%` : '--';
+  const borderColor =
+    currentStudentData &&
+    (currentStudentData.score > 50 ? '#58B588' : '#AD3030');
+  const itemStyle = currentStudentData ? borderColor : '#f0f0f0';
+  const textStyle = currentStudentData ? borderColor : '#BABABA';
   return (
     <List.Item
       className={styles.item}
