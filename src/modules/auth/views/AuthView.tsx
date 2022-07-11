@@ -3,7 +3,7 @@ import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { FormEvent, useEffect, useState } from 'react';
 import { useAppDispatch } from '../../../store';
 import { logIn } from '../../../store/slices/auth';
-import { setStudentData } from '../../../store/slices/userData';
+import { setStudentId } from '../../../store/slices/userData';
 import { UsersData, UserTypes, USER_TYPE_LIST } from '../models';
 import s from './AuthView.module.css';
 
@@ -52,7 +52,7 @@ export const AuthView = () => {
         user.type === 'student',
     );
     if (studentData) {
-      dispatch(setStudentData(studentData));
+      dispatch(setStudentId(studentData.id));
     }
   };
 

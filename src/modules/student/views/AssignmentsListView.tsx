@@ -6,7 +6,7 @@ import { AssigmentsData, StudentStat } from '../models';
 import styles from './AssignmentsListView.module.css';
 import { AssignmentsListItem } from '../components/AssignmentsListItem/AssignmentsListItem';
 import { useAppSelector } from '../../../store';
-import { selectStudentData } from '../../../store/slices/userData';
+import { selectStudentId } from '../../../store/slices/userData';
 
 type Props = {
   assignmentsData: AssigmentsData[];
@@ -20,7 +20,7 @@ export const AssignmentsListView = ({ assignmentsData }: Props) => {
 
   const finalData = filteredData.length ? filteredData : openAssignments;
 
-  const studentData = useAppSelector(selectStudentData);
+  const studentId = useAppSelector(selectStudentId);
 
   useEffect(() => {
     fetch('/api/open-assignments')
@@ -29,10 +29,10 @@ export const AssignmentsListView = ({ assignmentsData }: Props) => {
   }, []);
 
   useEffect(() => {
-    fetch(`/api/student-stats/${studentData?.id}`)
+    fetch(`/api/student-stats/${studentId}`)
       .then((res) => res.json())
       .then((res) => setStudentStat(res.data));
-  }, [studentData?.id]);
+  }, [studentId]);
 
   useEffect(() => {
     const openAssignmentsData = assignmentsData.filter((item) =>
