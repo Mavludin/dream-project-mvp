@@ -6,7 +6,7 @@ import { AssigmentsData, StudentStat } from '../models';
 import styles from './AssignmentsListView.module.css';
 import { AssignmentsListItem } from '../components/AssignmentsListItem/AssignmentsListItem';
 import { useAppSelector } from '../../../store';
-import { selectStudentData } from '../../../store/slices/auth';
+import { selectStudentData } from '../../../store/slices/userData';
 
 type Props = {
   assignmentsData: AssigmentsData[];
