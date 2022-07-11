@@ -3,11 +3,11 @@ import { UsersData } from '../../modules/auth/models';
 
 export type AuthState = {
   isLoggedIn: boolean;
-  studentData: UsersData | undefined;
+  studentData?: UsersData;
 };
 type SelectIsLoggedIn = { authReducer: { isLoggedIn: boolean } };
 type SelectStudentData = {
-  authReducer: { studentData: UsersData | undefined };
+  authReducer: { studentData?: UsersData };
 };
 
 const initialState: AuthState = {

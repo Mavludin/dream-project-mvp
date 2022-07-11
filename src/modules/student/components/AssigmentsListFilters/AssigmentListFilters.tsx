@@ -1,6 +1,7 @@
 import { FilterOutlined } from '@ant-design/icons';
 import { Dropdown, Menu, Space } from 'antd';
 import type { MenuProps } from 'antd';
+import { useMemo } from 'react';
 import {
   AssigmentsData,
   CompletedAssignment,
@@ -11,7 +12,7 @@ import s from './AssigmentListFilters.module.css';
 
 type Props = {
   openAssignments: AssigmentsData[];
-  completedAssignments: CompletedAssignment[] | undefined;
+  completedAssignments?: CompletedAssignment[];
   setFilteredData: (arr: AssigmentsData[]) => void;
 };
 
@@ -50,16 +51,20 @@ export const AssigmentListFilters = ({
     setFilteredData(complete);
   };
 
-  const filterItems = FILTER_METHODS.map((item) => ({
-    key: item.id,
-    label: item.name,
-    children:
-      item.children &&
-      item.children.map((itemChild) => ({
-        key: `${item.id}-${itemChild.id}`,
-        label: itemChild.name,
+  const filterItems = useMemo(
+    () =>
+      FILTER_METHODS.map((item) => ({
+        key: item.id,
+        label: item.name,
+        children:
+          item.children &&
+          item.children.map((itemChild) => ({
+            key: `${item.id}-${itemChild.id}`,
+            label: itemChild.name,
+          })),
       })),
-  }));
+    [],
+  );
 
   const handleMenuFilters: MenuProps['onClick'] = (e) => {
     if (e.key === '1') {
