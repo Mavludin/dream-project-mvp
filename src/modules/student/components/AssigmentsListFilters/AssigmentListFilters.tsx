@@ -82,9 +82,7 @@ export const AssigmentListFilters = ({
     }
   };
 
-  const menu = (
-    <Menu onClick={(e) => handleMenuFilters(e)} items={filterItems} />
-  );
+  const menu = <Menu onClick={handleMenuFilters} items={filterItems} />;
   return (
     <div className={s.filter}>
       <FilterOutlined />
