@@ -16,7 +16,7 @@ export type AssigmentsData = {
 type FilterItemChildren = {
   id: number;
   name: string;
-  type: Difficulty;
+  type?: Difficulty;
 };
 
 type FilterItem = {
@@ -32,7 +32,17 @@ export const FILTER_METHODS: FilterItem[] = [
   },
   {
     id: 2,
-    name: 'по завершенности',
+    name: 'по открытости',
+    children: [
+      {
+        id: 1,
+        name: 'показать открытые',
+      },
+      {
+        id: 2,
+        name: 'показать закрытые',
+      },
+    ],
   },
   {
     id: 3,
