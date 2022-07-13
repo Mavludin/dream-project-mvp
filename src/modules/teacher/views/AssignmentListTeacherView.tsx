@@ -12,6 +12,9 @@ type Props = {
 
 export const AssignmentListTeacherView = ({ assignmentsData }: Props) => {
   const [openAssignmentsIds, setOpenAssignmentsIds] = useState<number[]>([]);
+  const [filteredData, setFilteredData] = useState<AssigmentsData[]>([]);
+
+  const finalData = filteredData.length ? filteredData : assignmentsData;
 
   useEffect(() => {
     fetch('/api/open-assignments')
@@ -25,7 +28,11 @@ export const AssignmentListTeacherView = ({ assignmentsData }: Props) => {
       <div className={s.assignListTeacher}>
         <div className={s.title}>
           <h1>Список задач</h1>
-          <AssignmentListTeacherFilters />
+          <AssignmentListTeacherFilters
+            assignmentsData={assignmentsData}
+            setFilteredData={setFilteredData}
+            openAssignmentsIds={openAssignmentsIds}
+          />
         </div>
 
         <List
@@ -34,7 +41,7 @@ export const AssignmentListTeacherView = ({ assignmentsData }: Props) => {
           pagination={{
             pageSize: 5,
           }}
-          dataSource={assignmentsData}
+          dataSource={finalData}
           renderItem={(item, index) => (
             <Task
               item={item}
