@@ -1,3 +1,5 @@
+import { Document } from '@contentful/rich-text-types';
+
 export type Difficulty = 'easy' | 'medium' | 'hard';
 
 export type Examples = {
@@ -56,3 +58,21 @@ export const FILTER_METHODS: FilterItem[] = [
     name: 'по дедлайну',
   },
 ];
+
+export interface GraphqlSysData {
+  id: string;
+  publishedAt?: string;
+}
+
+export type LessonItem = {
+  sys: GraphqlSysData;
+  title: string;
+  type: string;
+  description: { json: Document } | null;
+  shortDescription: string;
+};
+
+export type FetchLessonsCollectionRequest = void;
+export type FetchLessonsCollectionResponse = {
+  items: LessonItem[];
+};
