@@ -5,7 +5,7 @@
 2. Клонируем данный frontend репозиторий и репозиторий с бекэндом в эту папку, чтобы в итоге были две папки рядом:  
 
   `git clone https://github.com/Mavludin/dream-project-mvp.git`  
-  `git clone https://github.com/Mavludin/dream-project-mvc-backend.git`  
+  `git clone https://github.com/Mavludin/dream-project-mvp-backend.git`  
 
 3. В каждой папке будет свой отдельный `package.json`, так что заходим в каждую через терминал и делаем `npm i`, чтобы скачать библиотеки;  
 4. Затем запускаем каждый проект через `npm start`.
