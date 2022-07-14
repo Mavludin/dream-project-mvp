@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import '../../../fonts/fonts.css';
+import '../../../assets/fonts/fonts.css';
 import s from './NoMatchView.module.css';
 
 export const NoMatchView = () => (
