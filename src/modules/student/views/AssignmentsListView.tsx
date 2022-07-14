@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { List } from 'antd';
 import { AssigmentListFilters } from '../components/AssigmentsListFilters/AssigmentListFilters';
-import { Header } from '../../../components/Header/Header';
+import { Header } from '../components/Header/Header';
 import { AssigmentsData, StudentStat } from '../models';
 import styles from './AssignmentsListView.module.css';
 import { AssignmentsListItem } from '../components/AssignmentsListItem/AssignmentsListItem';

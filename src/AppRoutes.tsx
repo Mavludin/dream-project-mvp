@@ -4,7 +4,6 @@ import { AuthView } from './modules/auth/views/AuthView';
 import { NoMatchView } from './modules/noMatch/views/NoMatchView';
 import { AssigmentsData } from './modules/student/models';
 import { AssignmentsListView } from './modules/student/views/AssignmentsListView';
-import { AssignmentListTeacherView } from './modules/teacher/views/AssignmentListTeacherView';
 import { selectIsLoggedIn } from './store/slices/auth';
 
 type Props = {
@@ -16,7 +15,7 @@ export const AppRoutes = ({ assignmentsData }: Props) => {
 
   return (
     <Routes>
-      {/* <Route
+      <Route
         path="/"
         element={
           isLoggedIn ? <Navigate to="/student" /> : <Navigate to="/auth" />
@@ -36,13 +35,7 @@ export const AppRoutes = ({ assignmentsData }: Props) => {
           )
         }
       />
-      <Route path="*" element={<NoMatchView />} /> */}
-      <Route
-        path="/teacher"
-        element={
-          <AssignmentListTeacherView assignmentsData={assignmentsData} />
-        }
-      />
+      <Route path="*" element={<NoMatchView />} />
     </Routes>
   );
 };
