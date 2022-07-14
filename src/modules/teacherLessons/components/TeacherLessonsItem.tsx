@@ -1,6 +1,5 @@
 import { DashOutlined, EyeOutlined } from '@ant-design/icons';
 import { List } from 'antd';
-import React from 'react';
 import { LessonItem } from '../../../models';
 import s from './TeacherLessonsItem.module.css';
 import jsImg from '../assets/js.svg';
@@ -13,19 +12,23 @@ type Props = {
 };
 
 export const TeacherLessonsItem = ({ item }: Props) => {
-  let imgSrc = jsImg;
-  if (item.type === 'html') {
-    imgSrc = htmlImg;
-  } else if (item.type === 'css') {
-    imgSrc = cssImg;
-  } else if (item.type === 'react') {
-    imgSrc = reactImg;
-  }
+  const getLessonImageByType = (lessonType: string) => {
+    switch (lessonType) {
+      case 'react':
+        return reactImg;
+      case 'html':
+        return htmlImg;
+      case 'css':
+        return cssImg;
+      default:
+        return jsImg;
+    }
+  };
   return (
     <List.Item>
       <div className={s.item}>
         <div className={s.info}>
-          <img src={imgSrc} alt="lesson" />
+          <img src={getLessonImageByType(item.type)} alt="lesson" />
           <div>
             <h2>{item.title}</h2>
             <p>{item.shortDescription}</p>
