@@ -1,5 +1,5 @@
 import { List } from 'antd';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Header } from '../../../components/Header/Header';
 import { useAppSelector } from '../../../store';
 import { lessonsGraphqlApi } from '../../../store/api/lessonsApi';
@@ -9,6 +9,7 @@ import { TeacherLessonsItem } from '../components/TeacherLessonsItem';
 import s from './TeacherLessons.module.css';
 
 export const TeacherLessons = () => {
+  const [openLessonsIds, setOpenLessonsIds] = useState<string[]>([]);
   const lessons = useAppSelector(selectLessons);
 
   const [fetchLessons] = lessonsGraphqlApi.useLazyFetchLessonsQuery();
@@ -18,6 +19,12 @@ export const TeacherLessons = () => {
 
     fetchLessons();
   }, [fetchLessons, lessons.length]);
+
+  useEffect(() => {
+    fetch('/api/open-lessons')
+      .then((res) => res.json())
+      .then((res) => setOpenLessonsIds(res.data));
+  }, []);
 
   return (
     <>
@@ -37,7 +44,9 @@ export const TeacherLessons = () => {
             column: 3,
           }}
           dataSource={lessons}
-          renderItem={(item) => <TeacherLessonsItem item={item} />}
+          renderItem={(item) => (
+            <TeacherLessonsItem openLessonsIds={openLessonsIds} item={item} />
+          )}
         />
       </div>
     </>
