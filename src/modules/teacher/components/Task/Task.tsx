@@ -4,7 +4,7 @@ import {
   StockOutlined,
 } from '@ant-design/icons';
 import { List, Spin } from 'antd';
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import { AssigmentsData } from '../../models';
 import s from './Task.module.css';
 
@@ -18,7 +18,7 @@ export const Task = ({ item, index, openAssignmentsIds }: Props) => {
   const [isViewTask, setIsViewTask] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const isMatchIds = useMemo(() => openAssignmentsIds.some((id) => id === item.id), []);
+  const isMatchIds = openAssignmentsIds.some((id) => id === item.id);
 
   useEffect(() => {
     if (isMatchIds) {
