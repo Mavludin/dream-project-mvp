@@ -18,7 +18,10 @@ export const Task = ({ item, index, openAssignmentsIds }: Props) => {
   const [isViewTask, setIsViewTask] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const isMatchIds = useMemo(() => openAssignmentsIds.some((id) => id === item.id), []);
+  const isMatchIds = useMemo(
+    () => openAssignmentsIds.some((id) => id === item.id),
+    [openAssignmentsIds, item],
+  );
 
   useEffect(() => {
     if (isMatchIds) {
