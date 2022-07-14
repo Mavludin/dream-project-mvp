@@ -16,7 +16,7 @@ export const AppRoutes = ({ assignmentsData }: Props) => {
 
   return (
     <Routes>
-      {/* <Route
+      <Route
         path="/"
         element={
           isLoggedIn ? <Navigate to="/student" /> : <Navigate to="/auth" />
@@ -36,7 +36,7 @@ export const AppRoutes = ({ assignmentsData }: Props) => {
           )
         }
       />
-      <Route path="*" element={<NoMatchView />} /> */}
+      <Route path="*" element={<NoMatchView />} />
       <Route
         path="/teacher"
         element={
