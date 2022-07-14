@@ -6,6 +6,7 @@
     "@ant-design/icons": "^4.7.0",
     "@contentful/rich-text-react-renderer": "^15.12.1",
     "@contentful/rich-text-types": "^15.12.1",
+    "@monaco-editor/react": "^4.4.5",
     "@reduxjs/toolkit": "^1.8.3",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.2.0",
