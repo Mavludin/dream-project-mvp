@@ -6,7 +6,7 @@ import { AssigmentsData } from './modules/student/models';
 import { AssignmentsListView } from './modules/student/views/AssignmentsListView';
 import { AssignmentListTeacherView } from './modules/teacher/views/AssignmentListTeacherView';
 import { TeacherLessons } from './modules/teacherLessons/views/TeacherLessons';
-import { selectIsLoggedIn } from './store/slices/auth';
+import { selectIsLoggedIn, selectUserType } from './store/slices/auth';
 
 type Props = {
   assignmentsData: AssigmentsData[];
@@ -14,6 +14,8 @@ type Props = {
 
 export const AppRoutes = ({ assignmentsData }: Props) => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
+
+  const userType = useSelector(selectUserType);
 
   return (
     <Routes>
@@ -30,20 +32,26 @@ export const AppRoutes = ({ assignmentsData }: Props) => {
       <Route
         path="/student"
         element={
-          isLoggedIn ? (
+          (isLoggedIn && userType === 'student' && (
             <AssignmentsListView assignmentsData={assignmentsData} />
-          ) : (
+          )) ||
+          (userType === 'teacher' && <Navigate to="/teacher" />) || (
+            <Navigate to="/auth" />
+          )
+        }
+      />
+      <Route
+        path="/teacher"
+        element={
+          (isLoggedIn && userType === 'teacher' && (
+            <AssignmentListTeacherView assignmentsData={assignmentsData} />
+          )) ||
+          (userType === 'student' && <Navigate to="/student" />) || (
             <Navigate to="/auth" />
           )
         }
       />
       <Route path="*" element={<NoMatchView />} />
-      <Route
-        path="/teacher"
-        element={
-          <AssignmentListTeacherView assignmentsData={assignmentsData} />
-        }
-      />
       <Route path="/teacher/lessons" element={<TeacherLessons />} />
     </Routes>
   );
