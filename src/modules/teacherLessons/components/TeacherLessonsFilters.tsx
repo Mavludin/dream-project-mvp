@@ -2,6 +2,7 @@ import { FilterOutlined } from '@ant-design/icons';
 import { Dropdown, Menu, Space } from 'antd';
 import React, { useMemo } from 'react';
 import { FILTER_METHODS } from '../models';
+import s from './TeacherLessonsFilters.module.css';
 
 export const TeacherLessonsFilters = () => {
   const filterItems = useMemo(
@@ -21,7 +22,7 @@ export const TeacherLessonsFilters = () => {
 
   const menu = <Menu items={filterItems} />;
   return (
-    <div>
+    <div className={s.filter}>
       <FilterOutlined />
       <Dropdown overlay={menu}>
         <button>
