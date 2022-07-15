@@ -1,15 +1,18 @@
 .filter li {
-    list-style-type: none;
+  list-style-type: none;
 }
 
 .filter ul {
-    margin-left: 0;
-    padding-left: 0;
+  margin-left: 0;
+  padding-left: 0;
 }
 
 .filter button {
-    background-color: transparent;
-    cursor: pointer;
-    border: none;
-    outline: none;
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+:global .ant-dropdown-menu li:not(:last-child) {
+  margin-bottom: 5px;
 }
