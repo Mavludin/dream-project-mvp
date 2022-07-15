@@ -5,7 +5,7 @@ import s from './Header.module.css';
 export function Header() {
   const dispatch = useAppDispatch();
 
-  const handleExitClick = () => {
+  const handleLogOut = () => {
     dispatch(logOut());
   };
 
@@ -20,7 +20,7 @@ export function Header() {
                 <button>Личный кабинет</button>
               </li>
               <li>
-                <button onClick={handleExitClick}>Выход</button>
+                <button onClick={handleLogOut}>Выход</button>
               </li>
             </ul>
           </div>
