@@ -35,14 +35,15 @@ export const AuthView = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const isStudentExists = users.some(
+    const isUserExists = users.some(
       (user) =>
         user.userName === loginValue &&
         user.password === passwordValue &&
         user.type === userRadioType,
     );
-    if (isStudentExists) {
-      dispatch(logIn(isRemembered));
+
+    if (isUserExists) {
+      dispatch(logIn({ isRemembered, userRadioType }));
     }
 
     const studentData = users.find(
