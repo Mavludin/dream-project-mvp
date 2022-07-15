@@ -1,0 +1,38 @@
+.dropDown {
+    position: absolute;
+    z-index: 10;
+    text-align: left;
+    text-transform: none;
+    background-color: #2D3D4D;
+    padding: 31px 79px 21px 25px;
+    border-radius: 5px;
+    opacity: 0;
+
+    right: 0;
+    top: 130%;
+}
+
+.dropDown li{
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    color: #fff;
+    list-style: none;
+    position: relative;
+}
+
+.dropDown li + li {
+    margin-top: 9px;
+}
+
+.dropDown li::before{
+    content: '';
+    background-color: #68BCE3;
+    width: 7px;
+    height: 7px;
+    position: absolute;
+    left: -14px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 50%;
+}
