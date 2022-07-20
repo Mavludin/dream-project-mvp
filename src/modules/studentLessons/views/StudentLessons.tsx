@@ -19,18 +19,6 @@ export const StudentLessons = () => {
     fetchLessons();
   }, [fetchLessons, lessons.length]);
 
-  const oLessons = [
-    {
-      sys: {
-        id: '1',
-      },
-      title: 'title',
-      type: 'js',
-      description: null,
-      shortDescription: 'string',
-    },
-  ];
-
   return (
     <>
       <Header />
@@ -48,7 +36,7 @@ export const StudentLessons = () => {
             gutter: 75,
             column: 3,
           }}
-          dataSource={oLessons}
+          dataSource={lessons}
           renderItem={(item) => <StudentLessonsItem item={item} />}
         />
       </div>

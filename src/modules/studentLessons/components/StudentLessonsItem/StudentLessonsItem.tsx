@@ -1,5 +1,5 @@
 import { List } from 'antd';
-import { EyeOutlined, DashOutlined, CheckOutlined } from '@ant-design/icons';
+import { DashOutlined, CheckOutlined } from '@ant-design/icons';
 import { LessonItem } from '../../../../models';
 import s from './StudentLessonsItem.module.css';
 import { getLessonImageByType } from '../../helpers/getLessonImageByType';
@@ -21,7 +21,7 @@ export const StudentLessonsItem = ({ item }: Props) => (
 
       <div className={s.buttons}>
         <button className={s.icon}>
-          <CheckOutlined />
+          <CheckOutlined className={s.complete} />
         </button>
         <span className={s.seporator} />
         <button>
