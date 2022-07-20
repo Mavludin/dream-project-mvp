@@ -45,6 +45,10 @@ button {
     color: #009bcc;
 }
 
+.complete {
+    color: #58B588;
+}
+
 .dash {
     color: rgba(0, 0, 0, 0.49);
 }
