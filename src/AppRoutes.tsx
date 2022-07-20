@@ -4,6 +4,7 @@ import { AuthView } from './modules/auth/views/AuthView';
 import { NoMatchView } from './modules/noMatch/views/NoMatchView';
 import { AssigmentsData } from './modules/student/models';
 import { AssignmentsListView } from './modules/student/views/AssignmentsListView';
+import { StudentLessons } from './modules/studentLessons/views/StudentLessons';
 import { AssignmentListTeacherView } from './modules/teacher/views/AssignmentListTeacherView';
 import { TeacherLessons } from './modules/teacherLessons/views/TeacherLessons';
 import { selectIsLoggedIn, selectUserType } from './store/slices/auth';
@@ -53,6 +54,7 @@ export const AppRoutes = ({ assignmentsData }: Props) => {
       />
       <Route path="*" element={<NoMatchView />} />
       <Route path="/teacher/lessons" element={<TeacherLessons />} />
+      <Route path="/student/lessons" element={<StudentLessons />} />
     </Routes>
   );
 };
