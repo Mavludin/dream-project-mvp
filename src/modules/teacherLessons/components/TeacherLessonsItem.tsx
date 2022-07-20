@@ -1,10 +1,11 @@
 import {
-  DashOutlined,
+  EllipsisOutlined,
   EyeInvisibleOutlined,
   EyeOutlined,
 } from '@ant-design/icons';
-import { List, Spin } from 'antd';
-import React, { useEffect, useMemo, useState } from 'react';
+import { Card, List, Spin } from 'antd';
+import { useEffect, useMemo, useState } from 'react';
+import Meta from 'antd/lib/card/Meta';
 import { LessonItem } from '../../../models';
 import s from './TeacherLessonsItem.module.css';
 import { getLessonImageByType } from '../helpers/getLessonImageByType';
@@ -59,38 +60,35 @@ export const TeacherLessonsItem = ({ item, openLessonsIds }: Props) => {
   return (
     <Spin tip="Loading..." spinning={isLoading}>
       <List.Item>
-        <div className={s.item}>
-          <div className={s.info}>
-            <img src={getLessonImageByType(item.type)} alt="lesson" />
-            <div>
-              <h2>{item.title}</h2>
-              <p>{item.shortDescription}</p>
-            </div>
-          </div>
-
-          <div className={s.buttons}>
-            {isOpen ? (
-              <button
-                className={s.openIcon}
+        <Card
+          bodyStyle={{
+            lineHeight: '15px',
+            marginBottom: '5px',
+            height: '84px',
+          }}
+          size="small"
+          actions={[
+            isOpen ? (
+              <EyeOutlined
                 onClick={() => handleOpenCloseClick()}
-              >
-                <EyeOutlined />
-              </button>
+                style={{ fontSize: '24px', color: '#009bcc' }}
+                key="edit"
+              />
             ) : (
-              <button
-                className={s.closeIcon}
+              <EyeInvisibleOutlined
                 onClick={() => handleOpenCloseClick()}
-              >
-                <EyeInvisibleOutlined />
-              </button>
-            )}
-
-            <span className={s.seporator} />
-            <button>
-              <DashOutlined className={s.dash} />
-            </button>
+                style={{ fontSize: '24px' }}
+                key="edit"
+              />
+            ),
+            <EllipsisOutlined style={{ fontSize: '24px' }} key="ellipsis" />,
+          ]}
+        >
+          <div className={s.info}>
+            <img src={getLessonImageByType(item.type)} alt="lesson icon" />
+            <Meta title={item.title} description={item.shortDescription} />
           </div>
-        </div>
+        </Card>
       </List.Item>
     </Spin>
   );
