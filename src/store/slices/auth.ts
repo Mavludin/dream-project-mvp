@@ -3,7 +3,7 @@ import { UserTypes } from '../../modules/auth/models';
 
 export type AuthState = {
   isLoggedIn: boolean;
-  userType: UserTypes;
+  userType: UserTypes | string;
 };
 type SelectIsLoggedIn = { authReducer: { isLoggedIn: boolean } };
 type SelectUserType = { authReducer: { userType: UserTypes } };
@@ -15,7 +15,7 @@ type PayloadType = {
 
 const initialState: AuthState = {
   isLoggedIn: localStorage.getItem('isLoggedIn') === 'true',
-  userType: 'student',
+  userType: localStorage.getItem('userType') || '',
 };
 
 export const authSlice = createSlice({
@@ -28,11 +28,13 @@ export const authSlice = createSlice({
 
       if (action.payload.isRemembered) {
         localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('userType', action.payload.userRadioType);
       }
     },
     logOut: (state) => {
       state.isLoggedIn = false;
       localStorage.removeItem('isLoggedIn');
+      localStorage.removeItem('userType');
     },
   },
 });

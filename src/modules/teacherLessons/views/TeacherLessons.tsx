@@ -1,6 +1,5 @@
 import { List } from 'antd';
-import React, { useEffect, useState } from 'react';
-import { Header } from '../../../components/Header/Header';
+import { useEffect, useState } from 'react';
 import { useAppSelector } from '../../../store';
 import { lessonsGraphqlApi } from '../../../store/api/lessonsApi';
 import { selectLessons } from '../../../store/slices/lessons';
@@ -27,28 +26,25 @@ export const TeacherLessons = () => {
   }, []);
 
   return (
-    <>
-      <Header />
-      <div className={s.lessons}>
-        <div className={s.title}>
-          <h1>Материалы</h1>
-          <TeacherLessonsFilters />
-        </div>
-
-        <List
-          pagination={{
-            pageSize: 6,
-          }}
-          grid={{
-            gutter: 75,
-            column: 3,
-          }}
-          dataSource={lessons}
-          renderItem={(item) => (
-            <TeacherLessonsItem openLessonsIds={openLessonsIds} item={item} />
-          )}
-        />
+    <div className={s.lessons}>
+      <div className={s.title}>
+        <h1>Материалы</h1>
+        <TeacherLessonsFilters />
       </div>
-    </>
+
+      <List
+        pagination={{
+          pageSize: 6,
+        }}
+        grid={{
+          gutter: 75,
+          column: 3,
+        }}
+        dataSource={lessons}
+        renderItem={(item) => (
+          <TeacherLessonsItem openLessonsIds={openLessonsIds} item={item} />
+        )}
+      />
+    </div>
   );
 };
