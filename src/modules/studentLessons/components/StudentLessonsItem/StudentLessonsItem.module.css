@@ -49,6 +49,10 @@ button {
     color: #58B588;
 }
 
+.minus {
+    color: #D9D9D9;
+}
+
 .dash {
     color: rgba(0, 0, 0, 0.49);
 }
