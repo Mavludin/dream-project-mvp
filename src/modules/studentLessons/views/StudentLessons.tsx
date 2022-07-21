@@ -17,7 +17,7 @@ export const StudentLessons = () => {
     if (lessons.length) return;
 
     fetchLessons();
-  }, [fetchLessons, lessons.length]);
+  }, [fetchLessons, lessons]);
 
   return (
     <>
