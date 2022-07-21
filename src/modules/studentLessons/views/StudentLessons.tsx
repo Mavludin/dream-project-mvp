@@ -1,6 +1,5 @@
 import { List } from 'antd';
 import { useEffect, useState } from 'react';
-import { Header } from '../../../components/Header/Header';
 import { LessonItem } from '../../../models';
 import { useAppSelector } from '../../../store';
 import { lessonsGraphqlApi } from '../../../store/api/lessonsApi';
@@ -45,32 +44,29 @@ export const StudentLessons = () => {
   }, []);
 
   return (
-    <>
-      <Header />
-      <div className={s.lessons}>
-        <div className={s.title}>
-          <h1>Материалы</h1>
-          <StudentLessonsFilters
-            setFilteredData={setFilteredData}
-            openLessons={openLessons}
-            readLessons={readLessons}
-          />
-        </div>
-
-        <List
-          pagination={{
-            pageSize: 6,
-          }}
-          grid={{
-            gutter: 75,
-            column: 3,
-          }}
-          dataSource={finalData}
-          renderItem={(item) => (
-            <StudentLessonsItem item={item} readLessons={readLessons} />
-          )}
+    <div className={s.lessons}>
+      <div className={s.title}>
+        <h1>Материалы</h1>
+        <StudentLessonsFilters
+          setFilteredData={setFilteredData}
+          openLessons={openLessons}
+          readLessons={readLessons}
         />
       </div>
-    </>
+
+      <List
+        pagination={{
+          pageSize: 6,
+        }}
+        grid={{
+          gutter: 75,
+          column: 3,
+        }}
+        dataSource={finalData}
+        renderItem={(item) => (
+          <StudentLessonsItem item={item} readLessons={readLessons} />
+        )}
+      />
+    </div>
   );
 };
