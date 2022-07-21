@@ -1,6 +1,7 @@
 import { List } from 'antd';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Header } from '../../../components/Header/Header';
+import { LessonItem } from '../../../models';
 import { useAppSelector } from '../../../store';
 import { lessonsGraphqlApi } from '../../../store/api/lessonsApi';
 import { selectLessons } from '../../../store/slices/lessons';
@@ -9,7 +10,9 @@ import { StudentLessonsItem } from '../components/StudentLessonsItem/StudentLess
 import s from './StudentLessons.module.css';
 
 export const StudentLessons = () => {
+  const [openLessons, setOpenLessons] = useState<LessonItem[]>([]);
   const lessons = useAppSelector(selectLessons);
+  const [openLessonsIds, setOpenLessonsIds] = useState<string[]>([]);
 
   const [fetchLessons] = lessonsGraphqlApi.useLazyFetchLessonsQuery();
 
@@ -18,6 +21,18 @@ export const StudentLessons = () => {
 
     fetchLessons();
   }, [fetchLessons, lessons]);
+
+  useEffect(() => {
+    fetch('/api/open-lessons')
+      .then((res) => res.json())
+      .then((res) => setOpenLessonsIds(res.data));
+  }, []);
+
+  useEffect(() => {
+    setOpenLessons(
+      lessons.filter((item) => openLessonsIds.some((id) => id === item.sys.id)),
+    );
+  }, [lessons, openLessonsIds]);
 
   return (
     <>
@@ -36,7 +51,7 @@ export const StudentLessons = () => {
             gutter: 75,
             column: 3,
           }}
-          dataSource={lessons}
+          dataSource={openLessons}
           renderItem={(item) => <StudentLessonsItem item={item} />}
         />
       </div>
