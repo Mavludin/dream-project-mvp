@@ -3,7 +3,7 @@ import { EllipsisOutlined, MinusOutlined } from '@ant-design/icons';
 import Meta from 'antd/lib/card/Meta';
 import { LessonItem } from '../../../../models';
 import s from './StudentLessonsItem.module.css';
-import { getLessonImageByType } from '../../helpers/getLessonImageByType';
+import { getLessonImageByType } from '../../../../helpers/getLessonImageByType';
 
 type Props = {
   item: LessonItem;
