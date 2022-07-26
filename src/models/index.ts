@@ -1,6 +1,7 @@
 import { Document } from '@contentful/rich-text-types';
 
 export type Difficulty = 'easy' | 'medium' | 'hard';
+export type Type = 'css' | 'html' | 'js' | 'react';
 
 export type Examples = {
   input: string;
@@ -18,10 +19,10 @@ export type AssigmentsData = {
 type FilterItemChildren = {
   id: number;
   name: string;
-  type: Difficulty;
+  type?: Difficulty | Type;
 };
 
-type FilterItem = {
+export type FilterItem = {
   id: number;
   name: string;
   children?: FilterItemChildren[];

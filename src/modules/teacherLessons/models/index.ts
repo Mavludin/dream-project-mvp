@@ -1,16 +1,4 @@
-export type Type = 'css' | 'html' | 'js' | 'react';
-
-type FilterItemChildren = {
-  id: number;
-  name: string;
-  type?: Type;
-};
-
-type FilterItem = {
-  id: number;
-  name: string;
-  children?: FilterItemChildren[];
-};
+import { FilterItem } from '../../../models';
 
 export const FILTER_METHODS: FilterItem[] = [
   {
