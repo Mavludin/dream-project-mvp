@@ -6,7 +6,7 @@ export type AuthState = {
   userType: UserTypes | string;
 };
 type SelectIsLoggedIn = { authReducer: { isLoggedIn: boolean } };
-type SelectUserType = { authReducer: { userType: UserTypes } };
+type SelectUserType = { authReducer: { userType: UserTypes | string } };
 
 type PayloadType = {
   isRemembered: boolean;

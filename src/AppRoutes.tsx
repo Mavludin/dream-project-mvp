@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { Header } from './components/Header/Header';
 import { AuthView } from './modules/auth/views/AuthView';
@@ -8,6 +7,7 @@ import { StudentAssignmentsView } from './modules/student/views/StudentAssignmen
 import { StudentLessons } from './modules/studentLessons/views/StudentLessons';
 import { TeacherAssignmentsView } from './modules/teacher/views/TeacherAssignmentsView';
 import { TeacherLessons } from './modules/teacherLessons/views/TeacherLessons';
+import { useAppSelector } from './store';
 import { selectIsLoggedIn, selectUserType } from './store/slices/auth';
 
 type Props = {
@@ -15,39 +15,46 @@ type Props = {
 };
 
 export const AppRoutes = ({ assignmentsData }: Props) => {
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
-  const userType = useSelector(selectUserType);
+  const userType = useAppSelector(selectUserType);
 
   const location = useLocation();
 
-  const teachersRoutes = ['/teacher/assignments', '/teacher/lessons'];
-  const studentRoutes = ['/student/assignments'];
+  const TEACHER_ROUTES = ['/teacher/assignments', '/teacher/lessons'];
+  const STUDENT_ROUTES = ['/student/assignments'];
 
-  const isTeacherOrStudent =
-    (isLoggedIn && userType === 'teacher' && (
-      <Navigate to="/teacher/assignments" />
-    )) ||
-    (isLoggedIn && userType === 'student' && (
-      <Navigate to="/student/assignments" />
-    ));
+  const getHomeRouteByUserType = (type: string, isLogged: boolean) => {
+    if (!isLogged) return <Navigate to="/auth" />;
+
+    if (type === 'teacher') {
+      return <Navigate to="/teacher/assignments" />;
+    }
+    return <Navigate to="/student/assignments" />;
+  };
+
+  const authRoute = isLoggedIn ? (
+    <Navigate to={`/${userType}/assignments`} />
+  ) : (
+    <AuthView />
+  );
 
   return (
     <>
       {userType === 'teacher' &&
-        teachersRoutes.some((route) => location.pathname === route) && (
+        TEACHER_ROUTES.some((route) => location.pathname === route) && (
           <Header />
         )}
       {userType === 'student' &&
-        studentRoutes.some((route) => location.pathname === route) && (
+        STUDENT_ROUTES.some((route) => location.pathname === route) && (
           <Header />
         )}
       <Routes>
         <Route
           path="/"
-          element={isTeacherOrStudent || <Navigate to="/auth" />}
+          element={getHomeRouteByUserType(userType, isLoggedIn)}
         />
-        <Route path="/auth" element={isTeacherOrStudent || <AuthView />} />
+        <Route path="/auth" element={authRoute} />
         {userType === 'student' && (
           <>
             <Route
