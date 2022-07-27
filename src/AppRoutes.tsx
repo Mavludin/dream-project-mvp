@@ -16,7 +16,6 @@ type Props = {
 
 export const AppRoutes = ({ assignmentsData }: Props) => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
-
   const userType = useAppSelector(selectUserType);
 
   const location = useLocation();
