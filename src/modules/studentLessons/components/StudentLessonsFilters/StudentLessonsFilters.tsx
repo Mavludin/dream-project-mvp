@@ -2,8 +2,8 @@ import { useMemo } from 'react';
 import { FilterOutlined } from '@ant-design/icons';
 import { Menu, Dropdown, Space, MenuProps } from 'antd';
 import s from './StudentLessonsFilters.module.css';
-import { FILTER_METHODS, Type } from '../../models';
-import { LessonItem } from '../../../../models';
+import { FILTER_METHODS } from '../../models';
+import { LessonItem, Type } from '../../../../models';
 
 type Props = {
   openLessons: LessonItem[];
