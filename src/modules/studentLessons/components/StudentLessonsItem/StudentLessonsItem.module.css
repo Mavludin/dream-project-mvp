@@ -2,3 +2,12 @@
     display: flex;
     gap: 15px;
 }
+
+.complete {
+    border: 1px solid #58B588;
+}
+
+.complete :global .ant-card-actions,
+.complete :global .ant-card-actions>li:not(:last-child) {
+    border-color: #58B588;
+}
