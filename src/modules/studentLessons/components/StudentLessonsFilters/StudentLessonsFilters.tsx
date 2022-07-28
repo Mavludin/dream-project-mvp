@@ -8,11 +8,13 @@ import { LessonItem, Type } from '../../../../models';
 type Props = {
   openLessons: LessonItem[];
   setFilteredData: (arr: LessonItem[]) => void;
+  readLessons: string[];
 };
 
 export const StudentLessonsFilters = ({
   setFilteredData,
   openLessons,
+  readLessons,
 }: Props) => {
   const filterItems = useMemo(
     () =>
@@ -35,13 +37,23 @@ export const StudentLessonsFilters = ({
     setFilteredData(openLessons.filter((item) => item.type === type));
   };
 
+  const filterCompleted = (completed: boolean) => {
+    setFilteredData(
+      openLessons.filter((item) =>
+        completed
+          ? readLessons.some((id) => item.sys.id === id)
+          : !readLessons.some((id) => item.sys.id === id),
+      ),
+    );
+  };
+
   const handleMenuFilters: MenuProps['onClick'] = (e) => {
     if (e.key === '1') {
       resetFilterList();
     } else if (e.key === '2-1') {
-      console.log(1);
+      filterCompleted(true);
     } else if (e.key === '2-2') {
-      console.log(2);
+      filterCompleted(false);
     } else if (e.key === '3-1') {
       filterType('html');
     } else if (e.key === '3-2') {

@@ -53,6 +53,7 @@ export const StudentLessons = () => {
           <StudentLessonsFilters
             setFilteredData={setFilteredData}
             openLessons={openLessons}
+            readLessons={readLessons}
           />
         </div>
 
