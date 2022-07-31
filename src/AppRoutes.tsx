@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { Header } from './components/Header/Header';
+import { getHomeRouteByUserType } from './helpers/getHomeRouteByUserType';
 import { AuthView } from './modules/auth/views/AuthView';
 import { NoMatchView } from './modules/noMatch/views/NoMatchView';
 import { AssigmentsData } from './modules/student/models';
@@ -23,16 +24,7 @@ export const AppRoutes = ({ assignmentsData }: Props) => {
   const TEACHER_ROUTES = ['/teacher/assignments', '/teacher/lessons'];
   const STUDENT_ROUTES = ['/student/assignments'];
 
-  const getHomeRouteByUserType = (type: string, isLogged: boolean) => {
-    if (!isLogged) return <Navigate to="/auth" />;
-
-    if (type === 'teacher') {
-      return <Navigate to="/teacher/assignments" />;
-    }
-    return <Navigate to="/student/assignments" />;
-  };
-
-  const authRoute = isLoggedIn ? (
+  const AUTH_ROUTE = isLoggedIn ? (
     <Navigate to={`/${userType}/assignments`} />
   ) : (
     <AuthView />
@@ -53,7 +45,7 @@ export const AppRoutes = ({ assignmentsData }: Props) => {
           path="/"
           element={getHomeRouteByUserType(userType, isLoggedIn)}
         />
-        <Route path="/auth" element={authRoute} />
+        <Route path="/auth" element={AUTH_ROUTE} />
         {userType === 'student' && (
           <>
             <Route
