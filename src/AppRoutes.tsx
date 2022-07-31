@@ -5,6 +5,7 @@ import { AuthView } from './modules/auth/views/AuthView';
 import { NoMatchView } from './modules/noMatch/views/NoMatchView';
 import { AssigmentsData } from './modules/student/models';
 import { StudentAssignmentsView } from './modules/student/views/StudentAssignmentsView';
+import { TaskView } from './modules/student/views/TaskView';
 import { StudentLessons } from './modules/studentLessons/views/StudentLessons';
 import { TeacherAssignmentsView } from './modules/teacher/views/TeacherAssignmentsView';
 import { TeacherLessons } from './modules/teacherLessons/views/TeacherLessons';
@@ -53,6 +54,10 @@ export const AppRoutes = ({ assignmentsData }: Props) => {
               element={
                 <StudentAssignmentsView assignmentsData={assignmentsData} />
               }
+            />
+            <Route
+              path="/student/assignments/:asgmtId"
+              element={<TaskView />}
             />
             <Route path="/student/lessons" element={<StudentLessons />} />
           </>

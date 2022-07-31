@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { List } from 'antd';
+import { Link } from 'react-router-dom';
 import { AssigmentListFilters } from '../components/AssigmentsListFilters/AssigmentListFilters';
 import { AssigmentsData, StudentStat } from '../models';
 import styles from './StudentAssignmentsView.module.css';
@@ -59,11 +60,13 @@ export const StudentAssignmentsView = ({ assignmentsData }: Props) => {
         }}
         dataSource={finalData}
         renderItem={(item, index) => (
-          <AssignmentsListItem
-            item={item}
-            index={index}
-            studentStat={studentStat}
-          />
+          <Link to={`/student/assignments/${item.id}`}>
+            <AssignmentsListItem
+              item={item}
+              index={index}
+              studentStat={studentStat}
+            />
+          </Link>
         )}
       />
     </div>
