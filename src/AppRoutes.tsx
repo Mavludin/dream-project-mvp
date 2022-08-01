@@ -73,6 +73,18 @@ export const AppRoutes = ({ assignmentsData }: Props) => {
             <Route path="/teacher/lessons" element={<TeacherLessons />} />
           </>
         )}
+        {userType || (
+          <Route
+            path="/student/assignments"
+            element={<Navigate to="/auth" />}
+          />
+        )}
+        {userType || (
+          <Route
+            path="/teacher/assignments"
+            element={<Navigate to="/auth" />}
+          />
+        )}
         <Route path="*" element={<NoMatchView />} />
       </Routes>
     </>
