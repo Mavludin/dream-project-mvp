@@ -5,7 +5,7 @@ import arrow from '../../../assets/image/arrow.svg';
 
 export const TaskView = () => (
   <div className={styles.taskPage}>
-    <div className={styles.descriptionWrapper} style={{ width: '50%' }}>
+    <div className={styles.descriptionWrapper}>
       <div className={styles.arrow}>
         <Link to="/">
           <img src={arrow} alt="" />
@@ -13,7 +13,7 @@ export const TaskView = () => (
         </Link>
       </div>
       <div className={styles.text}>
-        <div className={styles.name}>Сумма двух чисел</div>
+        <h2 className={styles.title}>Сумма двух чисел</h2>
         <div className={styles.description}>
           Напишите функцию sum(a, b), которая принимает два числа a и b и
           возвращает их сумму
@@ -22,18 +22,26 @@ export const TaskView = () => (
           <div className={styles.testsName}>Тесты</div>
           <div className={styles.tests}>
             <div className={styles.test}>
-              <div className={styles.input}>Input: 1 2</div>
-              <div className={styles.output}>Output: 3</div>
+              <div className={styles.input}>
+                <span>Input:</span> 1 2
+              </div>
+              <div className={styles.output}>
+                <span>Output:</span> 3
+              </div>
             </div>
             <div className={styles.test}>
-              <div className={styles.input}>Input: 5 5</div>
-              <div className={styles.output}>Output: 10</div>
+              <div className={styles.input}>
+                <span>Input:</span> 5 5
+              </div>
+              <div className={styles.output}>
+                <span>Output:</span> 10
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div className={styles.resizer}>1</div>
+    <div className={`${styles.resizer} ${styles.vertical}`} />
     <div className={styles.codeWrapper}>
       <div className={styles.code}>
         <Editor
@@ -43,8 +51,9 @@ export const TaskView = () => (
           defaultValue="// some comment"
         />
       </div>
-      {/* <div className={styles.resizer}>1</div> */}
+      <div className={`${styles.resizer} ${styles.horizontal}`} />
       <div className={styles.logs}>logs</div>
+      <div className={`${styles.resizer} ${styles.horizontal}`} />
       <div className={styles.codeFooter}>
         <button className={styles.run}>Run</button>
         <button className={styles.submit}>Submit</button>
