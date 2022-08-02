@@ -23,7 +23,7 @@ export const AppRoutes = ({ assignmentsData }: Props) => {
   const location = useLocation();
 
   const TEACHER_ROUTES = ['/teacher/assignments', '/teacher/lessons'];
-  const STUDENT_ROUTES = ['/student/assignments'];
+  const STUDENT_ROUTES = ['/student/assignments', '/student/lessons'];
 
   const AUTH_ROUTE = isLoggedIn ? (
     <Navigate to={`/${userType}/assignments`} />
