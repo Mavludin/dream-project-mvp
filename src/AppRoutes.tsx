@@ -31,16 +31,17 @@ export const AppRoutes = ({ assignmentsData }: Props) => {
     <AuthView />
   );
 
+  const isTeacherRoute = TEACHER_ROUTES.some(
+    (route) => location.pathname === route,
+  );
+  const isStudentRoute = STUDENT_ROUTES.some(
+    (route) => location.pathname === route,
+  );
+
   return (
     <>
-      {userType === 'teacher' &&
-        TEACHER_ROUTES.some((route) => location.pathname === route) && (
-          <Header />
-        )}
-      {userType === 'student' &&
-        STUDENT_ROUTES.some((route) => location.pathname === route) && (
-          <Header />
-        )}
+      {userType === 'teacher' && isTeacherRoute && <Header />}
+      {userType === 'student' && isStudentRoute && <Header />}
       <Routes>
         <Route
           path="/"
@@ -73,17 +74,8 @@ export const AppRoutes = ({ assignmentsData }: Props) => {
             <Route path="/teacher/lessons" element={<TeacherLessons />} />
           </>
         )}
-        {userType || (
-          <Route
-            path="/student/assignments"
-            element={<Navigate to="/auth" />}
-          />
-        )}
-        {userType || (
-          <Route
-            path="/teacher/assignments"
-            element={<Navigate to="/auth" />}
-          />
+        {(isTeacherRoute || isStudentRoute) && (
+          <Route path={location.pathname} element={<Navigate to="/auth" />} />
         )}
         <Route path="*" element={<NoMatchView />} />
       </Routes>
