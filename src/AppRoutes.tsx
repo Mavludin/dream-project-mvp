@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { Header } from './components/Header/Header';
 import { getHomeRouteByUserType } from './helpers/getHomeRouteByUserType';
@@ -31,11 +32,13 @@ export const AppRoutes = ({ assignmentsData }: Props) => {
     <AuthView />
   );
 
-  const isTeacherRoute = TEACHER_ROUTES.some(
-    (route) => location.pathname === route,
+  const isTeacherRoute = useMemo(
+    () => TEACHER_ROUTES.some((route) => location.pathname === route),
+    [location.pathname],
   );
-  const isStudentRoute = STUDENT_ROUTES.some(
-    (route) => location.pathname === route,
+  const isStudentRoute = useMemo(
+    () => STUDENT_ROUTES.some((route) => location.pathname === route),
+    [location.pathname],
   );
 
   return (
