@@ -43,8 +43,8 @@ export const AppRoutes = ({ assignmentsData }: Props) => {
 
   return (
     <>
-      {userType === 'teacher' && isTeacherRoute && <Header />}
-      {userType === 'student' && isStudentRoute && <Header />}
+      {(userType === 'student' || userType === 'teacher') &&
+        (isStudentRoute || isTeacherRoute) && <Header />}
       <Routes>
         <Route
           path="/"
