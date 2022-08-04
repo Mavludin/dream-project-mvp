@@ -26,11 +26,12 @@ export const AppRoutes = ({ assignmentsData }: Props) => {
   const TEACHER_ROUTES = ['/teacher/assignments', '/teacher/lessons'];
   const STUDENT_ROUTES = ['/student/assignments', '/student/lessons'];
 
-  const AUTH_ROUTE = isLoggedIn ? (
-    <Navigate to={`/${userType}/assignments`} />
-  ) : (
-    <AuthView />
-  );
+  const AUTH_ROUTE =
+    isLoggedIn || sessionStorage.getItem('isLoggedIn') ? (
+      <Navigate to={`/${userType}/assignments`} />
+    ) : (
+      <AuthView />
+    );
 
   const isTeacherRoute = useMemo(
     () => TEACHER_ROUTES.some((route) => location.pathname === route),
@@ -76,9 +77,6 @@ export const AppRoutes = ({ assignmentsData }: Props) => {
             />
             <Route path="/teacher/lessons" element={<TeacherLessons />} />
           </>
-        )}
-        {(isTeacherRoute || isStudentRoute) && (
-          <Route path={location.pathname} element={<Navigate to="/auth" />} />
         )}
         <Route path="*" element={<NoMatchView />} />
       </Routes>
