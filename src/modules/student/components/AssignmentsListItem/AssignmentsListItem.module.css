@@ -1,4 +1,15 @@
 .item {
   border: 1px solid #f0f0f0;
   margin-bottom: 10px;
+  font-size: 16px;
+}
+
+:global .ant-list-item-meta-title a {
+  font-family: 'Inter';
+  color: #05477d;
+  font-weight: 500;
+}
+
+:global .ant-list-item-meta-title {
+  margin-bottom: 5px !important;
 }

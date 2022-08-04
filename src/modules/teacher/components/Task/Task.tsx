@@ -63,7 +63,7 @@ export const Task = ({ item, index, openAssignmentsIds }: Props) => {
           <List.Item.Meta
             title={
               <a href="/">
-                {index + 1}.{item.name}
+                {index + 1}. {item.name}
               </a>
             }
           />

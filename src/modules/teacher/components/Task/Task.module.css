@@ -1,20 +1,21 @@
 .item {
-    border: 1px solid #f0f0f0;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center !important;
-    justify-content: space-between;
+  border: 1px solid #f0f0f0;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center !important;
+  justify-content: space-between;
+  font-size: 16px;
 }
 
 .item .itemWrapper {
-    flex-grow: 1;
+  flex-grow: 1;
 }
 
 .item .icon {
-    font-size: 24px;
-    cursor: pointer;
+  font-size: 24px;
+  cursor: pointer;
 }
 
-:global .ant-list-split .ant-list-item:last-child{
-    border-bottom: 1px solid #f0f0f0;
+:global .ant-list-split .ant-list-item:last-child {
+  border-bottom: 1px solid #f0f0f0;
 }
