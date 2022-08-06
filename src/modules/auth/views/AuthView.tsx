@@ -1,14 +1,18 @@
 import { Checkbox, Radio, RadioChangeEvent } from 'antd';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { FormEvent, useEffect, useState } from 'react';
-import { useAppDispatch } from '../../../store';
-import { logIn } from '../../../store/slices/auth';
+import { useAppDispatch, useAppSelector } from '../../../store';
+import { logIn, selectUserType } from '../../../store/slices/auth';
 import { setStudentId } from '../../../store/slices/userData';
 import { UsersData, UserTypes, USER_TYPE_LIST } from '../models';
 import s from './AuthView.module.css';
 
 export const AuthView = () => {
-  const [userRadioType, setUserRadioType] = useState<UserTypes>('student');
+  const usersType = useAppSelector(selectUserType);
+
+  const [userRadioType, setUserRadioType] = useState<UserTypes | string>(
+    usersType,
+  );
   const [isRemembered, setIsRemembered] = useState(false);
 
   const [loginValue, setLoginValue] = useState('');
