@@ -10,12 +10,12 @@ type SelectUserType = { authReducer: { userType: UserTypes | string } };
 
 type PayloadType = {
   isRemembered: boolean;
-  userRadioType: UserTypes;
+  userRadioType: UserTypes | string;
 };
 
 const initialState: AuthState = {
   isLoggedIn: localStorage.getItem('isLoggedIn') === 'true',
-  userType: localStorage.getItem('userType') || '',
+  userType: localStorage.getItem('userType') || 'student',
 };
 
 export const authSlice = createSlice({
@@ -34,7 +34,6 @@ export const authSlice = createSlice({
     logOut: (state) => {
       state.isLoggedIn = false;
       localStorage.removeItem('isLoggedIn');
-      localStorage.removeItem('userType');
     },
   },
 });
