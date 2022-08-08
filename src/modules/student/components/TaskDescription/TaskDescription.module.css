@@ -1,0 +1,81 @@
+.descriptionWrapper {
+  width: 50%;
+  background-color: #0F2940;
+  color: #EEF0F2;
+}
+
+.title,
+.description,
+.testsName {
+  font-family: 'Inter';
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 18px;
+  letter-spacing: 0.1em;
+  margin-top: 58px;
+  width: 70%;
+  line-height: 24px;
+}
+
+.title {
+  font-size: 20px;
+  color: #EEF0F2;
+}
+
+.description {
+  font-weight: 400;
+}
+
+.text {
+  margin-left: 77px;
+}
+
+.test {
+  background: #173A59;
+  border-radius: 2px;
+  width: 490px;
+  height: 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+}
+
+.testsName {
+  margin-bottom: 11px;
+}
+
+.test div {
+  padding-left: 18px;
+}
+
+.tests {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.arrow {
+  margin-top: 23px;
+  margin-left: 15px;
+}
+
+.arrow a {
+  font-weight: 700;
+  font-size: 10px;
+  line-height: 12px;
+  letter-spacing: 0.1em;
+  color: #FFFFFF;
+}
+
+.arrow img {
+  margin-right: 5px;
+}
+
+.input, .output {
+  font-weight: 400;
+}
+
+.input span, .output span {
+  font-weight: 600;
+}
