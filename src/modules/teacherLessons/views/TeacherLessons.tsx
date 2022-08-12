@@ -1,17 +1,18 @@
 import { List } from 'antd';
-import { useEffect, useState } from 'react';
-import { useAppSelector } from '../../../store';
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../store';
 import { lessonsGraphqlApi } from '../../../store/api/lessonsApi';
-import { selectLessons } from '../../../store/slices/lessons';
+import { fetchOpenLessons, selectLessons } from '../../../store/slices/lessons';
 import { TeacherLessonsFilters } from '../components/TeacherLessonsFilters';
 import { TeacherLessonsItem } from '../components/TeacherLessonsItem';
 import s from './TeacherLessons.module.css';
 
 export const TeacherLessons = () => {
-  const [openLessonsIds, setOpenLessonsIds] = useState<string[]>([]);
   const lessons = useAppSelector(selectLessons);
 
   const [fetchLessons] = lessonsGraphqlApi.useLazyFetchLessonsQuery();
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (lessons.length) return;
@@ -20,9 +21,7 @@ export const TeacherLessons = () => {
   }, [fetchLessons, lessons.length]);
 
   useEffect(() => {
-    fetch('/api/open-lessons')
-      .then((res) => res.json())
-      .then((res) => setOpenLessonsIds(res.data));
+    dispatch(fetchOpenLessons());
   }, []);
 
   return (
@@ -41,9 +40,7 @@ export const TeacherLessons = () => {
           column: 3,
         }}
         dataSource={lessons}
-        renderItem={(item) => (
-          <TeacherLessonsItem openLessonsIds={openLessonsIds} item={item} />
-        )}
+        renderItem={(item) => <TeacherLessonsItem item={item} />}
       />
     </div>
   );
