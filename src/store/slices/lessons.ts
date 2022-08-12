@@ -68,9 +68,11 @@ export const deleteOpenLesson = createAsyncThunk(
       if (res.ok) {
         return id;
       }
-      return new Error('Ошибка');
+      return new Error('Ошибка при удалении открытых материалов');
     } catch (error) {
-      return new Error('Ошибка (API хост некорректен)');
+      return new Error(
+        'Ошибка при удалении открытых материалов (API хост некорректен)',
+      );
     }
   },
 );
@@ -90,9 +92,11 @@ export const createOpenLesson = createAsyncThunk(
       if (res.ok) {
         return await res.json();
       }
-      return new Error('Ошибка');
+      return new Error('Ошибка при добавлении открытых материалов');
     } catch (error) {
-      return new Error('Ошибка (API хост некорректен)');
+      return new Error(
+        'Ошибка при добавлении открытых материалов (API хост некорректен)',
+      );
     }
   },
 );
