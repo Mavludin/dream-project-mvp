@@ -8,12 +8,14 @@ export const STATE_KEY = 'lessons';
 export type PodcastState = {
   lessonsCollection: LessonItem[];
   openLessonsIds: string[];
+  readLessonsIds: string[];
   status: 'idle' | 'loading' | 'failed' | 'success';
 };
 
 export const initialState: PodcastState = {
   lessonsCollection: [],
   openLessonsIds: [],
+  readLessonsIds: [],
   status: 'idle',
 };
 
@@ -36,6 +38,25 @@ export const fetchOpenLessons = createAsyncThunk(
   },
 );
 
+export const fetchReadLessons = createAsyncThunk(
+  'lessons/fetchReadLessons',
+  async () => {
+    try {
+      const res = await fetch('/api/read-lessons');
+
+      if (res.ok) {
+        const { data } = await res.json();
+        return data;
+      }
+      return new Error('Ошибка получения прочитанных материалов');
+    } catch (error) {
+      return new Error(
+        'Ошибка получения прочитанных материалов (API хост некорректен)',
+      );
+    }
+  },
+);
+
 export const deleteOpenLesson = createAsyncThunk(
   'lessons/deleteOpenLesson',
   async (id: string) => {
@@ -49,7 +70,7 @@ export const deleteOpenLesson = createAsyncThunk(
       }
       return new Error('Ошибка');
     } catch (error) {
-      return new Error('Ошибка');
+      return new Error('Ошибка (API хост некорректен)');
     }
   },
 );
@@ -71,7 +92,7 @@ export const createOpenLesson = createAsyncThunk(
       }
       return new Error('Ошибка');
     } catch (error) {
-      return new Error('Ошибка');
+      return new Error('Ошибка (API хост некорректен)');
     }
   },
 );
@@ -82,14 +103,24 @@ export const lessonsSlice = createSlice({
   reducers: {},
   extraReducers: (build) => {
     build
-      .addCase(fetchOpenLessons.pending, (state, action) => {
+      .addCase(fetchOpenLessons.pending, (state) => {
         state.status = 'loading';
       })
       .addCase(fetchOpenLessons.fulfilled, (state, action) => {
         state.openLessonsIds = action.payload;
         state.status = 'success';
       })
-      .addCase(fetchOpenLessons.rejected, (state, action) => {
+      .addCase(fetchOpenLessons.rejected, (state) => {
+        state.status = 'failed';
+      })
+      .addCase(fetchReadLessons.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchReadLessons.fulfilled, (state, action) => {
+        state.readLessonsIds = action.payload;
+        state.status = 'success';
+      })
+      .addCase(fetchReadLessons.rejected, (state) => {
         state.status = 'failed';
       })
       .addCase(deleteOpenLesson.fulfilled, (state, action) => {
@@ -98,13 +129,13 @@ export const lessonsSlice = createSlice({
         );
         state.status = 'success';
       })
-      .addCase(deleteOpenLesson.rejected, (state, action) => {
+      .addCase(deleteOpenLesson.rejected, (state) => {
         state.status = 'failed';
       })
       .addCase(createOpenLesson.fulfilled, (state, action) => {
         state.openLessonsIds.push(action.payload);
       })
-      .addCase(createOpenLesson.rejected, (state, action) => {
+      .addCase(createOpenLesson.rejected, (state) => {
         state.status = 'failed';
       })
       .addMatcher(
@@ -120,6 +151,8 @@ export const selectLessons = (state: RootState): LessonItem[] =>
   state[STATE_KEY].lessonsCollection;
 export const selectOpenLessonsIds = (state: RootState): string[] =>
   state[STATE_KEY].openLessonsIds;
+export const selectReadLessonsIds = (state: RootState): string[] =>
+  state[STATE_KEY].readLessonsIds;
 
 const lessonsReducer = lessonsSlice.reducer;
 

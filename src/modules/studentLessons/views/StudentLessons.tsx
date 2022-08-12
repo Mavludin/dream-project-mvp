@@ -1,9 +1,14 @@
 import { List } from 'antd';
 import { useEffect, useState } from 'react';
 import { LessonItem } from '../../../models';
-import { useAppSelector } from '../../../store';
+import { useAppDispatch, useAppSelector } from '../../../store';
 import { lessonsGraphqlApi } from '../../../store/api/lessonsApi';
-import { selectLessons } from '../../../store/slices/lessons';
+import {
+  fetchOpenLessons,
+  fetchReadLessons,
+  selectLessons,
+  selectOpenLessonsIds,
+} from '../../../store/slices/lessons';
 import { StudentLessonsFilters } from '../components/StudentLessonsFilters/StudentLessonsFilters';
 import { StudentLessonsItem } from '../components/StudentLessonsItem/StudentLessonsItem';
 import s from './StudentLessons.module.css';
@@ -11,11 +16,13 @@ import s from './StudentLessons.module.css';
 export const StudentLessons = () => {
   const [openLessons, setOpenLessons] = useState<LessonItem[]>([]);
   const lessons = useAppSelector(selectLessons);
-  const [openLessonsIds, setOpenLessonsIds] = useState<string[]>([]);
   const [filteredData, setFilteredData] = useState<LessonItem[]>([]);
-  const [readLessons, setReadLessons] = useState<string[]>([]);
 
   const finalData = filteredData.length ? filteredData : openLessons;
+
+  const openLessonsIds = useAppSelector(selectOpenLessonsIds);
+
+  const dispatch = useAppDispatch();
 
   const [fetchLessons] = lessonsGraphqlApi.useLazyFetchLessonsQuery();
 
@@ -26,9 +33,7 @@ export const StudentLessons = () => {
   }, [fetchLessons, lessons]);
 
   useEffect(() => {
-    fetch('/api/open-lessons')
-      .then((res) => res.json())
-      .then((res) => setOpenLessonsIds(res.data));
+    dispatch(fetchOpenLessons());
   }, []);
 
   useEffect(() => {
@@ -38,9 +43,7 @@ export const StudentLessons = () => {
   }, [lessons, openLessonsIds]);
 
   useEffect(() => {
-    fetch('/api/read-lessons')
-      .then((res) => res.json())
-      .then((res) => setReadLessons(res.data));
+    dispatch(fetchReadLessons());
   }, []);
 
   return (
@@ -50,7 +53,6 @@ export const StudentLessons = () => {
         <StudentLessonsFilters
           setFilteredData={setFilteredData}
           openLessons={openLessons}
-          readLessons={readLessons}
         />
       </div>
 
@@ -63,9 +65,7 @@ export const StudentLessons = () => {
           column: 3,
         }}
         dataSource={finalData}
-        renderItem={(item) => (
-          <StudentLessonsItem item={item} readLessons={readLessons} />
-        )}
+        renderItem={(item) => <StudentLessonsItem item={item} />}
       />
     </div>
   );

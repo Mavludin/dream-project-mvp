@@ -12,6 +12,7 @@ import { getLessonImageByType } from '../../../helpers/getLessonImageByType';
 import {
   createOpenLesson,
   deleteOpenLesson,
+  selectOpenLessonsIds,
 } from '../../../store/slices/lessons';
 import { useAppSelector, useAppDispatch } from '../../../store';
 
@@ -22,7 +23,7 @@ type Props = {
 export const TeacherLessonsItem = ({ item }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const { openLessonsIds } = useAppSelector((state) => state.lessons);
+  const openLessonsIds = useAppSelector(selectOpenLessonsIds);
 
   const dispatch = useAppDispatch();
 

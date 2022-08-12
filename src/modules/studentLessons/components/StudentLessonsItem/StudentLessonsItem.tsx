@@ -8,13 +8,15 @@ import Meta from 'antd/lib/card/Meta';
 import { LessonItem } from '../../../../models';
 import s from './StudentLessonsItem.module.css';
 import { getLessonImageByType } from '../../../../helpers/getLessonImageByType';
+import { selectReadLessonsIds } from '../../../../store/slices/lessons';
+import { useAppSelector } from '../../../../store';
 
 type Props = {
   item: LessonItem;
-  readLessons: string[];
 };
 
-export const StudentLessonsItem = ({ item, readLessons }: Props) => {
+export const StudentLessonsItem = ({ item }: Props) => {
+  const readLessons = useAppSelector(selectReadLessonsIds);
   const isReading = readLessons.some((id) => item.sys.id === id);
 
   return (
