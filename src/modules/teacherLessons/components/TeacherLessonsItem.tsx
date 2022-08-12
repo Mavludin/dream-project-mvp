@@ -9,15 +9,22 @@ import Meta from 'antd/lib/card/Meta';
 import { LessonItem } from '../../../models';
 import s from './TeacherLessonsItem.module.css';
 import { getLessonImageByType } from '../../../helpers/getLessonImageByType';
+import {
+  createOpenLesson,
+  deleteOpenLesson,
+} from '../../../store/slices/lessons';
+import { useAppSelector, useAppDispatch } from '../../../store';
 
 type Props = {
   item: LessonItem;
-  openLessonsIds: string[];
 };
 
-export const TeacherLessonsItem = ({ item, openLessonsIds }: Props) => {
+export const TeacherLessonsItem = ({ item }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const { openLessonsIds } = useAppSelector((state) => state.lessons);
+
+  const dispatch = useAppDispatch();
 
   const isMatchIds = useMemo(
     () => openLessonsIds.some((id) => id === item.sys.id),
@@ -33,28 +40,16 @@ export const TeacherLessonsItem = ({ item, openLessonsIds }: Props) => {
   const handleOpenCloseClick = async () => {
     if (isOpen) {
       setIsLoading(true);
-      const res = await fetch(`/api/open-lessons/${item.sys.id}`, {
-        method: 'DELETE',
-      });
-
-      if (res.ok) {
-        setIsOpen(false);
+      dispatch(deleteOpenLesson(item.sys.id)).finally(() => {
         setIsLoading(false);
-      }
+        setIsOpen(false);
+      });
     } else {
       setIsLoading(true);
-      const res = await fetch('/api/open-lessons', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ lessonId: item.sys.id }),
-      });
-
-      if (res.ok) {
+      dispatch(createOpenLesson(item.sys.id)).finally(() => {
         setIsOpen(true);
         setIsLoading(false);
-      }
+      });
     }
   };
   return (
