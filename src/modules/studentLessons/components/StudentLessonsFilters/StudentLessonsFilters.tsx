@@ -4,17 +4,17 @@ import { Menu, Dropdown, Space, MenuProps } from 'antd';
 import s from './StudentLessonsFilters.module.css';
 import { FILTER_METHODS } from '../../models';
 import { LessonItem, Type } from '../../../../models';
+import { selectReadLessonsIds } from '../../../../store/slices/lessons';
+import { useAppSelector } from '../../../../store';
 
 type Props = {
   openLessons: LessonItem[];
   setFilteredData: (arr: LessonItem[]) => void;
-  readLessons: string[];
 };
 
 export const StudentLessonsFilters = ({
   setFilteredData,
   openLessons,
-  readLessons,
 }: Props) => {
   const filterItems = useMemo(
     () =>
@@ -30,6 +30,8 @@ export const StudentLessonsFilters = ({
       })),
     [],
   );
+
+  const readLessons = useAppSelector(selectReadLessonsIds);
 
   const resetFilterList = () => setFilteredData([]);
 
