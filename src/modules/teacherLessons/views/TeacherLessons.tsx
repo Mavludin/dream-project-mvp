@@ -2,7 +2,10 @@ import { List } from 'antd';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../store';
 import { lessonsGraphqlApi } from '../../../store/api/lessonsApi';
-import { fetchOpenLessons, selectLessons } from '../../../store/slices/lessons';
+import {
+  fetchOpenLessonsIds,
+  selectLessons,
+} from '../../../store/slices/lessons';
 import { TeacherLessonsFilters } from '../components/TeacherLessonsFilters';
 import { TeacherLessonsItem } from '../components/TeacherLessonsItem';
 import s from './TeacherLessons.module.css';
@@ -21,8 +24,8 @@ export const TeacherLessons = () => {
   }, [fetchLessons, lessons.length]);
 
   useEffect(() => {
-    dispatch(fetchOpenLessons());
-  }, []);
+    dispatch(fetchOpenLessonsIds());
+  }, [dispatch]);
 
   return (
     <div className={s.lessons}>

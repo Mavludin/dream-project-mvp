@@ -31,7 +31,7 @@ export const StudentLessonsFilters = ({
     [],
   );
 
-  const readLessons = useAppSelector(selectReadLessonsIds);
+  const readLessonsIds = useAppSelector(selectReadLessonsIds);
 
   const resetFilterList = () => setFilteredData([]);
 
@@ -43,8 +43,8 @@ export const StudentLessonsFilters = ({
     setFilteredData(
       openLessons.filter((item) =>
         completed
-          ? readLessons.some((id) => item.sys.id === id)
-          : !readLessons.some((id) => item.sys.id === id),
+          ? readLessonsIds.some((id) => item.sys.id === id)
+          : !readLessonsIds.some((id) => item.sys.id === id),
       ),
     );
   };

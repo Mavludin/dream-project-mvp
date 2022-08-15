@@ -16,8 +16,8 @@ type Props = {
 };
 
 export const StudentLessonsItem = ({ item }: Props) => {
-  const readLessons = useAppSelector(selectReadLessonsIds);
-  const isReading = readLessons.some((id) => item.sys.id === id);
+  const readLessonsIds = useAppSelector(selectReadLessonsIds);
+  const isReading = readLessonsIds.some((id) => item.sys.id === id);
 
   return (
     <List.Item>

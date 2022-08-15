@@ -4,8 +4,8 @@ import { LessonItem } from '../../../models';
 import { useAppDispatch, useAppSelector } from '../../../store';
 import { lessonsGraphqlApi } from '../../../store/api/lessonsApi';
 import {
-  fetchOpenLessons,
-  fetchReadLessons,
+  fetchOpenLessonsIds,
+  fetchReadLessonsIds,
   selectLessons,
   selectOpenLessonsIds,
 } from '../../../store/slices/lessons';
@@ -33,18 +33,15 @@ export const StudentLessons = () => {
   }, [fetchLessons, lessons]);
 
   useEffect(() => {
-    dispatch(fetchOpenLessons());
-  }, []);
+    dispatch(fetchOpenLessonsIds());
+    dispatch(fetchReadLessonsIds());
+  }, [dispatch]);
 
   useEffect(() => {
     setOpenLessons(
       lessons.filter((item) => openLessonsIds.some((id) => id === item.sys.id)),
     );
   }, [lessons, openLessonsIds]);
-
-  useEffect(() => {
-    dispatch(fetchReadLessons());
-  }, []);
 
   return (
     <div className={s.lessons}>

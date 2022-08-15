@@ -19,7 +19,7 @@ export const initialState: PodcastState = {
   status: 'idle',
 };
 
-export const fetchOpenLessons = createAsyncThunk(
+export const fetchOpenLessonsIds = createAsyncThunk(
   'lessons/fetchOpenLessons',
   async () => {
     try {
@@ -38,8 +38,8 @@ export const fetchOpenLessons = createAsyncThunk(
   },
 );
 
-export const fetchReadLessons = createAsyncThunk(
-  'lessons/fetchReadLessons',
+export const fetchReadLessonsIds = createAsyncThunk(
+  'lessons/fetchReadLessonsIds',
   async () => {
     try {
       const res = await fetch('/api/read-lessons');
@@ -57,7 +57,7 @@ export const fetchReadLessons = createAsyncThunk(
   },
 );
 
-export const deleteOpenLesson = createAsyncThunk(
+export const deleteOpenLessonId = createAsyncThunk(
   'lessons/deleteOpenLesson',
   async (id: string) => {
     try {
@@ -77,7 +77,7 @@ export const deleteOpenLesson = createAsyncThunk(
   },
 );
 
-export const createOpenLesson = createAsyncThunk(
+export const createOpenLessonId = createAsyncThunk(
   'lessons/createOpenLesson',
   async (id: string) => {
     try {
@@ -107,39 +107,39 @@ export const lessonsSlice = createSlice({
   reducers: {},
   extraReducers: (build) => {
     build
-      .addCase(fetchOpenLessons.pending, (state) => {
+      .addCase(fetchOpenLessonsIds.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(fetchOpenLessons.fulfilled, (state, action) => {
+      .addCase(fetchOpenLessonsIds.fulfilled, (state, action) => {
         state.openLessonsIds = action.payload;
         state.status = 'success';
       })
-      .addCase(fetchOpenLessons.rejected, (state) => {
+      .addCase(fetchOpenLessonsIds.rejected, (state) => {
         state.status = 'failed';
       })
-      .addCase(fetchReadLessons.pending, (state) => {
+      .addCase(fetchReadLessonsIds.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(fetchReadLessons.fulfilled, (state, action) => {
+      .addCase(fetchReadLessonsIds.fulfilled, (state, action) => {
         state.readLessonsIds = action.payload;
         state.status = 'success';
       })
-      .addCase(fetchReadLessons.rejected, (state) => {
+      .addCase(fetchReadLessonsIds.rejected, (state) => {
         state.status = 'failed';
       })
-      .addCase(deleteOpenLesson.fulfilled, (state, action) => {
+      .addCase(deleteOpenLessonId.fulfilled, (state, action) => {
         state.openLessonsIds = state.openLessonsIds.filter(
           (id: string) => id !== action.payload,
         );
         state.status = 'success';
       })
-      .addCase(deleteOpenLesson.rejected, (state) => {
+      .addCase(deleteOpenLessonId.rejected, (state) => {
         state.status = 'failed';
       })
-      .addCase(createOpenLesson.fulfilled, (state, action) => {
+      .addCase(createOpenLessonId.fulfilled, (state, action) => {
         state.openLessonsIds.push(action.payload);
       })
-      .addCase(createOpenLesson.rejected, (state) => {
+      .addCase(createOpenLessonId.rejected, (state) => {
         state.status = 'failed';
       })
       .addMatcher(
