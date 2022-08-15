@@ -10,8 +10,8 @@ import { LessonItem } from '../../../models';
 import s from './TeacherLessonsItem.module.css';
 import { getLessonImageByType } from '../../../helpers/getLessonImageByType';
 import {
-  createOpenLesson,
-  deleteOpenLesson,
+  createOpenLessonId,
+  deleteOpenLessonId,
   selectOpenLessonsIds,
 } from '../../../store/slices/lessons';
 import { useAppSelector, useAppDispatch } from '../../../store';
@@ -39,15 +39,14 @@ export const TeacherLessonsItem = ({ item }: Props) => {
   }, [isMatchIds]);
 
   const handleOpenCloseClick = async () => {
+    setIsLoading(true);
     if (isOpen) {
-      setIsLoading(true);
-      dispatch(deleteOpenLesson(item.sys.id)).finally(() => {
+      dispatch(deleteOpenLessonId(item.sys.id)).finally(() => {
         setIsLoading(false);
         setIsOpen(false);
       });
     } else {
-      setIsLoading(true);
-      dispatch(createOpenLesson(item.sys.id)).finally(() => {
+      dispatch(createOpenLessonId(item.sys.id)).finally(() => {
         setIsOpen(true);
         setIsLoading(false);
       });
