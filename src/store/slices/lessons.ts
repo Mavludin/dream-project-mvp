@@ -10,6 +10,7 @@ export type PodcastState = {
   openLessonsIds: string[];
   readLessonsIds: string[];
   status: 'idle' | 'loading' | 'failed' | 'success';
+  lesson: LessonItem | null;
 };
 
 export const initialState: PodcastState = {
@@ -17,6 +18,7 @@ export const initialState: PodcastState = {
   openLessonsIds: [],
   readLessonsIds: [],
   status: 'idle',
+  lesson: null,
 };
 
 export const fetchOpenLessonsIds = createAsyncThunk(
@@ -143,7 +145,7 @@ export const lessonsSlice = createSlice({
         state.status = 'failed';
       })
       .addMatcher(
-        lessonsGraphqlApi.endpoints.fetchLessons.matchFulfilled,
+        lessonsGraphqlApi.endpoints.fetchLessonsCollection.matchFulfilled,
         (state, { payload }) => {
           state.lessonsCollection = payload.items;
         },
@@ -151,12 +153,15 @@ export const lessonsSlice = createSlice({
   },
 });
 
-export const selectLessons = (state: RootState): LessonItem[] =>
+export const selectLessonsCollection = (state: RootState): LessonItem[] =>
   state[STATE_KEY].lessonsCollection;
 export const selectOpenLessonsIds = (state: RootState): string[] =>
   state[STATE_KEY].openLessonsIds;
 export const selectReadLessonsIds = (state: RootState): string[] =>
   state[STATE_KEY].readLessonsIds;
+
+export const selectLesson = (state: RootState): LessonItem | null =>
+  state[STATE_KEY].lesson;
 
 const lessonsReducer = lessonsSlice.reducer;
 

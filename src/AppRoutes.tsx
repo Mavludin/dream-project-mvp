@@ -7,6 +7,7 @@ import { NoMatchView } from './modules/noMatch/views/NoMatchView';
 import { AssigmentsData } from './modules/student/models';
 import { StudentAssignmentsView } from './modules/student/views/StudentAssignmentsView';
 import { TaskView } from './modules/student/views/TaskView';
+import { LessonView } from './modules/studentLessons/views/LessonView';
 import { StudentLessons } from './modules/studentLessons/views/StudentLessons';
 import { TeacherAssignmentsView } from './modules/teacher/views/TeacherAssignmentsView';
 import { TeacherLessons } from './modules/teacherLessons/views/TeacherLessons';
@@ -17,14 +18,18 @@ type Props = {
   assignmentsData: AssigmentsData[];
 };
 
+const TEACHER_ROUTES = ['/teacher/assignments', '/teacher/lessons'];
+const STUDENT_ROUTES = [
+  '/student/assignments',
+  '/student/lessons',
+  '/student/lessons/:lessonId', // ???
+];
+
 export const AppRoutes = ({ assignmentsData }: Props) => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const userType = useAppSelector(selectUserType);
 
   const location = useLocation();
-
-  const TEACHER_ROUTES = ['/teacher/assignments', '/teacher/lessons'];
-  const STUDENT_ROUTES = ['/student/assignments', '/student/lessons'];
 
   const AUTH_ROUTE = isLoggedIn ? (
     <Navigate to={`/${userType}/assignments`} />
@@ -64,6 +69,7 @@ export const AppRoutes = ({ assignmentsData }: Props) => {
               element={<TaskView />}
             />
             <Route path="/student/lessons" element={<StudentLessons />} />
+            <Route path="/student/lessons/:lessonId" element={<LessonView />} />
           </>
         )}
         {userType === 'teacher' && (

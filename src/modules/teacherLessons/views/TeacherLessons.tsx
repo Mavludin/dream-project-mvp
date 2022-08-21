@@ -4,24 +4,25 @@ import { useAppDispatch, useAppSelector } from '../../../store';
 import { lessonsGraphqlApi } from '../../../store/api/lessonsApi';
 import {
   fetchOpenLessonsIds,
-  selectLessons,
+  selectLessonsCollection,
 } from '../../../store/slices/lessons';
 import { TeacherLessonsFilters } from '../components/TeacherLessonsFilters';
 import { TeacherLessonsItem } from '../components/TeacherLessonsItem';
 import s from './TeacherLessons.module.css';
 
 export const TeacherLessons = () => {
-  const lessons = useAppSelector(selectLessons);
-
-  const [fetchLessons] = lessonsGraphqlApi.useLazyFetchLessonsQuery();
-
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    if (lessons.length) return;
+  const lessonsCollection = useAppSelector(selectLessonsCollection);
 
-    fetchLessons();
-  }, [fetchLessons, lessons.length]);
+  const [fetchLessonsCollection] =
+    lessonsGraphqlApi.useLazyFetchLessonsCollectionQuery();
+
+  useEffect(() => {
+    if (lessonsCollection.length) return;
+
+    fetchLessonsCollection();
+  }, [fetchLessonsCollection, lessonsCollection.length]);
 
   useEffect(() => {
     dispatch(fetchOpenLessonsIds());
@@ -42,7 +43,7 @@ export const TeacherLessons = () => {
           gutter: 75,
           column: 3,
         }}
-        dataSource={lessons}
+        dataSource={lessonsCollection}
         renderItem={(item) => <TeacherLessonsItem item={item} />}
       />
     </div>

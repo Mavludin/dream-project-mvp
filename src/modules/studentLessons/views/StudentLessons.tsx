@@ -1,12 +1,13 @@
 import { List } from 'antd';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { LessonItem } from '../../../models';
 import { useAppDispatch, useAppSelector } from '../../../store';
 import { lessonsGraphqlApi } from '../../../store/api/lessonsApi';
 import {
   fetchOpenLessonsIds,
   fetchReadLessonsIds,
-  selectLessons,
+  selectLessonsCollection,
   selectOpenLessonsIds,
 } from '../../../store/slices/lessons';
 import { StudentLessonsFilters } from '../components/StudentLessonsFilters/StudentLessonsFilters';
@@ -15,7 +16,7 @@ import s from './StudentLessons.module.css';
 
 export const StudentLessons = () => {
   const [openLessons, setOpenLessons] = useState<LessonItem[]>([]);
-  const lessons = useAppSelector(selectLessons);
+  const lessonsCollection = useAppSelector(selectLessonsCollection);
   const [filteredData, setFilteredData] = useState<LessonItem[]>([]);
 
   const finalData = filteredData.length ? filteredData : openLessons;
@@ -24,13 +25,14 @@ export const StudentLessons = () => {
 
   const dispatch = useAppDispatch();
 
-  const [fetchLessons] = lessonsGraphqlApi.useLazyFetchLessonsQuery();
+  const [fetchLessonsCollection] =
+    lessonsGraphqlApi.useLazyFetchLessonsCollectionQuery();
 
   useEffect(() => {
-    if (lessons.length) return;
+    if (lessonsCollection.length) return;
 
-    fetchLessons();
-  }, [fetchLessons, lessons]);
+    fetchLessonsCollection();
+  }, [fetchLessonsCollection, lessonsCollection]);
 
   useEffect(() => {
     dispatch(fetchOpenLessonsIds());
@@ -39,9 +41,11 @@ export const StudentLessons = () => {
 
   useEffect(() => {
     setOpenLessons(
-      lessons.filter((item) => openLessonsIds.some((id) => id === item.sys.id)),
+      lessonsCollection.filter((item) =>
+        openLessonsIds.some((id) => id === item.sys.id),
+      ),
     );
-  }, [lessons, openLessonsIds]);
+  }, [lessonsCollection, openLessonsIds]);
 
   return (
     <div className={s.lessons}>
@@ -62,7 +66,11 @@ export const StudentLessons = () => {
           column: 3,
         }}
         dataSource={finalData}
-        renderItem={(item) => <StudentLessonsItem item={item} />}
+        renderItem={(item) => (
+          <Link to={`/student/lessons/${item.sys.id}`}>
+            <StudentLessonsItem item={item} />
+          </Link>
+        )}
       />
     </div>
   );

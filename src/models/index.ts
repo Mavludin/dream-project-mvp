@@ -69,7 +69,7 @@ export type LessonItem = {
   sys: GraphqlSysData;
   title: string;
   type: string;
-  description: { json: Document } | null;
+  description: { json: Document };
   shortDescription: string;
 };
 
@@ -77,3 +77,8 @@ export type FetchLessonsCollectionRequest = void;
 export type FetchLessonsCollectionResponse = {
   items: LessonItem[];
 };
+
+export type FetchLessonRequest = {
+  lessonId: string;
+};
+export type FetchLessonResponse = LessonItem;
