@@ -169,6 +169,9 @@ export const selectReadLessonsIds = (state: RootState): string[] =>
 export const selectLessons = (state: RootState): LessonItem | null =>
   state[STATE_KEY].lesson;
 
+export const selectLesson = (state: RootState): LessonItem | null =>
+  state[STATE_KEY].lesson;
+
 const lessonsReducer = lessonsSlice.reducer;
 
 export default lessonsReducer;
