@@ -1,5 +1,6 @@
 import { List } from 'antd';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { LessonItem } from '../../../models';
 import { useAppDispatch, useAppSelector } from '../../../store';
 import {
@@ -55,7 +56,11 @@ export const StudentLessons = () => {
           column: 3,
         }}
         dataSource={finalData}
-        renderItem={(item) => <StudentLessonsItem item={item} />}
+        renderItem={(item) => (
+          <Link to={`/student/lessons/${item.sys.id}`}>
+            <StudentLessonsItem item={item} />
+          </Link>
+        )}
       />
     </div>
   );

@@ -6,9 +6,10 @@ import { AuthView } from './modules/auth/views/AuthView';
 import { NoMatchView } from './modules/noMatch/views/NoMatchView';
 import { StudentAssignmentsView } from './modules/student/views/StudentAssignmentsView';
 import { TaskView } from './modules/student/views/TaskView';
+import { LessonView as StudentLessonView } from './modules/studentLessons/views/LessonView';
 import { StudentLessons } from './modules/studentLessons/views/StudentLessons';
 import { TeacherAssignmentsView } from './modules/teacher/views/TeacherAssignmentsView';
-import { LessonView } from './modules/teacherLessons/views/LessonView';
+import { LessonView as TeacherLessonView } from './modules/teacherLessons/views/LessonView';
 import { TeacherLessons } from './modules/teacherLessons/views/TeacherLessons';
 import { useAppDispatch, useAppSelector } from './store';
 import { lessonsGraphqlApi } from './store/api/lessonsApi';
@@ -98,6 +99,10 @@ export const AppRoutes = () => {
               />
             )}
             <Route path="/student/lessons" element={<StudentLessons />} />
+            <Route
+              path="/student/lessons/:lessonId"
+              element={<StudentLessonView />}
+            />
           </>
         )}
         {userType === 'teacher' && (
@@ -110,7 +115,7 @@ export const AppRoutes = () => {
             {isTeacherIdsRoute && (
               <Route
                 path="/teacher/lessons/:lessonId"
-                element={<LessonView />}
+                element={<TeacherLessonView />}
               />
             )}
           </>
