@@ -149,6 +149,12 @@ export const lessonsSlice = createSlice({
         (state, { payload }) => {
           state.lessonsCollection = payload.items;
         },
+      )
+      .addMatcher(
+        lessonsGraphqlApi.endpoints.fetchLessons.matchFulfilled,
+        (state, { payload }) => {
+          state.lesson = payload;
+        },
       );
   },
 });
@@ -160,7 +166,7 @@ export const selectOpenLessonsIds = (state: RootState): string[] =>
 export const selectReadLessonsIds = (state: RootState): string[] =>
   state[STATE_KEY].readLessonsIds;
 
-export const selectLesson = (state: RootState): LessonItem | null =>
+export const selectLessons = (state: RootState): LessonItem | null =>
   state[STATE_KEY].lesson;
 
 const lessonsReducer = lessonsSlice.reducer;

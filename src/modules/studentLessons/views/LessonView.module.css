@@ -1,0 +1,54 @@
+.lessonView {
+  max-width: 1050px;
+  margin: 0 auto;
+  margin-top: 75px;
+}
+
+.lessonView h1 {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 39px;
+  text-align: center;
+  margin-bottom: 26px;
+}
+
+.lessonView p {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.lessonView p code {
+  background: #F3F4F6;
+  color: rgba(5, 71, 125, 1);
+}
+
+.btn {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 70px;
+}
+
+.btn button {
+  outline: none;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 18px;
+  letter-spacing: 0.1em;
+  height: 40px;
+}
+
+.nav {
+  background: #1C86CA;
+  color: #FFFFFF;
+  border: none;
+  width: 120px;
+}
+
+.read {
+  background: #FFFFFF;
+  border: 1px solid #1C86CA;
+  color: #1C86CA;
+  width: 150px;
+}
+

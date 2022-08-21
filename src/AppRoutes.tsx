@@ -19,16 +19,11 @@ type Props = {
 };
 
 const TEACHER_ROUTES = ['/teacher/assignments', '/teacher/lessons'];
-const STUDENT_ROUTES = [
-  '/student/assignments',
-  '/student/lessons',
-  '/student/lessons/:lessonId', // ???
-];
+const STUDENT_ROUTES = ['/student/assignments', '/student/lessons'];
 
 export const AppRoutes = ({ assignmentsData }: Props) => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const userType = useAppSelector(selectUserType);
-
   const location = useLocation();
 
   const AUTH_ROUTE = isLoggedIn ? (
@@ -41,6 +36,7 @@ export const AppRoutes = ({ assignmentsData }: Props) => {
     () => TEACHER_ROUTES.some((route) => location.pathname === route),
     [location.pathname],
   );
+
   const isStudentRoute = useMemo(
     () => STUDENT_ROUTES.some((route) => location.pathname === route),
     [location.pathname],
@@ -48,8 +44,7 @@ export const AppRoutes = ({ assignmentsData }: Props) => {
 
   return (
     <>
-      {(userType === 'student' || userType === 'teacher') &&
-        (isStudentRoute || isTeacherRoute) && <Header />}
+      {isLoggedIn && <Header />}
       <Routes>
         <Route
           path="/"
