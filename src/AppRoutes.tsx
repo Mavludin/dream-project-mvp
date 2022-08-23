@@ -17,14 +17,14 @@ type Props = {
   assignmentsData: AssigmentsData[];
 };
 
+const TEACHER_ROUTES = ['/teacher/assignments', '/teacher/lessons'];
+const STUDENT_ROUTES = ['/student/assignments', '/student/lessons'];
+
 export const AppRoutes = ({ assignmentsData }: Props) => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const userType = useAppSelector(selectUserType);
 
   const location = useLocation();
-
-  const TEACHER_ROUTES = ['/teacher/assignments', '/teacher/lessons'];
-  const STUDENT_ROUTES = ['/student/assignments', '/student/lessons'];
 
   const AUTH_ROUTE = isLoggedIn ? (
     <Navigate to={`/${userType}/assignments`} />

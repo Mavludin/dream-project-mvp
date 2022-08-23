@@ -3,19 +3,19 @@ import { UserTypes } from '../../modules/auth/models';
 
 export type AuthState = {
   isLoggedIn: boolean;
-  userType: UserTypes | string;
+  userType: UserTypes;
 };
 type SelectIsLoggedIn = { authReducer: { isLoggedIn: boolean } };
-type SelectUserType = { authReducer: { userType: UserTypes | string } };
+type SelectUserType = { authReducer: { userType: UserTypes } };
 
 type PayloadType = {
   isRemembered: boolean;
-  userRadioType: UserTypes | string;
+  userRadioType: UserTypes;
 };
 
 const initialState: AuthState = {
   isLoggedIn: localStorage.getItem('isLoggedIn') === 'true',
-  userType: localStorage.getItem('userType') || 'student',
+  userType: (localStorage.getItem('userType') as UserTypes) || 'student',
 };
 
 export const authSlice = createSlice({
