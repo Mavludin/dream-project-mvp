@@ -10,9 +10,7 @@ import s from './AuthView.module.css';
 export const AuthView = () => {
   const usersType = useAppSelector(selectUserType);
 
-  const [userRadioType, setUserRadioType] = useState<UserTypes | string>(
-    usersType,
-  );
+  const [userRadioType, setUserRadioType] = useState<UserTypes>(usersType);
   const [isRemembered, setIsRemembered] = useState(false);
 
   const [loginValue, setLoginValue] = useState('');
