@@ -6,6 +6,7 @@ import { logIn, selectUserType } from '../../../store/slices/auth';
 import { setStudentId } from '../../../store/slices/userData';
 import { UsersData, UserTypes, USER_TYPE_LIST } from '../models';
 import s from './AuthView.module.css';
+import AppConfig from '../../../config/AppConfig';
 
 export const AuthView = () => {
   const usersType = useAppSelector(selectUserType);
@@ -27,7 +28,7 @@ export const AuthView = () => {
   const [users, setUsers] = useState<UsersData[]>([]);
 
   useEffect(() => {
-    fetch('/api/users')
+    fetch(`${AppConfig.apiUrl}/api/users/`)
       .then((res) => res.json())
       .then(({ data }) => setUsers(data));
   }, []);

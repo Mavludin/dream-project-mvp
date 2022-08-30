@@ -7,6 +7,7 @@ import styles from './StudentAssignmentsView.module.css';
 import { AssignmentsListItem } from '../components/AssignmentsListItem/AssignmentsListItem';
 import { useAppSelector } from '../../../store';
 import { selectStudentId } from '../../../store/slices/userData';
+import AppConfig from '../../../config/AppConfig';
 
 type Props = {
   assignmentsData: AssigmentsData[];
@@ -23,13 +24,13 @@ export const StudentAssignmentsView = ({ assignmentsData }: Props) => {
   const studentId = useAppSelector(selectStudentId);
 
   useEffect(() => {
-    fetch('/api/open-assignments')
+    fetch(`${AppConfig.apiUrl}/api/open-assignments`)
       .then((res) => res.json())
       .then((res) => setOpenAssignmentsIds(res.data));
   }, []);
 
   useEffect(() => {
-    fetch(`/api/student-stats/${studentId}`)
+    fetch(`${AppConfig.apiUrl}/api/student-stats/${studentId}`)
       .then((res) => res.json())
       .then((res) => setStudentStat(res.data));
   }, [studentId]);

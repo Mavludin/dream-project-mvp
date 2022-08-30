@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '..';
+import AppConfig from '../../config/AppConfig';
 import { LessonItem } from '../../models';
 import { lessonsGraphqlApi } from '../api/lessonsApi';
 
@@ -23,7 +24,7 @@ export const fetchOpenLessonsIds = createAsyncThunk(
   'lessons/fetchOpenLessons',
   async () => {
     try {
-      const res = await fetch('/api/open-lessons');
+      const res = await fetch(`${AppConfig.apiUrl}/api/open-lessons`);
 
       if (res.ok) {
         const { data } = await res.json();
@@ -42,7 +43,7 @@ export const fetchReadLessonsIds = createAsyncThunk(
   'lessons/fetchReadLessonsIds',
   async () => {
     try {
-      const res = await fetch('/api/read-lessons');
+      const res = await fetch(`${AppConfig.apiUrl}/api/read-lessons`);
 
       if (res.ok) {
         const { data } = await res.json();
@@ -61,7 +62,7 @@ export const deleteOpenLessonId = createAsyncThunk(
   'lessons/deleteOpenLesson',
   async (id: string) => {
     try {
-      const res = await fetch(`/api/open-lessons/${id}`, {
+      const res = await fetch(`${AppConfig.apiUrl}/api/open-lessons/${id}`, {
         method: 'DELETE',
       });
 
@@ -81,7 +82,7 @@ export const createOpenLessonId = createAsyncThunk(
   'lessons/createOpenLesson',
   async (id: string) => {
     try {
-      const res = await fetch('/api/open-lessons', {
+      const res = await fetch(`${AppConfig.apiUrl}/api/open-lessons`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

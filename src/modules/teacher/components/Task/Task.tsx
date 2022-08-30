@@ -5,6 +5,7 @@ import {
 } from '@ant-design/icons';
 import { List, Spin } from 'antd';
 import { useEffect, useState, useMemo } from 'react';
+import AppConfig from '../../../../config/AppConfig';
 import { AssigmentsData } from '../../models';
 import s from './Task.module.css';
 
@@ -32,9 +33,12 @@ export const Task = ({ item, index, openAssignmentsIds }: Props) => {
   const handleClickViewTask = async (id: number) => {
     if (isViewTask) {
       setIsLoading(true);
-      const res = await fetch(`/api/open-assignments/${id}`, {
-        method: 'DELETE',
-      });
+      const res = await fetch(
+        `${AppConfig.apiUrl}/api/open-assignments/${id}`,
+        {
+          method: 'DELETE',
+        },
+      );
 
       if (res.ok) {
         setIsViewTask(false);
@@ -42,7 +46,7 @@ export const Task = ({ item, index, openAssignmentsIds }: Props) => {
       }
     } else {
       setIsLoading(true);
-      const res = await fetch('/api/open-assignments', {
+      const res = await fetch(`${AppConfig.apiUrl}/api/open-assignments`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
