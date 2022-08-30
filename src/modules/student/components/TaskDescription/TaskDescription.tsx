@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import styles from './TaskDescription.module.css';
 import arrow from '../../../../assets/image/arrow.svg';
 import { AssigmentsData } from '../../models';
+import AppConfig from '../../../../config/AppConfig';
 
 export const TaskDescription = () => {
   const { asgmtId } = useParams();
@@ -11,7 +12,7 @@ export const TaskDescription = () => {
 
   useEffect(() => {
     if (asgmtId) {
-      fetch(`/api/assignments/${asgmtId}`)
+      fetch(`${AppConfig.apiUrl}/api/assignments/${asgmtId}`)
         .then((res) => res.json())
         .then((res) => setAssigment(res.data));
     }

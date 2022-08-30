@@ -2,12 +2,13 @@ import './App.css';
 import { useEffect, useState } from 'react';
 import { AssigmentsData } from './models';
 import { AppRoutes } from './AppRoutes';
+import AppConfig from './config/AppConfig';
 
 function App() {
   const [assignmentsData, setAssignmentsData] = useState<AssigmentsData[]>([]);
 
   useEffect(() => {
-    fetch('/api/assignments')
+    fetch(`${AppConfig.apiUrl}/api/assignments/`)
       .then((res) => res.json())
       .then((res) => setAssignmentsData(res.data));
   }, []);

@@ -1,5 +1,6 @@
 import { List } from 'antd';
 import { useEffect, useState } from 'react';
+import AppConfig from '../../../config/AppConfig';
 import { AssignmentListTeacherFilters } from '../components/AssignmentListTeacherFilters/AssignmentListTeacherFilters';
 import { Task } from '../components/Task/Task';
 import { AssigmentsData } from '../models';
@@ -16,7 +17,7 @@ export const TeacherAssignmentsView = ({ assignmentsData }: Props) => {
   const finalData = filteredData.length ? filteredData : assignmentsData;
 
   useEffect(() => {
-    fetch('/api/open-assignments')
+    fetch(`${AppConfig.apiUrl}/api/open-assignments`)
       .then((res) => res.json())
       .then((res) => setOpenAssignmentsIds(res.data));
   }, []);
