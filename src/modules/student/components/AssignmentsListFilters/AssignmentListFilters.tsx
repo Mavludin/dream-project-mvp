@@ -3,20 +3,20 @@ import { Dropdown, Menu, Space } from 'antd';
 import type { MenuProps } from 'antd';
 import { useMemo } from 'react';
 import {
-  AssigmentsData,
+  AssignmentsData,
   CompletedAssignment,
   Difficulty,
   FILTER_METHODS,
 } from '../../models';
-import s from './AssigmentListFilters.module.css';
+import s from './AssignmentListFilters.module.css';
 
 type Props = {
-  openAssignments: AssigmentsData[];
+  openAssignments: AssignmentsData[];
   completedAssignments?: CompletedAssignment[];
-  setFilteredData: (arr: AssigmentsData[]) => void;
+  setFilteredData: (arr: AssignmentsData[]) => void;
 };
 
-export const AssigmentListFilters = ({
+export const AssignmentListFilters = ({
   openAssignments,
   setFilteredData,
   completedAssignments,

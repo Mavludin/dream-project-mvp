@@ -2,12 +2,12 @@ import { FilterOutlined } from '@ant-design/icons';
 import { Dropdown, Menu, Space } from 'antd';
 import type { MenuProps } from 'antd';
 import { useMemo } from 'react';
-import { AssigmentsData, Difficulty, FILTER_METHODS } from '../../models';
+import { AssignmentsData, Difficulty, FILTER_METHODS } from '../../models';
 import s from './AssignmentListTeacherFilters.module.css';
 
 type Props = {
-  assignmentsData: AssigmentsData[];
-  setFilteredData: (arr: AssigmentsData[]) => void;
+  assignmentsData: AssignmentsData[];
+  setFilteredData: (arr: AssignmentsData[]) => void;
   openAssignmentsIds: number[];
 };
 

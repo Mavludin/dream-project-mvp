@@ -1,26 +1,29 @@
 import { List } from 'antd';
 import { useEffect, useState } from 'react';
-import AppConfig from '../../../config/AppConfig';
+import { useAppDispatch, useAppSelector } from '../../../store';
+import {
+  fetchAssignments,
+  fetchOpenAssignmentsIds,
+  selectAssignmentsData,
+} from '../../../store/slices/assignments';
 import { AssignmentListTeacherFilters } from '../components/AssignmentListTeacherFilters/AssignmentListTeacherFilters';
 import { Task } from '../components/Task/Task';
-import { AssigmentsData } from '../models';
 import s from './TeacherAssignmentsView.module.css';
 
-type Props = {
-  assignmentsData: AssigmentsData[];
-};
-
-export const TeacherAssignmentsView = ({ assignmentsData }: Props) => {
-  const [openAssignmentsIds, setOpenAssignmentsIds] = useState<number[]>([]);
-  const [filteredData, setFilteredData] = useState<AssigmentsData[]>([]);
+export const TeacherAssignmentsView = () => {
+  const { assignmentsData, openAssignmentsIds } = useAppSelector(
+    selectAssignmentsData,
+  );
+  const [filteredData, setFilteredData] = useState(assignmentsData);
 
   const finalData = filteredData.length ? filteredData : assignmentsData;
 
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
-    fetch(`${AppConfig.apiUrl}/api/open-assignments`)
-      .then((res) => res.json())
-      .then((res) => setOpenAssignmentsIds(res.data));
-  }, []);
+    dispatch(fetchAssignments());
+    dispatch(fetchOpenAssignmentsIds());
+  }, [dispatch]);
 
   return (
     <div className={s.assignListTeacher}>

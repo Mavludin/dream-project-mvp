@@ -19,3 +19,15 @@
 :global .ant-list-split .ant-list-item:last-child {
   border-bottom: 1px solid #f0f0f0;
 }
+
+.link {
+  font-family: 'Inter';
+  color: #05477d;
+  font-weight: 500;
+  text-decoration: none;
+  background-color: transparent;
+  transition: all 0.3s;
+}
+.link:hover {
+  color: #40a9ff;
+}

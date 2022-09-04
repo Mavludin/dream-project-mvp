@@ -1,13 +1,13 @@
 import { BarChartOutlined, StockOutlined } from '@ant-design/icons';
 import { List } from 'antd';
 import React, { useMemo } from 'react';
-import { AssigmentsData, StudentStat } from '../../models';
+import { AssignmentsData, StudentStat } from '../../models';
 import { IconText } from '../IconText';
 import styles from './AssignmentsListItem.module.css';
 
 type Props = {
   studentStat?: StudentStat;
-  item: AssigmentsData;
+  item: AssignmentsData;
   index: number;
 };
 
@@ -38,9 +38,9 @@ export const AssignmentsListItem = ({ studentStat, item, index }: Props) => {
     >
       <List.Item.Meta
         title={
-          <a href="/">
+          <div className={styles.link}>
             {index + 1}. {item.name}
-          </a>
+          </div>
         }
       />
       <StockOutlined /> {item.difficulty}
