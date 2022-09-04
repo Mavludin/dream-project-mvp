@@ -1,54 +1,45 @@
 import { useEffect, useState } from 'react';
 import { List } from 'antd';
 import { Link } from 'react-router-dom';
-import { AssigmentListFilters } from '../components/AssigmentsListFilters/AssigmentListFilters';
-import { AssigmentsData, StudentStat } from '../models';
+import { AssignmentListFilters } from '../components/AssignmentsListFilters/AssignmentListFilters';
 import styles from './StudentAssignmentsView.module.css';
 import { AssignmentsListItem } from '../components/AssignmentsListItem/AssignmentsListItem';
-import { useAppSelector } from '../../../store';
+import { useAppDispatch, useAppSelector } from '../../../store';
 import { selectStudentId } from '../../../store/slices/userData';
-import AppConfig from '../../../config/AppConfig';
+import {
+  fetchAssignments,
+  fetchStudentStat,
+  selectAssignmentsData,
+} from '../../../store/slices/assignments';
 
-type Props = {
-  assignmentsData: AssigmentsData[];
-};
+export const StudentAssignmentsView = () => {
+  const { assignmentsData, studentStat, completedAssignments } = useAppSelector(
+    selectAssignmentsData,
+  );
+  const [filteredData, setFilteredData] = useState(assignmentsData);
 
-export const StudentAssignmentsView = ({ assignmentsData }: Props) => {
-  const [openAssignments, setOpenAssignments] = useState<AssigmentsData[]>([]);
-  const [filteredData, setFilteredData] = useState<AssigmentsData[]>([]);
-  const [openAssignmentsIds, setOpenAssignmentsIds] = useState<number[]>([]);
-  const [studentStat, setStudentStat] = useState<StudentStat>();
-
-  const finalData = filteredData.length ? filteredData : openAssignments;
+  const finalData = filteredData.length ? filteredData : assignmentsData;
 
   const studentId = useAppSelector(selectStudentId);
 
-  useEffect(() => {
-    fetch(`${AppConfig.apiUrl}/api/open-assignments`)
-      .then((res) => res.json())
-      .then((res) => setOpenAssignmentsIds(res.data));
-  }, []);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    fetch(`${AppConfig.apiUrl}/api/student-stats/${studentId}`)
-      .then((res) => res.json())
-      .then((res) => setStudentStat(res.data));
-  }, [studentId]);
+    dispatch(fetchAssignments());
+  }, [dispatch]);
 
   useEffect(() => {
-    const openAssignmentsData = assignmentsData.filter((item) =>
-      openAssignmentsIds.some((id) => id === item.id),
-    );
-    setOpenAssignments(openAssignmentsData);
-  }, [assignmentsData, openAssignmentsIds]);
+    if (!studentId) return;
+    dispatch(fetchStudentStat(studentId));
+  }, [dispatch, studentId]);
 
   return (
     <div className={styles.assignList}>
       <div className={styles.title}>
         <h1>Список задач</h1>
-        <AssigmentListFilters
-          completedAssignments={studentStat?.completedAssignments}
-          openAssignments={openAssignments}
+        <AssignmentListFilters
+          completedAssignments={completedAssignments}
+          openAssignments={assignmentsData}
           setFilteredData={setFilteredData}
         />
       </div>

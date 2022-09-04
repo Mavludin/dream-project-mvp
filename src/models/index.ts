@@ -8,7 +8,7 @@ export type Examples = {
   output: string;
 };
 
-export type AssigmentsData = {
+export type AssignmentsData = {
   id: number;
   name: string;
   description: string;

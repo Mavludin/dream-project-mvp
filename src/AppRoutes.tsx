@@ -4,7 +4,6 @@ import { Header } from './components/Header/Header';
 import { getHomeRouteByUserType } from './helpers/getHomeRouteByUserType';
 import { AuthView } from './modules/auth/views/AuthView';
 import { NoMatchView } from './modules/noMatch/views/NoMatchView';
-import { AssigmentsData } from './modules/student/models';
 import { StudentAssignmentsView } from './modules/student/views/StudentAssignmentsView';
 import { TaskView } from './modules/student/views/TaskView';
 import { StudentLessons } from './modules/studentLessons/views/StudentLessons';
@@ -13,14 +12,10 @@ import { TeacherLessons } from './modules/teacherLessons/views/TeacherLessons';
 import { useAppSelector } from './store';
 import { selectIsLoggedIn, selectUserType } from './store/slices/auth';
 
-type Props = {
-  assignmentsData: AssigmentsData[];
-};
-
 const TEACHER_ROUTES = ['/teacher/assignments', '/teacher/lessons'];
 const STUDENT_ROUTES = ['/student/assignments', '/student/lessons'];
 
-export const AppRoutes = ({ assignmentsData }: Props) => {
+export const AppRoutes = () => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const userType = useAppSelector(selectUserType);
 
@@ -55,9 +50,7 @@ export const AppRoutes = ({ assignmentsData }: Props) => {
           <>
             <Route
               path="/student/assignments"
-              element={
-                <StudentAssignmentsView assignmentsData={assignmentsData} />
-              }
+              element={<StudentAssignmentsView />}
             />
             <Route
               path="/student/assignments/:asgmtId"
@@ -70,9 +63,7 @@ export const AppRoutes = ({ assignmentsData }: Props) => {
           <>
             <Route
               path="/teacher/assignments"
-              element={
-                <TeacherAssignmentsView assignmentsData={assignmentsData} />
-              }
+              element={<TeacherAssignmentsView />}
             />
             <Route path="/teacher/lessons" element={<TeacherLessons />} />
           </>

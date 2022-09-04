@@ -1,22 +1,24 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import styles from './TaskDescription.module.css';
 import arrow from '../../../../assets/image/arrow.svg';
-import { AssigmentsData } from '../../models';
-import AppConfig from '../../../../config/AppConfig';
+import { useAppDispatch, useAppSelector } from '../../../../store';
+import {
+  fetchAssignment,
+  selectAssignmentsData,
+} from '../../../../store/slices/assignments';
 
 export const TaskDescription = () => {
   const { asgmtId } = useParams();
+  const { openAssignment, openAssignmentExamples } = useAppSelector(
+    selectAssignmentsData,
+  );
 
-  const [assigment, setAssigment] = useState<AssigmentsData>();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (asgmtId) {
-      fetch(`${AppConfig.apiUrl}/api/assignments/${asgmtId}`)
-        .then((res) => res.json())
-        .then((res) => setAssigment(res.data));
-    }
-  }, [asgmtId]);
+    dispatch(fetchAssignment(Number(asgmtId)));
+  }, [dispatch]);
 
   return (
     <div className={styles.descriptionWrapper}>
@@ -27,12 +29,12 @@ export const TaskDescription = () => {
         </Link>
       </div>
       <div className={styles.text}>
-        <h2 className={styles.title}>{assigment?.name}</h2>
-        <div className={styles.description}>{assigment?.description}</div>
+        <h2 className={styles.title}>{openAssignment?.name}</h2>
+        <div className={styles.description}>{openAssignment?.description}</div>
         <div className={styles.testsWrapper}>
           <div className={styles.testsName}>Тесты</div>
           <div className={styles.tests}>
-            {assigment?.examples?.map((elem) => (
+            {openAssignmentExamples.map((elem) => (
               <div className={styles.test} key={elem.input + elem.output}>
                 <div className={styles.input}>
                   <span>Input:</span> {elem.input}

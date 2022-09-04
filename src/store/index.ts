@@ -5,6 +5,9 @@ import userDataReducer from './slices/userData';
 import lessonsReducer, {
   STATE_KEY as LESSONS_STATE_KEY,
 } from './slices/lessons';
+import assignmentsReducer, {
+  STATE_KEY as ASSIGNMENTS_STATE_KEY,
+} from './slices/assignments';
 import { emptyGraphqlApi } from './api/emptyGraphqlApi';
 
 export const store = configureStore({
@@ -13,6 +16,7 @@ export const store = configureStore({
     userDataReducer,
     [LESSONS_STATE_KEY]: lessonsReducer,
     [emptyGraphqlApi.reducerPath]: emptyGraphqlApi.reducer,
+    [ASSIGNMENTS_STATE_KEY]: assignmentsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(emptyGraphqlApi.middleware),

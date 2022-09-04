@@ -5,12 +5,16 @@ import {
 } from '@ant-design/icons';
 import { List, Spin } from 'antd';
 import { useEffect, useState, useMemo } from 'react';
-import AppConfig from '../../../../config/AppConfig';
-import { AssigmentsData } from '../../models';
+import { useAppDispatch } from '../../../../store';
+import {
+  createOpenAssignmentsIds,
+  deleteOpenAssignmentsIds,
+} from '../../../../store/slices/assignments';
+import { AssignmentsData } from '../../models';
 import s from './Task.module.css';
 
 type Props = {
-  item: AssigmentsData;
+  item: AssignmentsData;
   index: number;
   openAssignmentsIds: number[];
 };
@@ -24,6 +28,8 @@ export const Task = ({ item, index, openAssignmentsIds }: Props) => {
     [openAssignmentsIds, item],
   );
 
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
     if (isMatchIds) {
       setIsViewTask(true);
@@ -33,31 +39,16 @@ export const Task = ({ item, index, openAssignmentsIds }: Props) => {
   const handleClickViewTask = async (id: number) => {
     if (isViewTask) {
       setIsLoading(true);
-      const res = await fetch(
-        `${AppConfig.apiUrl}/api/open-assignments/${id}`,
-        {
-          method: 'DELETE',
-        },
-      );
-
-      if (res.ok) {
-        setIsViewTask(false);
+      dispatch(deleteOpenAssignmentsIds(id)).finally(() => {
         setIsLoading(false);
-      }
+        setIsViewTask(false);
+      });
     } else {
       setIsLoading(true);
-      const res = await fetch(`${AppConfig.apiUrl}/api/open-assignments`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ asgmtId: id }),
-      });
-
-      if (res.ok) {
-        setIsViewTask(true);
+      dispatch(createOpenAssignmentsIds(id)).finally(() => {
         setIsLoading(false);
-      }
+        setIsViewTask(true);
+      });
     }
   };
   return (
@@ -66,9 +57,9 @@ export const Task = ({ item, index, openAssignmentsIds }: Props) => {
         <div className={s.itemWrapper}>
           <List.Item.Meta
             title={
-              <a href="/">
+              <div className={s.link}>
                 {index + 1}. {item.name}
-              </a>
+              </div>
             }
           />
           <StockOutlined /> {item.difficulty}
