@@ -13,9 +13,8 @@ import {
 } from '../../../store/slices/assignments';
 
 export const StudentAssignmentsView = () => {
-  const { assignmentsData, studentStat, completedAssignments } = useAppSelector(
-    selectAssignmentsData,
-  );
+  const { assignmentsData } = useAppSelector(selectAssignmentsData);
+
   const [filteredData, setFilteredData] = useState(assignmentsData);
 
   const finalData = filteredData.length ? filteredData : assignmentsData;
@@ -37,11 +36,7 @@ export const StudentAssignmentsView = () => {
     <div className={styles.assignList}>
       <div className={styles.title}>
         <h1>Список задач</h1>
-        <AssignmentListFilters
-          completedAssignments={completedAssignments}
-          openAssignments={assignmentsData}
-          setFilteredData={setFilteredData}
-        />
+        <AssignmentListFilters setFilteredData={setFilteredData} />
       </div>
 
       <List
@@ -53,11 +48,7 @@ export const StudentAssignmentsView = () => {
         dataSource={finalData}
         renderItem={(item, index) => (
           <Link to={`/student/assignments/${item.id}`}>
-            <AssignmentsListItem
-              item={item}
-              index={index}
-              studentStat={studentStat}
-            />
+            <AssignmentsListItem item={item} index={index} />
           </Link>
         )}
       />

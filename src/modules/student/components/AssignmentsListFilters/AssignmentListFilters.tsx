@@ -2,29 +2,24 @@ import { FilterOutlined } from '@ant-design/icons';
 import { Dropdown, Menu, Space } from 'antd';
 import type { MenuProps } from 'antd';
 import { useMemo } from 'react';
-import {
-  AssignmentsData,
-  CompletedAssignment,
-  Difficulty,
-  FILTER_METHODS,
-} from '../../models';
+import { AssignmentsData, Difficulty, FILTER_METHODS } from '../../models';
 import s from './AssignmentListFilters.module.css';
+import { selectAssignmentsData } from '../../../../store/slices/assignments';
+import { useAppSelector } from '../../../../store';
 
 type Props = {
-  openAssignments: AssignmentsData[];
-  completedAssignments?: CompletedAssignment[];
   setFilteredData: (arr: AssignmentsData[]) => void;
 };
 
-export const AssignmentListFilters = ({
-  openAssignments,
-  setFilteredData,
-  completedAssignments,
-}: Props) => {
+export const AssignmentListFilters = ({ setFilteredData }: Props) => {
+  const { assignmentsData, completedAssignments } = useAppSelector(
+    selectAssignmentsData,
+  );
+
   const resetFilterList = () => setFilteredData([]);
 
   const filterDifficulty = (difficulty: Difficulty) => {
-    const easy = openAssignments.filter(
+    const easy = assignmentsData.filter(
       (item) => item.difficulty === difficulty,
     );
 
@@ -32,7 +27,7 @@ export const AssignmentListFilters = ({
   };
 
   const filterCompleted = () => {
-    const complete = openAssignments.filter((item) =>
+    const complete = assignmentsData.filter((item) =>
       completedAssignments?.some(
         (completedItem) => completedItem.id === item.id,
       ),
@@ -42,7 +37,7 @@ export const AssignmentListFilters = ({
   };
 
   const filterUncompleted = () => {
-    const complete = openAssignments.filter((item) =>
+    const complete = assignmentsData.filter((item) =>
       completedAssignments?.every(
         (completedItem) => item.id !== completedItem.id,
       ),
