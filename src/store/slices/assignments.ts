@@ -5,6 +5,7 @@ import { Examples } from '../../models';
 import {
   AssignmentsData,
   CompletedAssignment,
+  StudentStat,
 } from '../../modules/student/models/index';
 
 export const STATE_KEY = 'assignments';
@@ -14,7 +15,7 @@ export type PodcastState = {
   openAssignment: any;
   openAssignmentExamples: Examples[];
   openAssignmentsIds: number[];
-  studentStat: undefined;
+  studentStat: StudentStat[];
   completedAssignments: CompletedAssignment[];
   status: 'idle' | 'loading' | 'failed' | 'success';
 };
@@ -23,7 +24,7 @@ export const initialState: PodcastState = {
   openAssignment: [],
   openAssignmentExamples: [],
   openAssignmentsIds: [],
-  studentStat: undefined,
+  studentStat: [],
   completedAssignments: [],
   status: 'idle',
 };
@@ -47,7 +48,7 @@ export const fetchAssignments = createAsyncThunk(
 
 export const fetchAssignment = createAsyncThunk(
   'assignments/fetchAssignment',
-  async (id: number) => {
+  async (id: string) => {
     try {
       const res = await fetch(`${AppConfig.apiUrl}/api/assignments/${id}`);
 

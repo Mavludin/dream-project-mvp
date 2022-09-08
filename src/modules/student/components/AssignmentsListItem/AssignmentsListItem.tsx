@@ -1,20 +1,22 @@
 import { BarChartOutlined, StockOutlined } from '@ant-design/icons';
 import { List } from 'antd';
-import React, { useMemo } from 'react';
-import { AssignmentsData, StudentStat } from '../../models';
+import { useMemo } from 'react';
+import { useAppSelector } from '../../../../store';
+import { selectAssignmentsData } from '../../../../store/slices/assignments';
+import { AssignmentsData } from '../../models';
 import { IconText } from '../IconText';
 import styles from './AssignmentsListItem.module.css';
 
 type Props = {
-  studentStat?: StudentStat;
   item: AssignmentsData;
   index: number;
 };
 
-export const AssignmentsListItem = ({ studentStat, item, index }: Props) => {
+export const AssignmentsListItem = ({ item, index }: Props) => {
+  const { completedAssignments } = useAppSelector(selectAssignmentsData);
   const currentStudentData = useMemo(
-    () => studentStat?.completedAssignments.find((stat) => item.id === stat.id),
-    [item.id, studentStat?.completedAssignments],
+    () => completedAssignments.find((stat) => item.id === stat.id),
+    [item.id, completedAssignments],
   );
   const mark = currentStudentData ? `${currentStudentData.score}%` : '--';
   const borderColor =

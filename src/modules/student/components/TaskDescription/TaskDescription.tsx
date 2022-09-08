@@ -17,8 +17,9 @@ export const TaskDescription = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchAssignment(Number(asgmtId)));
-  }, [dispatch]);
+    if (!asgmtId) return;
+    dispatch(fetchAssignment(asgmtId));
+  }, [dispatch, asgmtId]);
 
   return (
     <div className={styles.descriptionWrapper}>
