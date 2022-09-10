@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { Header } from './components/Header/Header';
 import { getHomeRouteByUserType } from './helpers/getHomeRouteByUserType';
@@ -9,8 +9,11 @@ import { TaskView } from './modules/student/views/TaskView';
 import { StudentLessons } from './modules/studentLessons/views/StudentLessons';
 import { TeacherAssignmentsView } from './modules/teacher/views/TeacherAssignmentsView';
 import { TeacherLessons } from './modules/teacherLessons/views/TeacherLessons';
-import { useAppSelector } from './store';
-import { selectAssignmentsData } from './store/slices/assignments';
+import { useAppDispatch, useAppSelector } from './store';
+import {
+  fetchAssignments,
+  selectAssignmentsData,
+} from './store/slices/assignments';
 import { selectIsLoggedIn, selectUserType } from './store/slices/auth';
 
 const TEACHER_ROUTES = ['/teacher/assignments', '/teacher/lessons'];
@@ -28,6 +31,12 @@ export const AppRoutes = () => {
   ) : (
     <AuthView />
   );
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchAssignments());
+  }, [dispatch]);
 
   const studentIdsRoutes = assignmentsData.map(
     (student) => `/student/assignments/${student.id}`,
