@@ -10,6 +10,7 @@ import { StudentLessons } from './modules/studentLessons/views/StudentLessons';
 import { TeacherAssignmentsView } from './modules/teacher/views/TeacherAssignmentsView';
 import { TeacherLessons } from './modules/teacherLessons/views/TeacherLessons';
 import { useAppSelector } from './store';
+import { selectAssignmentsData } from './store/slices/assignments';
 import { selectIsLoggedIn, selectUserType } from './store/slices/auth';
 
 const TEACHER_ROUTES = ['/teacher/assignments', '/teacher/lessons'];
@@ -18,6 +19,7 @@ const STUDENT_ROUTES = ['/student/assignments', '/student/lessons'];
 export const AppRoutes = () => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const userType = useAppSelector(selectUserType);
+  const { assignmentsData } = useAppSelector(selectAssignmentsData);
 
   const location = useLocation();
 
@@ -27,6 +29,10 @@ export const AppRoutes = () => {
     <AuthView />
   );
 
+  const studentIdsRoutes = assignmentsData.map(
+    (student) => `/student/assignments/${student.id}`,
+  );
+
   const isTeacherRoute = useMemo(
     () => TEACHER_ROUTES.some((route) => location.pathname === route),
     [location.pathname],
@@ -34,6 +40,10 @@ export const AppRoutes = () => {
   const isStudentRoute = useMemo(
     () => STUDENT_ROUTES.some((route) => location.pathname === route),
     [location.pathname],
+  );
+  const isStudentIdsRoute = useMemo(
+    () => studentIdsRoutes.some((route) => location.pathname === route),
+    [location.pathname, studentIdsRoutes],
   );
 
   return (
@@ -52,10 +62,12 @@ export const AppRoutes = () => {
               path="/student/assignments"
               element={<StudentAssignmentsView />}
             />
-            <Route
-              path="/student/assignments/:asgmtId"
-              element={<TaskView />}
-            />
+            {isStudentIdsRoute && (
+              <Route
+                path="/student/assignments/:asgmtId"
+                element={<TaskView />}
+              />
+            )}
             <Route path="/student/lessons" element={<StudentLessons />} />
           </>
         )}
