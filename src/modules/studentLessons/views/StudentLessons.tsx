@@ -14,6 +14,8 @@ import { StudentLessonsItem } from '../components/StudentLessonsItem/StudentLess
 import s from './StudentLessons.module.css';
 
 export const StudentLessons = () => {
+  const dispatch = useAppDispatch();
+
   const [openLessons, setOpenLessons] = useState<LessonItem[]>([]);
   const lessons = useAppSelector(selectLessons);
   const [filteredData, setFilteredData] = useState<LessonItem[]>([]);
@@ -21,8 +23,6 @@ export const StudentLessons = () => {
   const finalData = filteredData.length ? filteredData : openLessons;
 
   const openLessonsIds = useAppSelector(selectOpenLessonsIds);
-
-  const dispatch = useAppDispatch();
 
   const [fetchLessons] = lessonsGraphqlApi.useLazyFetchLessonsQuery();
 

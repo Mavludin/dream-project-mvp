@@ -9,6 +9,8 @@ import s from './AuthView.module.css';
 import AppConfig from '../../../config/AppConfig';
 
 export const AuthView = () => {
+  const dispatch = useAppDispatch();
+
   const usersType = useAppSelector(selectUserType);
 
   const [userRadioType, setUserRadioType] = useState<UserTypes>(usersType);
@@ -16,6 +18,8 @@ export const AuthView = () => {
 
   const [loginValue, setLoginValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
+
+  const [users, setUsers] = useState<UsersData[]>([]);
 
   const handleRememberedChange = (e: CheckboxChangeEvent) => {
     setIsRemembered(e.target.checked);
@@ -25,15 +29,11 @@ export const AuthView = () => {
     setUserRadioType(e.target.value);
   };
 
-  const [users, setUsers] = useState<UsersData[]>([]);
-
   useEffect(() => {
     fetch(`${AppConfig.apiUrl}/api/users/`)
       .then((res) => res.json())
       .then(({ data }) => setUsers(data));
   }, []);
-
-  const dispatch = useAppDispatch();
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

@@ -11,15 +11,14 @@ import { TeacherLessonsItem } from '../components/TeacherLessonsItem';
 import s from './TeacherLessons.module.css';
 
 export const TeacherLessons = () => {
+  const dispatch = useAppDispatch();
+
   const lessons = useAppSelector(selectLessons);
 
   const [fetchLessons] = lessonsGraphqlApi.useLazyFetchLessonsQuery();
 
-  const dispatch = useAppDispatch();
-
   useEffect(() => {
     if (lessons.length) return;
-
     fetchLessons();
   }, [fetchLessons, lessons.length]);
 

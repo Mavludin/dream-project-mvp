@@ -9,12 +9,13 @@ import {
 } from '../../../../store/slices/assignments';
 
 export const TaskDescription = () => {
-  const { asgmtId } = useParams();
+  const dispatch = useAppDispatch();
+
   const { openAssignment, openAssignmentExamples } = useAppSelector(
     selectAssignmentsData,
   );
 
-  const dispatch = useAppDispatch();
+  const { asgmtId } = useParams();
 
   useEffect(() => {
     if (!asgmtId) return;
