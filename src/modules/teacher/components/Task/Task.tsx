@@ -20,6 +20,8 @@ type Props = {
 };
 
 export const Task = ({ item, index, openAssignmentsIds }: Props) => {
+  const dispatch = useAppDispatch();
+
   const [isViewTask, setIsViewTask] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -27,8 +29,6 @@ export const Task = ({ item, index, openAssignmentsIds }: Props) => {
     () => openAssignmentsIds.some((id) => id === item.id),
     [openAssignmentsIds, item],
   );
-
-  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (isMatchIds) {
@@ -50,6 +50,7 @@ export const Task = ({ item, index, openAssignmentsIds }: Props) => {
       });
     }
   };
+
   return (
     <Spin tip="Loading..." spinning={isLoading}>
       <List.Item className={s.item} key={item.id}>

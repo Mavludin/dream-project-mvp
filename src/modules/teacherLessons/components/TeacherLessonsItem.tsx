@@ -21,11 +21,12 @@ type Props = {
 };
 
 export const TeacherLessonsItem = ({ item }: Props) => {
+  const dispatch = useAppDispatch();
+
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const openLessonsIds = useAppSelector(selectOpenLessonsIds);
 
-  const dispatch = useAppDispatch();
+  const openLessonsIds = useAppSelector(selectOpenLessonsIds);
 
   const isMatchIds = useMemo(
     () => openLessonsIds.some((id) => id === item.sys.id),
@@ -52,6 +53,7 @@ export const TeacherLessonsItem = ({ item }: Props) => {
       });
     }
   };
+
   return (
     <Spin tip="Loading..." spinning={isLoading}>
       <List.Item>

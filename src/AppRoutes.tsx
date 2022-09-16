@@ -20,6 +20,8 @@ const TEACHER_ROUTES = ['/teacher/assignments', '/teacher/lessons'];
 const STUDENT_ROUTES = ['/student/assignments', '/student/lessons'];
 
 export const AppRoutes = () => {
+  const dispatch = useAppDispatch();
+
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const userType = useAppSelector(selectUserType);
   const { assignmentsData } = useAppSelector(selectAssignmentsData);
@@ -31,12 +33,6 @@ export const AppRoutes = () => {
   ) : (
     <AuthView />
   );
-
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(fetchAssignments());
-  }, [dispatch]);
 
   const studentIdsRoutes = assignmentsData.map(
     (student) => `/student/assignments/${student.id}`,
@@ -54,6 +50,10 @@ export const AppRoutes = () => {
     () => studentIdsRoutes.some((route) => location.pathname === route),
     [location.pathname, studentIdsRoutes],
   );
+
+  useEffect(() => {
+    dispatch(fetchAssignments());
+  }, [dispatch]);
 
   return (
     <>

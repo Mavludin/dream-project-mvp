@@ -7,25 +7,20 @@ import { AssignmentsListItem } from '../components/AssignmentsListItem/Assignmen
 import { useAppDispatch, useAppSelector } from '../../../store';
 import { selectStudentId } from '../../../store/slices/userData';
 import {
-  fetchAssignments,
   fetchStudentStat,
   selectAssignmentsData,
 } from '../../../store/slices/assignments';
 
 export const StudentAssignmentsView = () => {
+  const dispatch = useAppDispatch();
+
   const { assignmentsData } = useAppSelector(selectAssignmentsData);
 
   const [filteredData, setFilteredData] = useState(assignmentsData);
 
-  const finalData = filteredData.length ? filteredData : assignmentsData;
-
   const studentId = useAppSelector(selectStudentId);
 
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(fetchAssignments());
-  }, [dispatch]);
+  const finalData = filteredData.length ? filteredData : assignmentsData;
 
   useEffect(() => {
     if (!studentId) return;
