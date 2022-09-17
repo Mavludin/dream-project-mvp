@@ -7,11 +7,12 @@ import {
   fetchAssignment,
   selectAssignmentsData,
 } from '../../../../store/slices/assignments';
+import { TaskDescriptionPreloader } from './TaskDescriptionPreloader';
 
 export const TaskDescription = () => {
   const dispatch = useAppDispatch();
 
-  const { openAssignment, openAssignmentExamples } = useAppSelector(
+  const { openAssignment, openAssignmentExamples, isLoading } = useAppSelector(
     selectAssignmentsData,
   );
 
@@ -30,25 +31,29 @@ export const TaskDescription = () => {
           назад
         </Link>
       </div>
-      <div className={styles.text}>
-        <h2 className={styles.title}>{openAssignment?.name}</h2>
-        <div className={styles.description}>{openAssignment?.description}</div>
-        <div className={styles.testsWrapper}>
-          <div className={styles.testsName}>Тесты</div>
-          <div className={styles.tests}>
-            {openAssignmentExamples.map((elem) => (
-              <div className={styles.test} key={elem.input + elem.output}>
-                <div className={styles.input}>
-                  <span>Input:</span> {elem.input}
+      <TaskDescriptionPreloader isLoading={isLoading}>
+        <div className={styles.text}>
+          <h2 className={styles.title}>{openAssignment?.name}</h2>
+          <div className={styles.description}>
+            {openAssignment?.description}
+          </div>
+          <div className={styles.testsWrapper}>
+            <div className={styles.testsName}>Тесты</div>
+            <div className={styles.tests}>
+              {openAssignmentExamples.map((elem) => (
+                <div className={styles.test} key={elem.input + elem.output}>
+                  <div className={styles.input}>
+                    <span>Input:</span> {elem.input}
+                  </div>
+                  <div className={styles.output}>
+                    <span>Output:</span> {elem.output}
+                  </div>
                 </div>
-                <div className={styles.output}>
-                  <span>Output:</span> {elem.output}
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      </TaskDescriptionPreloader>
     </div>
   );
 };
