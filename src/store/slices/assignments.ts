@@ -17,6 +17,7 @@ export type PodcastState = {
   openAssignmentsIds: number[];
   studentStat: StudentStat[];
   completedAssignments: CompletedAssignment[];
+  isLoading: boolean;
   status: 'idle' | 'loading' | 'failed' | 'success';
 };
 export const initialState: PodcastState = {
@@ -26,6 +27,7 @@ export const initialState: PodcastState = {
   openAssignmentsIds: [],
   studentStat: [],
   completedAssignments: [],
+  isLoading: false,
   status: 'idle',
 };
 
@@ -164,14 +166,17 @@ export const assignmentsSlice = createSlice({
         state.status = 'failed';
       })
       .addCase(fetchAssignment.pending, (state) => {
+        state.isLoading = true;
         state.status = 'loading';
       })
       .addCase(fetchAssignment.fulfilled, (state, action) => {
         state.openAssignment = action.payload;
         state.openAssignmentExamples = action.payload.examples;
+        state.isLoading = false;
         state.status = 'success';
       })
       .addCase(fetchAssignment.rejected, (state) => {
+        state.isLoading = false;
         state.status = 'failed';
       })
       .addCase(fetchOpenAssignmentsIds.pending, (state) => {

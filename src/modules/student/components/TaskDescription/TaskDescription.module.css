@@ -1,7 +1,7 @@
 .descriptionWrapper {
   width: 50%;
-  background-color: #0F2940;
-  color: #EEF0F2;
+  background-color: #0f2940;
+  color: #eef0f2;
 }
 
 .title,
@@ -19,7 +19,12 @@
 
 .title {
   font-size: 20px;
-  color: #EEF0F2;
+  color: #eef0f2;
+}
+
+.title > div > ul > li,
+.title > div > h3 {
+  background-color: #173a59 !important;
 }
 
 .description {
@@ -31,7 +36,7 @@
 }
 
 .test {
-  background: #173A59;
+  background: #173a59;
   border-radius: 2px;
   width: 490px;
   height: 70px;
@@ -39,6 +44,14 @@
   flex-direction: column;
   justify-content: center;
   gap: 6px;
+}
+
+.test > ul,
+.test ul > li {
+  background-color: #173a59 !important;
+  height: 14px !important;
+  margin-top: 10px !important;
+  width: 33% !important;
 }
 
 .testsName {
@@ -53,6 +66,7 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  align-items: flex-start;
 }
 
 .arrow {
@@ -65,17 +79,19 @@
   font-size: 10px;
   line-height: 12px;
   letter-spacing: 0.1em;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .arrow img {
   margin-right: 5px;
 }
 
-.input, .output {
+.input,
+.output {
   font-weight: 400;
 }
 
-.input span, .output span {
+.input span,
+.output span {
   font-weight: 600;
 }
