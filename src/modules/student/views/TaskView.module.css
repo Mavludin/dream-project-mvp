@@ -20,10 +20,3 @@
 .horizontal {
   height: 3px;
 }
-
-.spin {
-  background: #173a59 !important;
-}
-.spin > div::after {
-  opacity: 0 !important;
-}
