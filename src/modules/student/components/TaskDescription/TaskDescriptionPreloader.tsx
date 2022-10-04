@@ -6,7 +6,7 @@ type Props = {
   children: JSX.Element;
 };
 export const TaskDescriptionPreloader = ({ isLoading, children }: Props) => {
-  if (isLoading)
+  if (isLoading) {
     return (
       <div className={styles.text}>
         <Skeleton
@@ -33,5 +33,6 @@ export const TaskDescriptionPreloader = ({ isLoading, children }: Props) => {
         </div>
       </div>
     );
+  }
   return children;
 };
