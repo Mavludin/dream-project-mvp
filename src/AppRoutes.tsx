@@ -8,6 +8,7 @@ import { StudentAssignmentsView } from './modules/student/views/StudentAssignmen
 import { TaskView } from './modules/student/views/TaskView';
 import { StudentLessons } from './modules/studentLessons/views/StudentLessons';
 import { TeacherAssignmentsView } from './modules/teacher/views/TeacherAssignmentsView';
+import { LessonsView } from './modules/teacherLessons/views/LessonsView';
 import { TeacherLessons } from './modules/teacherLessons/views/TeacherLessons';
 import { useAppDispatch, useAppSelector } from './store';
 import {
@@ -15,6 +16,7 @@ import {
   selectAssignmentsData,
 } from './store/slices/assignments';
 import { selectIsLoggedIn, selectUserType } from './store/slices/auth';
+import { selectLessons } from './store/slices/lessons';
 
 const TEACHER_ROUTES = ['/teacher/assignments', '/teacher/lessons'];
 const STUDENT_ROUTES = ['/student/assignments', '/student/lessons'];
@@ -25,6 +27,7 @@ export const AppRoutes = () => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const userType = useAppSelector(selectUserType);
   const { assignmentsData } = useAppSelector(selectAssignmentsData);
+  const lessons = useAppSelector(selectLessons);
 
   const location = useLocation();
 
@@ -32,6 +35,10 @@ export const AppRoutes = () => {
     <Navigate to={`/${userType}/assignments`} />
   ) : (
     <AuthView />
+  );
+
+  const teacherIdsRoutes = lessons.map(
+    (item) => `/teacher/lessons/${item.type}`,
   );
 
   const studentIdsRoutes = assignmentsData.map(
@@ -50,6 +57,10 @@ export const AppRoutes = () => {
     () => studentIdsRoutes.some((route) => location.pathname === route),
     [location.pathname, studentIdsRoutes],
   );
+  const isTeacherIdsRoute = useMemo(
+    () => teacherIdsRoutes.some((route) => location.pathname === route),
+    [location.pathname, teacherIdsRoutes],
+  );
 
   useEffect(() => {
     dispatch(fetchAssignments());
@@ -58,7 +69,7 @@ export const AppRoutes = () => {
   return (
     <>
       {(userType === 'student' || userType === 'teacher') &&
-        (isStudentRoute || isTeacherRoute) && <Header />}
+        (isStudentRoute || isTeacherRoute || isTeacherIdsRoute) && <Header />}
       <Routes>
         <Route
           path="/"
@@ -87,6 +98,12 @@ export const AppRoutes = () => {
               element={<TeacherAssignmentsView />}
             />
             <Route path="/teacher/lessons" element={<TeacherLessons />} />
+            {isTeacherIdsRoute && (
+              <Route
+                path="/teacher/lessons/:lsnType"
+                element={<LessonsView />}
+              />
+            )}
           </>
         )}
         {(isTeacherRoute || isStudentRoute) && (
