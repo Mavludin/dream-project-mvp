@@ -69,7 +69,7 @@ export type LessonItem = {
   sys: GraphqlSysData;
   title: string;
   type: string;
-  description: { json: Document } | null;
+  description: { json: Document };
   shortDescription: string;
 };
 

@@ -6,6 +6,7 @@ import {
 import { Card, List, Spin } from 'antd';
 import { useEffect, useMemo, useState } from 'react';
 import Meta from 'antd/lib/card/Meta';
+import { Link } from 'react-router-dom';
 import { LessonItem } from '../../../models';
 import s from './TeacherLessonsItem.module.css';
 import { getLessonImageByType } from '../../../helpers/getLessonImageByType';
@@ -81,10 +82,12 @@ export const TeacherLessonsItem = ({ item }: Props) => {
             <EllipsisOutlined style={{ fontSize: '24px' }} key="ellipsis" />,
           ]}
         >
-          <div className={s.info}>
-            <img src={getLessonImageByType(item.type)} alt="lesson icon" />
-            <Meta title={item.title} description={item.shortDescription} />
-          </div>
+          <Link to={`/teacher/lessons/${item.type}`}>
+            <div className={s.info}>
+              <img src={getLessonImageByType(item.type)} alt="lesson icon" />
+              <Meta title={item.title} description={item.shortDescription} />
+            </div>
+          </Link>
         </Card>
       </List.Item>
     </Spin>
