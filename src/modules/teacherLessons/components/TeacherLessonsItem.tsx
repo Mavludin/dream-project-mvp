@@ -82,11 +82,9 @@ export const TeacherLessonsItem = ({ item }: Props) => {
             <EllipsisOutlined style={{ fontSize: '24px' }} key="ellipsis" />,
           ]}
         >
-          <Link to={`/teacher/lessons/${item.type}`}>
-            <div className={s.info}>
-              <img src={getLessonImageByType(item.type)} alt="lesson icon" />
-              <Meta title={item.title} description={item.shortDescription} />
-            </div>
+          <Link className={s.info} to={`/teacher/lessons/${item.sys.id}`}>
+            <img src={getLessonImageByType(item.type)} alt="lesson icon" />
+            <Meta title={item.title} description={item.shortDescription} />
           </Link>
         </Card>
       </List.Item>

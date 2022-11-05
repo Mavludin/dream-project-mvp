@@ -1,10 +1,9 @@
 import { List } from 'antd';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../store';
-import { lessonsGraphqlApi } from '../../../store/api/lessonsApi';
 import {
   fetchOpenLessonsIds,
-  selectLessons,
+  selectLessonsCollection,
 } from '../../../store/slices/lessons';
 import { TeacherLessonsFilters } from '../components/TeacherLessonsFilters';
 import { TeacherLessonsItem } from '../components/TeacherLessonsItem';
@@ -13,14 +12,7 @@ import s from './TeacherLessons.module.css';
 export const TeacherLessons = () => {
   const dispatch = useAppDispatch();
 
-  const lessons = useAppSelector(selectLessons);
-
-  const [fetchLessons] = lessonsGraphqlApi.useLazyFetchLessonsQuery();
-
-  useEffect(() => {
-    if (lessons.length) return;
-    fetchLessons();
-  }, [fetchLessons, lessons.length]);
+  const lessonsCollection = useAppSelector(selectLessonsCollection);
 
   useEffect(() => {
     dispatch(fetchOpenLessonsIds());
@@ -41,7 +33,7 @@ export const TeacherLessons = () => {
           gutter: 75,
           column: 3,
         }}
-        dataSource={lessons}
+        dataSource={lessonsCollection}
         renderItem={(item) => <TeacherLessonsItem item={item} />}
       />
     </div>

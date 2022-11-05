@@ -2,11 +2,10 @@ import { List } from 'antd';
 import { useEffect, useState } from 'react';
 import { LessonItem } from '../../../models';
 import { useAppDispatch, useAppSelector } from '../../../store';
-import { lessonsGraphqlApi } from '../../../store/api/lessonsApi';
 import {
   fetchOpenLessonsIds,
   fetchReadLessonsIds,
-  selectLessons,
+  selectLessonsCollection,
   selectOpenLessonsIds,
 } from '../../../store/slices/lessons';
 import { StudentLessonsFilters } from '../components/StudentLessonsFilters/StudentLessonsFilters';
@@ -17,20 +16,12 @@ export const StudentLessons = () => {
   const dispatch = useAppDispatch();
 
   const [openLessons, setOpenLessons] = useState<LessonItem[]>([]);
-  const lessons = useAppSelector(selectLessons);
+  const lessonsCollection = useAppSelector(selectLessonsCollection);
   const [filteredData, setFilteredData] = useState<LessonItem[]>([]);
 
   const finalData = filteredData.length ? filteredData : openLessons;
 
   const openLessonsIds = useAppSelector(selectOpenLessonsIds);
-
-  const [fetchLessons] = lessonsGraphqlApi.useLazyFetchLessonsQuery();
-
-  useEffect(() => {
-    if (lessons.length) return;
-
-    fetchLessons();
-  }, [fetchLessons, lessons]);
 
   useEffect(() => {
     dispatch(fetchOpenLessonsIds());
@@ -39,9 +30,11 @@ export const StudentLessons = () => {
 
   useEffect(() => {
     setOpenLessons(
-      lessons.filter((item) => openLessonsIds.some((id) => id === item.sys.id)),
+      lessonsCollection.filter((item) =>
+        openLessonsIds.some((id) => id === item.sys.id),
+      ),
     );
-  }, [lessons, openLessonsIds]);
+  }, [lessonsCollection, openLessonsIds]);
 
   return (
     <div className={s.lessons}>
