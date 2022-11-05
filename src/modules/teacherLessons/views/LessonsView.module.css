@@ -1,27 +1,43 @@
 .lesson {
   max-width: 1050px;
   margin: 80px auto;
-  font-size: 15px;
 }
-.title {
-  text-transform: uppercase;
+.lesson h1 {
+  font-weight: 700;
+  font-size: 35px;
+  line-height: 39px;
   text-align: center;
+  margin-bottom: 26px;
 }
-.text {
-  min-height: 600px;
-}
-.text h1,
-.text h2 {
-  text-align: center;
+.lesson p {
+  font-size: 16px;
+  line-height: 24px;
 }
 
-.text code {
-  text-align: center;
+.lesson p code {
+  background: #f3f4f6;
+  color: #05477d;
   white-space: pre;
 }
-.button {
-  width: 110px;
-  border-radius: 0;
-  margin: 20px 0 60px 0;
-  background-color: #1c86ca;
+
+.btn {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn button {
+  outline: none;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 18px;
+  letter-spacing: 0.1em;
+  height: 40px;
+
+  margin: 20px 0;
+}
+.nav {
+  background: #1c86ca;
+  color: #ffffff;
+  border: none;
+  width: 120px;
 }

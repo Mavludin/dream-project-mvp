@@ -11,12 +11,13 @@ import { TeacherAssignmentsView } from './modules/teacher/views/TeacherAssignmen
 import { LessonsView } from './modules/teacherLessons/views/LessonsView';
 import { TeacherLessons } from './modules/teacherLessons/views/TeacherLessons';
 import { useAppDispatch, useAppSelector } from './store';
+import { lessonsGraphqlApi } from './store/api/lessonsApi';
 import {
   fetchAssignments,
   selectAssignmentsData,
 } from './store/slices/assignments';
 import { selectIsLoggedIn, selectUserType } from './store/slices/auth';
-import { selectLessons } from './store/slices/lessons';
+import { selectLessonsCollection } from './store/slices/lessons';
 
 const TEACHER_ROUTES = ['/teacher/assignments', '/teacher/lessons'];
 const STUDENT_ROUTES = ['/student/assignments', '/student/lessons'];
@@ -27,9 +28,17 @@ export const AppRoutes = () => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const userType = useAppSelector(selectUserType);
   const { assignmentsData } = useAppSelector(selectAssignmentsData);
-  const lessons = useAppSelector(selectLessons);
+  const lessonsCollection = useAppSelector(selectLessonsCollection);
 
   const location = useLocation();
+
+  const [fetchLessonsCollection] =
+    lessonsGraphqlApi.useLazyFetchLessonsCollectionQuery();
+  useEffect(() => {
+    if (lessonsCollection.length) return;
+
+    fetchLessonsCollection();
+  }, [fetchLessonsCollection, lessonsCollection]);
 
   const AUTH_ROUTE = isLoggedIn ? (
     <Navigate to={`/${userType}/assignments`} />
@@ -37,8 +46,8 @@ export const AppRoutes = () => {
     <AuthView />
   );
 
-  const teacherIdsRoutes = lessons.map(
-    (item) => `/teacher/lessons/${item.type}`,
+  const teacherIdsRoutes = lessonsCollection.map(
+    (item) => `/teacher/lessons/${item.sys.id}`,
   );
 
   const studentIdsRoutes = assignmentsData.map(
@@ -100,7 +109,7 @@ export const AppRoutes = () => {
             <Route path="/teacher/lessons" element={<TeacherLessons />} />
             {isTeacherIdsRoute && (
               <Route
-                path="/teacher/lessons/:lsnType"
+                path="/teacher/lessons/:lessonId"
                 element={<LessonsView />}
               />
             )}

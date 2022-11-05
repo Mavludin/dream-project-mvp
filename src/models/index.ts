@@ -77,3 +77,8 @@ export type FetchLessonsCollectionRequest = void;
 export type FetchLessonsCollectionResponse = {
   items: LessonItem[];
 };
+
+export type FetchLessonRequest = {
+  lessonId: string;
+};
+export type FetchLessonResponse = LessonItem;
