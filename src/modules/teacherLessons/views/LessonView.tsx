@@ -5,9 +5,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useAppSelector } from '../../../store';
 import { lessonsGraphqlApi } from '../../../store/api/lessonsApi';
 import { selectLessons } from '../../../store/slices/lessons';
-import s from './LessonsView.module.css';
+import s from './LessonView.module.css';
 
-export const LessonsView = () => {
+export const LessonView = () => {
   const lesson = useAppSelector(selectLessons);
 
   const { lessonId } = useParams();

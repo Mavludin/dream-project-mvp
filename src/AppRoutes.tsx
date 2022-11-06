@@ -8,7 +8,7 @@ import { StudentAssignmentsView } from './modules/student/views/StudentAssignmen
 import { TaskView } from './modules/student/views/TaskView';
 import { StudentLessons } from './modules/studentLessons/views/StudentLessons';
 import { TeacherAssignmentsView } from './modules/teacher/views/TeacherAssignmentsView';
-import { LessonsView } from './modules/teacherLessons/views/LessonsView';
+import { LessonView } from './modules/teacherLessons/views/LessonView';
 import { TeacherLessons } from './modules/teacherLessons/views/TeacherLessons';
 import { useAppDispatch, useAppSelector } from './store';
 import { lessonsGraphqlApi } from './store/api/lessonsApi';
@@ -110,7 +110,7 @@ export const AppRoutes = () => {
             {isTeacherIdsRoute && (
               <Route
                 path="/teacher/lessons/:lessonId"
-                element={<LessonsView />}
+                element={<LessonView />}
               />
             )}
           </>
