@@ -15,17 +15,17 @@ export const LessonView = () => {
   const [fetchLesson] = lessonsGraphqlApi.useLazyFetchLessonsQuery();
 
   useEffect(() => {
-    if (!lessonId || lessonId === lesson?.sys?.id) return;
+    if (!lessonId) return;
 
     fetchLesson({ lessonId });
-  }, [fetchLesson, lesson, lessonId]);
+  }, [fetchLesson, lessonId]);
 
   const history = useNavigate();
   const goBack = () => history(-1);
 
   if (!lesson) return null;
   return (
-    <div className={s.lesson}>
+    <div className={s.lessonView}>
       {documentToReactComponents(lesson?.description?.json)}
       <div className={s.btn}>
         <Button className={s.nav} type="primary" onClick={goBack}>

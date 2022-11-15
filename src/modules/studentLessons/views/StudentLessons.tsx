@@ -2,10 +2,8 @@ import { List } from 'antd';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { LessonItem } from '../../../models';
-import { useAppDispatch, useAppSelector } from '../../../store';
+import { useAppSelector } from '../../../store';
 import {
-  fetchOpenLessonsIds,
-  fetchReadLessonsIds,
   selectLessonsCollection,
   selectOpenLessonsIds,
 } from '../../../store/slices/lessons';
@@ -14,8 +12,6 @@ import { StudentLessonsItem } from '../components/StudentLessonsItem/StudentLess
 import s from './StudentLessons.module.css';
 
 export const StudentLessons = () => {
-  const dispatch = useAppDispatch();
-
   const [openLessons, setOpenLessons] = useState<LessonItem[]>([]);
   const lessonsCollection = useAppSelector(selectLessonsCollection);
   const [filteredData, setFilteredData] = useState<LessonItem[]>([]);
@@ -23,11 +19,6 @@ export const StudentLessons = () => {
   const finalData = filteredData.length ? filteredData : openLessons;
 
   const openLessonsIds = useAppSelector(selectOpenLessonsIds);
-
-  useEffect(() => {
-    dispatch(fetchOpenLessonsIds());
-    dispatch(fetchReadLessonsIds());
-  }, [dispatch]);
 
   useEffect(() => {
     setOpenLessons(

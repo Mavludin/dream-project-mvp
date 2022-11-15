@@ -1,43 +1,70 @@
-.lesson {
+.lessonView {
   max-width: 1050px;
-  margin: 80px auto;
+  margin: 0 auto;
+  margin-top: 75px;
 }
-.lesson h1 {
+
+.lessonView h1 {
   font-weight: 700;
-  font-size: 35px;
+  font-size: 32px;
   line-height: 39px;
   text-align: center;
   margin-bottom: 26px;
 }
-.lesson p {
+
+.lessonView p {
+  font-weight: 500;
   font-size: 16px;
   line-height: 24px;
 }
 
-.lesson p code {
+.lessonView p code {
   background: #f3f4f6;
   color: #05477d;
+
   white-space: pre;
 }
 
 .btn {
   display: flex;
   justify-content: space-between;
+  margin-top: 70px;
+
+  padding-bottom: 20px;
 }
 
 .btn button {
   outline: none;
+  height: 40px;
   font-weight: 700;
   font-size: 15px;
   line-height: 18px;
   letter-spacing: 0.1em;
-  height: 40px;
-
-  margin: 20px 0;
 }
+
 .nav {
   background: #1c86ca;
   color: #ffffff;
-  border: none;
+  border: 1px solid transparent;
   width: 120px;
+  text-align: center;
+}
+.nav:hover {
+  border: 1px solid transparent;
+  color: white;
+  background-color: #1773ac;
+  transition: 0.15s linear;
+}
+
+.read {
+  background: #ffffff;
+  border: 1px solid #1c86ca;
+  color: #1c86ca;
+  width: 150px;
+}
+.readUp {
+  background: #1773ac !important;
+  color: white !important;
+  border: none;
+  width: 150px;
 }
