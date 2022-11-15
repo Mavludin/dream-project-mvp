@@ -18,7 +18,12 @@ import {
   selectAssignmentsData,
 } from './store/slices/assignments';
 import { selectIsLoggedIn, selectUserType } from './store/slices/auth';
-import { selectLessonsCollection } from './store/slices/lessons';
+import {
+  fetchOpenLessonsIds,
+  fetchReadLessonsIds,
+  selectLessonsCollection,
+  selectOpenLessonsIds,
+} from './store/slices/lessons';
 
 const TEACHER_ROUTES = ['/teacher/assignments', '/teacher/lessons'];
 const STUDENT_ROUTES = ['/student/assignments', '/student/lessons'];
@@ -30,6 +35,7 @@ export const AppRoutes = () => {
   const userType = useAppSelector(selectUserType);
   const { assignmentsData } = useAppSelector(selectAssignmentsData);
   const lessonsCollection = useAppSelector(selectLessonsCollection);
+  const openLessonsIds = useAppSelector(selectOpenLessonsIds);
 
   const location = useLocation();
 
@@ -47,9 +53,12 @@ export const AppRoutes = () => {
     <AuthView />
   );
 
-  const teacherIdsRoutes = lessonsCollection.map(
+  const teacherLessons = lessonsCollection.map(
     (item) => `/teacher/lessons/${item.sys.id}`,
   );
+  const studentLesson = lessonsCollection
+    .filter((item) => openLessonsIds.some((id) => id === item.sys.id))
+    .map((item) => `/student/lessons/${item.sys.id}`);
 
   const studentIdsRoutes = assignmentsData.map(
     (student) => `/student/assignments/${student.id}`,
@@ -67,10 +76,19 @@ export const AppRoutes = () => {
     () => studentIdsRoutes.some((route) => location.pathname === route),
     [location.pathname, studentIdsRoutes],
   );
-  const isTeacherIdsRoute = useMemo(
-    () => teacherIdsRoutes.some((route) => location.pathname === route),
-    [location.pathname, teacherIdsRoutes],
+  const isTeacherLessons = useMemo(
+    () => teacherLessons.some((route) => location.pathname === route),
+    [location.pathname, teacherLessons],
   );
+  const isStudentLessons = useMemo(
+    () => studentLesson.some((route) => location.pathname === route),
+    [location.pathname, studentLesson],
+  );
+
+  useEffect(() => {
+    dispatch(fetchOpenLessonsIds());
+    dispatch(fetchReadLessonsIds());
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(fetchAssignments());
@@ -79,7 +97,10 @@ export const AppRoutes = () => {
   return (
     <>
       {(userType === 'student' || userType === 'teacher') &&
-        (isStudentRoute || isTeacherRoute || isTeacherIdsRoute) && <Header />}
+        (isStudentRoute ||
+          isTeacherRoute ||
+          isTeacherLessons ||
+          isStudentLessons) && <Header />}
       <Routes>
         <Route
           path="/"
@@ -99,10 +120,12 @@ export const AppRoutes = () => {
               />
             )}
             <Route path="/student/lessons" element={<StudentLessons />} />
-            <Route
-              path="/student/lessons/:lessonId"
-              element={<StudentLessonView />}
-            />
+            {isStudentLessons && (
+              <Route
+                path="/student/lessons/:lessonId"
+                element={<StudentLessonView />}
+              />
+            )}
           </>
         )}
         {userType === 'teacher' && (
@@ -112,7 +135,7 @@ export const AppRoutes = () => {
               element={<TeacherAssignmentsView />}
             />
             <Route path="/teacher/lessons" element={<TeacherLessons />} />
-            {isTeacherIdsRoute && (
+            {isTeacherLessons && (
               <Route
                 path="/teacher/lessons/:lessonId"
                 element={<TeacherLessonView />}

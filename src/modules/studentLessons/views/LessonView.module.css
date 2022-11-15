@@ -19,36 +19,52 @@
 }
 
 .lessonView p code {
-  background: #F3F4F6;
-  color: rgba(5, 71, 125, 1);
+  background: #f3f4f6;
+  color: #05477d;
+
+  white-space: pre;
 }
 
 .btn {
   display: flex;
   justify-content: space-between;
   margin-top: 70px;
+
+  padding-bottom: 20px;
 }
 
 .btn button {
   outline: none;
+  height: 40px;
   font-weight: 700;
   font-size: 15px;
   line-height: 18px;
   letter-spacing: 0.1em;
-  height: 40px;
 }
 
 .nav {
-  background: #1C86CA;
-  color: #FFFFFF;
-  border: none;
+  background: #1c86ca;
+  color: #ffffff;
+  border: 1px solid transparent;
   width: 120px;
+  text-align: center;
+}
+.nav:hover {
+  border: 1px solid transparent;
+  color: white;
+  background-color: #1773ac;
+  transition: 0.15s linear;
 }
 
 .read {
-  background: #FFFFFF;
-  border: 1px solid #1C86CA;
-  color: #1C86CA;
+  background: #ffffff;
+  border: 1px solid #1c86ca;
+  color: #1c86ca;
   width: 150px;
 }
-
+.readUp {
+  background: #1773ac !important;
+  color: white !important;
+  border: none;
+  width: 150px;
+}
