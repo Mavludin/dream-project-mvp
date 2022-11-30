@@ -60,6 +60,31 @@ export const fetchReadLessonsIds = createAsyncThunk(
   },
 );
 
+export const createReadLessonId = createAsyncThunk(
+  'lessons/createReadLessonId',
+  async (id: string) => {
+    try {
+      const res = await fetch(`${AppConfig.apiUrl}/api/read-lessons`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ lessonId: id }),
+      });
+
+      if (res.ok) {
+        const { data } = await res.json();
+        return data;
+      }
+      return new Error('Ошибка при добавлении прочитанных материалов');
+    } catch (error) {
+      return new Error(
+        'Ошибка при добавлении прочитанных материалов (API хост некорректен)',
+      );
+    }
+  },
+);
+
 export const deleteOpenLessonId = createAsyncThunk(
   'lessons/deleteOpenLesson',
   async (id: string) => {
@@ -130,6 +155,14 @@ export const lessonsSlice = createSlice({
       .addCase(fetchReadLessonsIds.rejected, (state) => {
         state.status = 'failed';
       })
+      .addCase(createReadLessonId.fulfilled, (state, action) => {
+        state.readLessonsIds = action.payload;
+        state.status = 'success';
+      })
+      .addCase(createReadLessonId.rejected, (state) => {
+        state.status = 'failed';
+      })
+
       .addCase(deleteOpenLessonId.fulfilled, (state, action) => {
         state.openLessonsIds = state.openLessonsIds.filter(
           (id: string) => id !== action.payload,
