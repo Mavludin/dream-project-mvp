@@ -1,5 +1,5 @@
 import { Button } from 'antd';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { useAppDispatch, useAppSelector } from '../../../store';
@@ -15,8 +15,6 @@ import s from './LessonView.module.css';
 
 export const LessonView = () => {
   const dispatch = useAppDispatch();
-
-  const [isRead, setIsRead] = useState<boolean>(false);
 
   const lesson = useAppSelector(selectLessons);
   const lessonsCollection = useAppSelector(selectLessonsCollection);
@@ -37,22 +35,12 @@ export const LessonView = () => {
     .filter((item) => openLessonsIds.some((id) => id === item.sys.id))
     .map((item) => item.sys.id);
 
-  const isMatchIds = readLessonsIds.some((id) => id === lessonId);
+  const isMatchId = readLessonsIds.some((id) => id === lessonId);
 
-  useEffect(() => {
-    if (isMatchIds) {
-      setIsRead(true);
-    } else {
-      setIsRead(false);
-    }
-  }, [isMatchIds]);
-
-  const handleReadLesson = () => {
-    if (!lessonId || isRead) return;
-    dispatch(createReadLessonId(lessonId)).finally(() => {
-      setIsRead(true);
-    });
-  };
+  const handleReadLesson = useCallback(() => {
+    if (!lessonId || isMatchId) return;
+    dispatch(createReadLessonId(lessonId));
+  }, [lessonId, isMatchId, dispatch]);
 
   const index = studentLessonIds.findIndex((i) => i === lessonId);
 
@@ -70,7 +58,7 @@ export const LessonView = () => {
           <Link to={`/student/lessons/${prev}`}>Назад</Link>
         </Button>
         <Button
-          className={isRead ? s.readUp : s.read}
+          className={isMatchId ? s.readUp : s.read}
           onClick={handleReadLesson}
         >
           Прочитано
