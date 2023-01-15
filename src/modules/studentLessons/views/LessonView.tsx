@@ -6,9 +6,11 @@ import { useAppDispatch, useAppSelector } from '../../../store';
 import { lessonsGraphqlApi } from '../../../store/api/lessonsApi';
 import {
   createReadLessonId,
+  fetchOpenLessonsIds,
   fetchReadLessonsIds,
   selectLessons,
   selectLessonsCollection,
+  selectOpenLessonsIds,
   selectReadLessonsIds,
 } from '../../../store/slices/lessons';
 import s from './LessonView.module.css';
@@ -22,6 +24,7 @@ export const LessonView = () => {
   const lesson = useAppSelector(selectLessons);
   const lessonsCollection = useAppSelector(selectLessonsCollection);
   const readLessonsIds = useAppSelector(selectReadLessonsIds);
+  const openLessonsIds = useAppSelector(selectOpenLessonsIds);
 
   const [fetchLesson] = lessonsGraphqlApi.useLazyFetchLessonsQuery();
 
@@ -32,11 +35,15 @@ export const LessonView = () => {
     [studentLessonIds, lessonId],
   );
 
+  const filteredData = studentLessonIds.filter((studId) =>
+    openLessonsIds.some((id) => id === studId),
+  );
+
   const isMatchId = readLessonsIds.some((id) => id === lessonId);
 
-  const index = studentLessonIds.findIndex((i) => i === lessonId);
-  const prev = studentLessonIds[index - 1];
-  const next = studentLessonIds[index + 1];
+  const index = filteredData.findIndex((i) => i === lessonId);
+  const prev = filteredData[index - 1];
+  const next = filteredData[index + 1];
 
   const handleReadLesson = useCallback(() => {
     if (!lessonId || isMatchId) return;
@@ -56,9 +63,9 @@ export const LessonView = () => {
   }, [fetchLesson, lessonId]);
 
   useEffect(() => {
-    if (readLessonsIds.length) return;
+    dispatch(fetchOpenLessonsIds());
     dispatch(fetchReadLessonsIds());
-  }, [dispatch, readLessonsIds]);
+  }, [dispatch]);
 
   if (lessonsCollection.length && !isRouteExists) return <NoMatchView />;
   if (!lesson) return null;
@@ -77,10 +84,7 @@ export const LessonView = () => {
         >
           Прочитано
         </Button>
-        <Button
-          className={s.nav}
-          disabled={index === studentLessonIds.length - 1}
-        >
+        <Button className={s.nav} disabled={index === filteredData.length - 1}>
           <Link to={`/student/lessons/${next}`}>Вперед</Link>
         </Button>
       </div>
