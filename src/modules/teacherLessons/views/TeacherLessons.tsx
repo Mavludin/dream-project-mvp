@@ -1,6 +1,7 @@
 import { List } from 'antd';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../store';
+import { lessonsGraphqlApi } from '../../../store/api/lessonsApi';
 import {
   fetchOpenLessonsIds,
   selectLessonsCollection,
@@ -13,6 +14,14 @@ export const TeacherLessons = () => {
   const dispatch = useAppDispatch();
 
   const lessonsCollection = useAppSelector(selectLessonsCollection);
+
+  const [fetchLessonsCollection] =
+    lessonsGraphqlApi.useLazyFetchLessonsCollectionQuery();
+  useEffect(() => {
+    if (lessonsCollection.length) return;
+
+    fetchLessonsCollection();
+  }, [fetchLessonsCollection, lessonsCollection]);
 
   useEffect(() => {
     dispatch(fetchOpenLessonsIds());
