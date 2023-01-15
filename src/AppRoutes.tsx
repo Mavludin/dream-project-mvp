@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { Header } from './components/Header/Header';
 import { getHomeRouteByUserType } from './helpers/getHomeRouteByUserType';
@@ -11,57 +11,25 @@ import { StudentLessons } from './modules/studentLessons/views/StudentLessons';
 import { TeacherAssignmentsView } from './modules/teacher/views/TeacherAssignmentsView';
 import { LessonView as TeacherLessonView } from './modules/teacherLessons/views/LessonView';
 import { TeacherLessons } from './modules/teacherLessons/views/TeacherLessons';
-import { useAppDispatch, useAppSelector } from './store';
-import { lessonsGraphqlApi } from './store/api/lessonsApi';
-import {
-  fetchAssignments,
-  selectAssignmentsData,
-} from './store/slices/assignments';
+import { useAppSelector } from './store';
 import { selectIsLoggedIn, selectUserType } from './store/slices/auth';
-import {
-  fetchOpenLessonsIds,
-  fetchReadLessonsIds,
-  selectLessonsCollection,
-  selectOpenLessonsIds,
-} from './store/slices/lessons';
+import { selectLessonsCollection } from './store/slices/lessons';
 
 const TEACHER_ROUTES = ['/teacher/assignments', '/teacher/lessons'];
 const STUDENT_ROUTES = ['/student/assignments', '/student/lessons'];
 
 export const AppRoutes = () => {
-  const dispatch = useAppDispatch();
-
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const userType = useAppSelector(selectUserType);
-  const { assignmentsData } = useAppSelector(selectAssignmentsData);
+
   const lessonsCollection = useAppSelector(selectLessonsCollection);
-  const openLessonsIds = useAppSelector(selectOpenLessonsIds);
 
   const location = useLocation();
-
-  const [fetchLessonsCollection] =
-    lessonsGraphqlApi.useLazyFetchLessonsCollectionQuery();
-  useEffect(() => {
-    if (lessonsCollection.length) return;
-
-    fetchLessonsCollection();
-  }, [fetchLessonsCollection, lessonsCollection]);
 
   const AUTH_ROUTE = isLoggedIn ? (
     <Navigate to={`/${userType}/assignments`} />
   ) : (
     <AuthView />
-  );
-
-  const teacherLessons = lessonsCollection.map(
-    (item) => `/teacher/lessons/${item.sys.id}`,
-  );
-  const studentLesson = lessonsCollection
-    .filter((item) => openLessonsIds.some((id) => id === item.sys.id))
-    .map((item) => `/student/lessons/${item.sys.id}`);
-
-  const studentIdsRoutes = assignmentsData.map(
-    (student) => `/student/assignments/${student.id}`,
   );
 
   const isTeacherRoute = useMemo(
@@ -72,35 +40,20 @@ export const AppRoutes = () => {
     () => STUDENT_ROUTES.some((route) => location.pathname === route),
     [location.pathname],
   );
-  const isStudentIdsRoute = useMemo(
-    () => studentIdsRoutes.some((route) => location.pathname === route),
-    [location.pathname, studentIdsRoutes],
-  );
-  const isTeacherLessons = useMemo(
-    () => teacherLessons.some((route) => location.pathname === route),
-    [location.pathname, teacherLessons],
-  );
-  const isStudentLessons = useMemo(
-    () => studentLesson.some((route) => location.pathname === route),
-    [location.pathname, studentLesson],
+
+  const lessonsRoutes = lessonsCollection.map(
+    (item) => `/${userType}/lessons/${item.sys.id}`,
   );
 
-  useEffect(() => {
-    dispatch(fetchOpenLessonsIds());
-    dispatch(fetchReadLessonsIds());
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(fetchAssignments());
-  }, [dispatch]);
+  const isLessonPage = useMemo(
+    () => lessonsRoutes.some((route) => location.pathname === route),
+    [location.pathname, lessonsRoutes],
+  );
 
   return (
     <>
       {(userType === 'student' || userType === 'teacher') &&
-        (isStudentRoute ||
-          isTeacherRoute ||
-          isTeacherLessons ||
-          isStudentLessons) && <Header />}
+        (isStudentRoute || isTeacherRoute || isLessonPage) && <Header />}
       <Routes>
         <Route
           path="/"
@@ -113,19 +66,15 @@ export const AppRoutes = () => {
               path="/student/assignments"
               element={<StudentAssignmentsView />}
             />
-            {isStudentIdsRoute && (
-              <Route
-                path="/student/assignments/:asgmtId"
-                element={<TaskView />}
-              />
-            )}
+            <Route
+              path="/student/assignments/:asgmtId"
+              element={<TaskView />}
+            />
             <Route path="/student/lessons" element={<StudentLessons />} />
-            {isStudentLessons && (
-              <Route
-                path="/student/lessons/:lessonId"
-                element={<StudentLessonView />}
-              />
-            )}
+            <Route
+              path="/student/lessons/:lessonId"
+              element={<StudentLessonView />}
+            />
           </>
         )}
         {userType === 'teacher' && (
@@ -135,12 +84,10 @@ export const AppRoutes = () => {
               element={<TeacherAssignmentsView />}
             />
             <Route path="/teacher/lessons" element={<TeacherLessons />} />
-            {isTeacherLessons && (
-              <Route
-                path="/teacher/lessons/:lessonId"
-                element={<TeacherLessonView />}
-              />
-            )}
+            <Route
+              path="/teacher/lessons/:lessonId"
+              element={<TeacherLessonView />}
+            />
           </>
         )}
         {(isTeacherRoute || isStudentRoute) && (

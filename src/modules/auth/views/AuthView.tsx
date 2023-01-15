@@ -1,6 +1,6 @@
 import { Checkbox, Radio, RadioChangeEvent } from 'antd';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../store';
 import { logIn, selectUserType } from '../../../store/slices/auth';
 import { setStudentId } from '../../../store/slices/userData';
@@ -19,8 +19,6 @@ export const AuthView = () => {
   const [loginValue, setLoginValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
 
-  const [users, setUsers] = useState<UsersData[]>([]);
-
   const handleRememberedChange = (e: CheckboxChangeEvent) => {
     setIsRemembered(e.target.checked);
   };
@@ -29,15 +27,7 @@ export const AuthView = () => {
     setUserRadioType(e.target.value);
   };
 
-  useEffect(() => {
-    fetch(`${AppConfig.apiUrl}/api/users/`)
-      .then((res) => res.json())
-      .then(({ data }) => setUsers(data));
-  }, []);
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  const handleLogIn = (users: UsersData[]) => {
     const isUserExists = users.some(
       (user) =>
         user.userName === loginValue &&
@@ -58,6 +48,13 @@ export const AuthView = () => {
     if (studentData) {
       dispatch(setStudentId(studentData.id));
     }
+  };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    fetch(`${AppConfig.apiUrl}/api/users/`)
+      .then((res) => res.json())
+      .then(({ data }) => handleLogIn(data));
   };
 
   return (

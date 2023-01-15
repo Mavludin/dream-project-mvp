@@ -2,6 +2,7 @@ import { List } from 'antd';
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../store';
 import {
+  fetchAssignments,
   fetchOpenAssignmentsIds,
   selectAssignmentsData,
 } from '../../../store/slices/assignments';
@@ -20,6 +21,7 @@ export const TeacherAssignmentsView = () => {
   const finalData = filteredData.length ? filteredData : assignmentsData;
 
   useEffect(() => {
+    dispatch(fetchAssignments());
     dispatch(fetchOpenAssignmentsIds());
   }, [dispatch]);
 
