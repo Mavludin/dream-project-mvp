@@ -8,10 +8,10 @@ import {
   selectLessons,
   selectLessonsCollection,
 } from '../../../store/slices/lessons';
-import s from './LessonView.module.css';
+import s from './TeacherLessonView.module.css';
 import { NoMatchView } from '../../noMatch/views/NoMatchView';
 
-export const LessonView = () => {
+export const TeacherLessonView = () => {
   const { lessonId } = useParams();
 
   const [fetchLesson] = lessonsGraphqlApi.useLazyFetchLessonsQuery();
