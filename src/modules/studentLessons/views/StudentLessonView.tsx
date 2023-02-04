@@ -13,10 +13,10 @@ import {
   selectOpenLessonsIds,
   selectReadLessonsIds,
 } from '../../../store/slices/lessons';
-import s from './LessonView.module.css';
+import s from './StudentLessonView.module.css';
 import { NoMatchView } from '../../noMatch/views/NoMatchView';
 
-export const LessonView = () => {
+export const StudentLessonView = () => {
   const dispatch = useAppDispatch();
 
   const { lessonId } = useParams();
@@ -35,20 +35,24 @@ export const LessonView = () => {
     [studentLessonIds, lessonId],
   );
 
-  const filteredData = studentLessonIds.filter((studId) =>
-    openLessonsIds.some((id) => id === studId),
+  const filteredData = useMemo(
+    () =>
+      studentLessonIds.filter((studId) =>
+        openLessonsIds.some((id) => id === studId),
+      ),
+    [studentLessonIds, openLessonsIds],
   );
 
-  const isMatchId = readLessonsIds.some((id) => id === lessonId);
+  const isRead = readLessonsIds.some((id) => id === lessonId);
 
   const index = filteredData.findIndex((i) => i === lessonId);
   const prev = filteredData[index - 1];
   const next = filteredData[index + 1];
 
   const handleReadLesson = useCallback(() => {
-    if (!lessonId || isMatchId) return;
+    if (!lessonId || isRead) return;
     dispatch(createReadLessonId(lessonId));
-  }, [lessonId, isMatchId, dispatch]);
+  }, [lessonId, isRead, dispatch]);
 
   const [fetchLessonsCollection] =
     lessonsGraphqlApi.useLazyFetchLessonsCollectionQuery();
@@ -79,7 +83,7 @@ export const LessonView = () => {
           <Link to={`/student/lessons/${prev}`}>Назад</Link>
         </Button>
         <Button
-          className={isMatchId ? s.readUp : s.read}
+          className={isRead ? s.readUp : s.read}
           onClick={handleReadLesson}
         >
           Прочитано
