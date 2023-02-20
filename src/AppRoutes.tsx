@@ -15,16 +15,18 @@ import { useAppSelector } from './store';
 import { selectIsLoggedIn, selectUserType } from './store/slices/auth';
 import { selectLessonsCollection } from './store/slices/lessons';
 
-const TEACHER_ROUTES = ['/teacher/assignments', '/teacher/lessons'];
-const STUDENT_ROUTES = ['/student/assignments', '/student/lessons'];
+// const TEACHER_ROUTES = ['/teacher/assignments', '/teacher/lessons'];
+// const STUDENT_ROUTES = ['/student/assignments', '/student/lessons'];
 
 export const AppRoutes = () => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const userType = useAppSelector(selectUserType);
 
-  const lessonsCollection = useAppSelector(selectLessonsCollection);
+  console.log(userType);
 
-  const location = useLocation();
+  // const lessonsCollection = useAppSelector(selectLessonsCollection);
+
+  // const location = useLocation();
 
   const AUTH_ROUTE = isLoggedIn ? (
     <Navigate to={`/${userType}/assignments`} />
@@ -32,32 +34,36 @@ export const AppRoutes = () => {
     <AuthView />
   );
 
-  const isTeacherRoute = useMemo(
-    () => TEACHER_ROUTES.some((route) => location.pathname === route),
-    [location.pathname],
-  );
-  const isStudentRoute = useMemo(
-    () => STUDENT_ROUTES.some((route) => location.pathname === route),
-    [location.pathname],
-  );
+  // const isTeacherRoute = useMemo(
+  //   () => TEACHER_ROUTES.some((route) => location.pathname === route),
+  //   [location.pathname],
+  // );
+  // const isStudentRoute = useMemo(
+  //   () => STUDENT_ROUTES.some((route) => location.pathname === route),
+  //   [location.pathname],
+  // );
 
-  const lessonsRoutes = lessonsCollection.map(
-    (item) => `/${userType}/lessons/${item.sys.id}`,
-  );
+  // const lessonsRoutes = lessonsCollection.map(
+  //   (item) => `/${userType}/lessons/${item.sys.id}`,
+  // );
 
-  const isLessonPage = useMemo(
-    () => lessonsRoutes.some((route) => location.pathname === route),
-    [location.pathname, lessonsRoutes],
-  );
+  // const isLessonPage = useMemo(
+  //   () => lessonsRoutes.some((route) => location.pathname === route),
+  //   [location.pathname, lessonsRoutes],
+  // );
 
   return (
     <>
-      {(userType === 'student' || userType === 'teacher') &&
-        (isStudentRoute || isTeacherRoute || isLessonPage) && <Header />}
+      {/* {(userType === 'student' || userType === 'teacher') &&
+        (isStudentRoute || isTeacherRoute || isLessonPage) && <Header />} */}
+
+      {isLoggedIn && <Header />}
+
       <Routes>
         <Route
           path="/"
-          element={getHomeRouteByUserType(userType, isLoggedIn)}
+          // element={getHomeRouteByUserType(userType, isLoggedIn)}
+          element={AUTH_ROUTE}
         />
         <Route path="/auth" element={AUTH_ROUTE} />
         {userType === 'student' && (
@@ -90,9 +96,9 @@ export const AppRoutes = () => {
             />
           </>
         )}
-        {(isTeacherRoute || isStudentRoute) && (
+        {/* {(isTeacherRoute || isStudentRoute) && (
           <Route path={location.pathname} element={<Navigate to="/auth" />} />
-        )}
+        )} */}
         <Route path="*" element={<NoMatchView />} />
       </Routes>
     </>

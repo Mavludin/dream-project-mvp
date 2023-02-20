@@ -14,8 +14,14 @@ type PayloadType = {
 };
 
 const initialState: AuthState = {
-  isLoggedIn: localStorage.getItem('isLoggedIn') === 'true',
-  userType: (localStorage.getItem('userType') as UserTypes) || 'student',
+  // TODO: refactor
+  isLoggedIn:
+    localStorage.getItem('isLoggedIn') === 'true' ||
+    sessionStorage.getItem('isLoggedIn') === 'true',
+  userType:
+    (localStorage.getItem('userType') as UserTypes) ||
+    (sessionStorage.getItem('userType') as UserTypes) ||
+    'student',
 };
 
 export const authSlice = createSlice({
@@ -30,10 +36,14 @@ export const authSlice = createSlice({
         localStorage.setItem('isLoggedIn', 'true');
         localStorage.setItem('userType', action.payload.userRadioType);
       }
+
+      sessionStorage.setItem('isLoggedIn', 'true');
+      sessionStorage.setItem('userType', action.payload.userRadioType);
     },
     logOut: (state) => {
       state.isLoggedIn = false;
       localStorage.removeItem('isLoggedIn');
+      sessionStorage.removeItem('isLoggedIn');
     },
   },
 });
