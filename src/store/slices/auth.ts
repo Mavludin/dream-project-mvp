@@ -43,7 +43,9 @@ export const authSlice = createSlice({
     logOut: (state) => {
       state.isLoggedIn = false;
       localStorage.removeItem('isLoggedIn');
+      localStorage.removeItem('userType');
       sessionStorage.removeItem('isLoggedIn');
+      sessionStorage.removeItem('userType');
     },
   },
 });
