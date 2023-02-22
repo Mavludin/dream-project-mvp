@@ -1,4 +1,5 @@
 import { Button } from 'antd';
+import { ArrowLeftOutlined } from '@ant-design/icons';
 import { useCallback, useEffect, useMemo } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
@@ -76,6 +77,9 @@ export const StudentLessonView = () => {
 
   return (
     <div className={s.lessonView}>
+      <Link className={s.backBtn} to="/student/lessons">
+        <ArrowLeftOutlined />
+      </Link>
       {documentToReactComponents(lesson?.description?.json)}
 
       <div className={s.btn}>
