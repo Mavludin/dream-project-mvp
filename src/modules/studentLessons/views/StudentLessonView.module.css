@@ -25,11 +25,22 @@
   white-space: pre;
 }
 
+.lessonWrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.lessonWrapper *:not(:first-child, :nth-child(2)) {
+  flex: 0 0 100%;
+}
+
+.lessonWrapper :nth-child(2) {
+  flex-grow: 1;
+}
+
 .backBtn {
-  float: left;
-  line-height: 39px;
   font-size: 24px;
-  fill: #919191;
+  height: 39px;
 }
 
 .backBtn svg {

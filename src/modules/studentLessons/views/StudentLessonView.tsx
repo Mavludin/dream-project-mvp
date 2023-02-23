@@ -77,10 +77,12 @@ export const StudentLessonView = () => {
 
   return (
     <div className={s.lessonView}>
-      <Link className={s.backBtn} to="/student/lessons">
-        <ArrowLeftOutlined />
-      </Link>
-      {documentToReactComponents(lesson?.description?.json)}
+      <div className={s.lessonWrapper}>
+        <Link className={s.backBtn} to="/student/lessons">
+          <ArrowLeftOutlined />
+        </Link>
+        {documentToReactComponents(lesson?.description?.json)}
+      </div>
 
       <div className={s.btn}>
         <Button className={s.nav} disabled={index === 0}>
