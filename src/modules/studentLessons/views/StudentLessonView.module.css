@@ -25,30 +25,13 @@
   white-space: pre;
 }
 
-.lessonWrapper {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.lessonWrapper *:not(:first-child, :nth-child(2)) {
-  flex: 0 0 100%;
-}
-
-.lessonWrapper :nth-child(2) {
-  flex-grow: 1;
-}
-
 .backBtn {
   font-size: 24px;
-  height: 39px;
+  color: #919191;
 }
 
-.backBtn svg {
-  fill: #919191;
-}
-
-.backBtn:hover svg {
-  fill: #000;
+.backBtn:hover {
+  color: #000;
 }
 
 .btn {
