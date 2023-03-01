@@ -27,32 +27,29 @@ export const AuthView = () => {
     setUserRadioType(e.target.value);
   };
 
-  const handleLogIn = (users: UsersData[]) => {
-    const isUserExists = users.some(
-      (user) =>
-        user.userName === loginValue &&
-        user.password === passwordValue &&
-        user.type === userRadioType,
-    );
-
-    if (isUserExists) {
+  const handleLogIn = (user: UsersData) => {
+    if (user) {
       dispatch(logIn({ isRemembered, userRadioType }));
     }
 
-    const studentData = users.find(
-      (user) =>
-        user.userName === loginValue &&
-        user.password === passwordValue &&
-        user.type === 'student',
-    );
-    if (studentData) {
-      dispatch(setStudentId(studentData.id));
+    if (user && user.type === 'student') {
+      dispatch(setStudentId(user.id));
     }
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    fetch(`${AppConfig.apiUrl}/api/users/`)
+    fetch(`${AppConfig.apiUrl}/api/users/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userName: loginValue,
+        password: passwordValue,
+        type: userRadioType,
+      }),
+    })
       .then((res) => res.json())
       .then(({ data }) => handleLogIn(data));
   };
