@@ -21,7 +21,7 @@ const initialState: AuthState = {
   userType:
     (localStorage.getItem('userType') as UserTypes) ||
     (sessionStorage.getItem('userType') as UserTypes) ||
-    'student',
+    null,
 };
 
 export const authSlice = createSlice({
