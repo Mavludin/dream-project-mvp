@@ -30,6 +30,7 @@
 		"react/require-default-props": "off",
 		"react-hooks/rules-of-hooks": "error",
 		"react-hooks/exhaustive-deps": "warn",
+		"react/jsx-no-useless-fragment": "off",
 		//typescript rules
 		"@typescript-eslint/no-explicit-any": "off",
 		"@typescript-eslint/explicit-function-return-type": "off",
