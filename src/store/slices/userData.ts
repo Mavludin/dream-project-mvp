@@ -1,30 +1,30 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type UserDataState = {
-  studentId?: number;
+  userId?: number;
 };
-type SelectstudentId = {
-  userDataReducer: { studentId?: number };
+type SelectUserId = {
+  userDataReducer: { userId?: number };
 };
 
 const initialState: UserDataState = {
-  studentId: JSON.parse(localStorage.getItem('studentId')!),
+  userId: JSON.parse(localStorage.getItem('userId')!),
 };
 
 export const userDataSlice = createSlice({
   name: 'userData',
   initialState,
   reducers: {
-    setStudentId: (state, action: PayloadAction<number>) => {
-      state.studentId = action.payload;
-      localStorage.setItem('studentId', JSON.stringify(action.payload));
+    setUserId: (state, action: PayloadAction<number>) => {
+      state.userId = action.payload;
+      localStorage.setItem('userId', JSON.stringify(action.payload));
     },
   },
 });
 
-export const { setStudentId } = userDataSlice.actions;
+export const { setUserId } = userDataSlice.actions;
 
-export const selectStudentId = (state: SelectstudentId) =>
-  state.userDataReducer.studentId;
+export const selectUserId = (state: SelectUserId) =>
+  state.userDataReducer.userId;
 
 export default userDataSlice.reducer;
