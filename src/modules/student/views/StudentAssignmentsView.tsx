@@ -5,7 +5,7 @@ import { AssignmentListFilters } from '../components/AssignmentsListFilters/Assi
 import styles from './StudentAssignmentsView.module.css';
 import { AssignmentsListItem } from '../components/AssignmentsListItem/AssignmentsListItem';
 import { useAppDispatch, useAppSelector } from '../../../store';
-import { selectStudentId } from '../../../store/slices/userData';
+import { selectUserId } from '../../../store/slices/userData';
 import {
   fetchAssignments,
   fetchStudentStat,
@@ -19,7 +19,7 @@ export const StudentAssignmentsView = () => {
 
   const [filteredData, setFilteredData] = useState(assignmentsData);
 
-  const studentId = useAppSelector(selectStudentId);
+  const userId = useAppSelector(selectUserId);
 
   const finalData = filteredData.length ? filteredData : assignmentsData;
 
@@ -30,10 +30,10 @@ export const StudentAssignmentsView = () => {
   }, [dispatch, assignmentsData]);
 
   useEffect(() => {
-    if (!studentId) return;
+    if (!userId) return;
 
-    dispatch(fetchStudentStat(studentId));
-  }, [dispatch, studentId]);
+    dispatch(fetchStudentStat(userId));
+  }, [dispatch, userId]);
 
   return (
     <div className={styles.assignList}>

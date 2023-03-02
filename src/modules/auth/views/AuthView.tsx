@@ -3,7 +3,7 @@ import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { FormEvent, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../store';
 import { logIn, selectUserType } from '../../../store/slices/auth';
-import { setStudentId } from '../../../store/slices/userData';
+import { setUserId } from '../../../store/slices/userData';
 import { UsersData, UserTypes, USER_TYPE_LIST } from '../models';
 import s from './AuthView.module.css';
 import AppConfig from '../../../config/AppConfig';
@@ -30,10 +30,7 @@ export const AuthView = () => {
   const handleLogIn = (user: UsersData) => {
     if (user) {
       dispatch(logIn({ isRemembered, userRadioType }));
-    }
-
-    if (user && user.type === 'student') {
-      dispatch(setStudentId(user.id));
+      dispatch(setUserId(user.id));
     }
   };
 
