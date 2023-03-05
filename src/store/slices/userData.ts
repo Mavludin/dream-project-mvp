@@ -8,7 +8,7 @@ type SelectUserId = {
 };
 
 const initialState: UserDataState = {
-  userId: JSON.parse(localStorage.getItem('userId')!),
+  userId: JSON.parse(localStorage.getItem('userId') || 'null'),
 };
 
 export const userDataSlice = createSlice({
