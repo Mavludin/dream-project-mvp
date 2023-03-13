@@ -36,7 +36,7 @@ export const AuthView = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    fetch(`${AppConfig.apiUrl}/api/users/`, {
+    fetch(`${AppConfig.apiUrl}api/users/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
