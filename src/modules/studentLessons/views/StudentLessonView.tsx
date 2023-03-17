@@ -1,6 +1,6 @@
 import { Button } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { useAppDispatch, useAppSelector } from '../../../store';
@@ -16,10 +16,12 @@ import {
 } from '../../../store/slices/lessons';
 import s from './StudentLessonView.module.css';
 import { NoMatchView } from '../../noMatch/views/NoMatchView';
+import { LessonViewPreloader } from './LessonViewPreloader';
 
 export const StudentLessonView = () => {
   const dispatch = useAppDispatch();
 
+  const [isLoading, setIsLoading] = useState(false);
   const { lessonId } = useParams();
 
   const lesson = useAppSelector(selectLessons);
@@ -64,7 +66,8 @@ export const StudentLessonView = () => {
 
   useEffect(() => {
     if (!lessonId) return;
-    fetchLesson({ lessonId });
+    setIsLoading(true);
+    fetchLesson({ lessonId }).finally(() => setIsLoading(false));
   }, [fetchLesson, lessonId]);
 
   useEffect(() => {
@@ -80,7 +83,9 @@ export const StudentLessonView = () => {
       <Link className={s.backBtn} to="/student/lessons">
         <ArrowLeftOutlined />
       </Link>
-      {documentToReactComponents(lesson?.description?.json)}
+      <LessonViewPreloader isLoading={isLoading}>
+        {documentToReactComponents(lesson?.description?.json)}
+      </LessonViewPreloader>
 
       <div className={s.btn}>
         <Button className={s.nav} disabled={index === 0}>
