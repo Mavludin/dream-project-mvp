@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { Button } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -10,8 +10,10 @@ import {
 } from '../../../store/slices/lessons';
 import s from './TeacherLessonView.module.css';
 import { NoMatchView } from '../../noMatch/views/NoMatchView';
+import { LessonViewPreloader } from '../../studentLessons/views/LessonViewPreloader';
 
 export const TeacherLessonView = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const { lessonId } = useParams();
 
   const [fetchLesson] = lessonsGraphqlApi.useLazyFetchLessonsQuery();
@@ -36,7 +38,8 @@ export const TeacherLessonView = () => {
 
   useEffect(() => {
     if (!lessonId) return;
-    fetchLesson({ lessonId });
+    setIsLoading(true);
+    fetchLesson({ lessonId }).finally(() => setIsLoading(false));
   }, [fetchLesson, lessonId]);
 
   const history = useNavigate();
@@ -47,7 +50,9 @@ export const TeacherLessonView = () => {
 
   return (
     <div className={s.lessonView}>
-      {documentToReactComponents(lesson?.description?.json)}
+      <LessonViewPreloader isLoading={isLoading}>
+        {documentToReactComponents(lesson?.description?.json)}
+      </LessonViewPreloader>
       <div className={s.btn}>
         <Button className={s.nav} type="primary" onClick={goBack}>
           Назад
