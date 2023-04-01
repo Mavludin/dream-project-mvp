@@ -1,7 +1,7 @@
 import { FilterOutlined } from '@ant-design/icons';
 import { Dropdown, Menu, Space } from 'antd';
 import type { MenuProps } from 'antd';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { AssignmentsData, Difficulty, FILTER_METHODS } from '../../models';
 import s from './AssignmentListTeacherFilters.module.css';
 
@@ -16,6 +16,8 @@ export const AssignmentListTeacherFilters = ({
   setFilteredData,
   openAssignmentsIds,
 }: Props) => {
+  const [openKeys, setOpenKeys] = useState<string[]>([]);
+
   const filterDifficulty = (difficulty: Difficulty) => {
     setFilteredData(
       assignmentsData.filter((item) => item.difficulty === difficulty),
@@ -71,12 +73,23 @@ export const AssignmentListTeacherFilters = ({
     }
   };
 
+  const onOpenChange: MenuProps['onOpenChange'] = (keys) => {
+    const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
+    setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
+  };
+  const menu = (
+    <Menu
+      openKeys={openKeys}
+      onOpenChange={onOpenChange}
+      onClick={handleMenuFilters}
+      items={filterItems}
+    />
+  );
+
   return (
     <div className={s.filter}>
       <FilterOutlined />
-      <Dropdown
-        overlay={<Menu onClick={handleMenuFilters} items={filterItems} />}
-      >
+      <Dropdown overlay={menu}>
         <button>
           <Space>Фильтр</Space>
         </button>
