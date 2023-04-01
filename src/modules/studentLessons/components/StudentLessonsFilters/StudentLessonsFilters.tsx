@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { FilterOutlined } from '@ant-design/icons';
 import { Menu, Dropdown, Space, MenuProps } from 'antd';
 import s from './StudentLessonsFilters.module.css';
@@ -16,6 +16,8 @@ export const StudentLessonsFilters = ({
   setFilteredData,
   openLessons,
 }: Props) => {
+  const [openKeys, setOpenKeys] = useState<string[]>([]);
+
   const filterItems = useMemo(
     () =>
       FILTER_METHODS.map((item) => ({
@@ -67,7 +69,19 @@ export const StudentLessonsFilters = ({
     }
   };
 
-  const menu = <Menu onClick={handleMenuFilters} items={filterItems} />;
+  const onOpenChange: MenuProps['onOpenChange'] = (keys) => {
+    const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
+    setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
+  };
+  const menu = (
+    <Menu
+      openKeys={openKeys}
+      onOpenChange={onOpenChange}
+      onClick={handleMenuFilters}
+      items={filterItems}
+    />
+  );
+
   return (
     <div className={s.filter}>
       <FilterOutlined />
