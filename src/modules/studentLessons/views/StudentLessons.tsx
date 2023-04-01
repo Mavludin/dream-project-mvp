@@ -31,7 +31,7 @@ export const StudentLessons = () => {
     if (lessonsCollection.length) return;
 
     fetchLessonsCollection();
-  }, [fetchLessonsCollection, lessonsCollection]);
+  }, [fetchLessonsCollection, lessonsCollection.length]);
 
   useEffect(() => {
     dispatch(fetchOpenLessonsIds());
