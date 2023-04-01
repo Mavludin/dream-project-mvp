@@ -27,7 +27,7 @@ export const StudentAssignmentsView = () => {
     if (assignmentsData.length) return;
 
     dispatch(fetchAssignments());
-  }, [dispatch, assignmentsData]);
+  }, [assignmentsData.length, dispatch]);
 
   useEffect(() => {
     if (!userId) return;

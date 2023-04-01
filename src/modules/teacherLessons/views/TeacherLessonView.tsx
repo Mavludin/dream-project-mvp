@@ -34,7 +34,7 @@ export const TeacherLessonView = () => {
     if (lessonsCollection.length) return;
 
     fetchLessonsCollection();
-  }, [fetchLessonsCollection, lessonsCollection]);
+  }, [fetchLessonsCollection, lessonsCollection.length]);
 
   useEffect(() => {
     if (!lessonId) return;

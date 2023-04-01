@@ -34,7 +34,7 @@ export const Task = ({ item, index, openAssignmentsIds }: Props) => {
     if (isMatchIds) {
       setIsViewTask(true);
     }
-  }, [isMatchIds, item]);
+  }, [isMatchIds]);
 
   const handleClickViewTask = async (id: number) => {
     setIsLoading(true);

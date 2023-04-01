@@ -31,7 +31,7 @@ export const TaskView = () => {
     if (assignmentsData.length) return;
 
     dispatch(fetchAssignments());
-  }, [dispatch, assignmentsData]);
+  }, [assignmentsData.length, dispatch]);
 
   if (!assignmentsData.length) return null;
 

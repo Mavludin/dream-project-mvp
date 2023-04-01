@@ -53,16 +53,16 @@ export const StudentLessonView = () => {
   const next = filteredData[index + 1];
 
   const handleReadLesson = useCallback(() => {
-    if (!lessonId || isRead) return;
+    if (!lessonId) return;
     dispatch(createReadLessonId(lessonId));
-  }, [lessonId, isRead, dispatch]);
+  }, [lessonId, dispatch]);
 
   const [fetchLessonsCollection] =
     lessonsGraphqlApi.useLazyFetchLessonsCollectionQuery();
   useEffect(() => {
     if (lessonsCollection.length) return;
     fetchLessonsCollection();
-  }, [fetchLessonsCollection, lessonsCollection]);
+  }, [fetchLessonsCollection, lessonsCollection.length]);
 
   useEffect(() => {
     if (!lessonId) return;
