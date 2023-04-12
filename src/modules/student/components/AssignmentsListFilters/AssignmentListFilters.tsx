@@ -1,19 +1,18 @@
 import { FilterOutlined } from '@ant-design/icons';
-import { Dropdown, Menu, Space } from 'antd';
+import { Dropdown, Space } from 'antd';
 import type { MenuProps } from 'antd';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { AssignmentsData, Difficulty, FILTER_METHODS } from '../../models';
 import s from './AssignmentListFilters.module.css';
 import { selectAssignmentsData } from '../../../../store/slices/assignments';
 import { useAppSelector } from '../../../../store';
+import { useMenuList } from '../../../../helpers/useMenuList';
 
 type Props = {
   setFilteredData: (arr: AssignmentsData[]) => void;
 };
 
 export const AssignmentListFilters = ({ setFilteredData }: Props) => {
-  const [openKeys, setOpenKeys] = useState<string[]>([]);
-
   const { assignmentsData, completedAssignments } = useAppSelector(
     selectAssignmentsData,
   );
@@ -79,18 +78,7 @@ export const AssignmentListFilters = ({ setFilteredData }: Props) => {
     }
   };
 
-  const onOpenChange: MenuProps['onOpenChange'] = (keys) => {
-    const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
-    setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
-  };
-  const menu = (
-    <Menu
-      openKeys={openKeys}
-      onOpenChange={onOpenChange}
-      onClick={handleMenuFilters}
-      items={filterItems}
-    />
-  );
+  const menu = useMenuList(filterItems, handleMenuFilters);
 
   return (
     <div className={s.filter}>
