@@ -6,7 +6,7 @@ import { FILTER_METHODS } from '../../models';
 import { LessonItem, Type } from '../../../../models';
 import { selectReadLessonsIds } from '../../../../store/slices/lessons';
 import { useAppSelector } from '../../../../store';
-import { useMenuList } from '../../../../helpers/useMenuList';
+import { MenuList } from '../../../../components/MenuList';
 
 type Props = {
   openLessons: LessonItem[];
@@ -68,7 +68,7 @@ export const StudentLessonsFilters = ({
     }
   };
 
-  const menu = useMenuList(filterItems, handleMenuFilters);
+  const menu = MenuList(filterItems, handleMenuFilters);
 
   return (
     <div className={s.filter}>

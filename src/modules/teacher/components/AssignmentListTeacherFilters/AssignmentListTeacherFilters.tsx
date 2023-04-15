@@ -4,7 +4,7 @@ import type { MenuProps } from 'antd';
 import { useMemo } from 'react';
 import { AssignmentsData, Difficulty, FILTER_METHODS } from '../../models';
 import s from './AssignmentListTeacherFilters.module.css';
-import { useMenuList } from '../../../../helpers/useMenuList';
+import { MenuList } from '../../../../components/MenuList';
 
 type Props = {
   assignmentsData: AssignmentsData[];
@@ -72,7 +72,7 @@ export const AssignmentListTeacherFilters = ({
     }
   };
 
-  const menu = useMenuList(filterItems, handleMenuFilters);
+  const menu = MenuList(filterItems, handleMenuFilters);
 
   return (
     <div className={s.filter}>

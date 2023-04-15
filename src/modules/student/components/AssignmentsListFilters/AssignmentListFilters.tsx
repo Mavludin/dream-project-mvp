@@ -6,7 +6,7 @@ import { AssignmentsData, Difficulty, FILTER_METHODS } from '../../models';
 import s from './AssignmentListFilters.module.css';
 import { selectAssignmentsData } from '../../../../store/slices/assignments';
 import { useAppSelector } from '../../../../store';
-import { useMenuList } from '../../../../helpers/useMenuList';
+import { MenuList } from '../../../../components/MenuList';
 
 type Props = {
   setFilteredData: (arr: AssignmentsData[]) => void;
@@ -78,7 +78,7 @@ export const AssignmentListFilters = ({ setFilteredData }: Props) => {
     }
   };
 
-  const menu = useMenuList(filterItems, handleMenuFilters);
+  const menu = MenuList(filterItems, handleMenuFilters);
 
   return (
     <div className={s.filter}>
