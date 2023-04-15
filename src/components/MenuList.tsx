@@ -3,7 +3,7 @@ import { ItemType } from 'antd/lib/menu/hooks/useItems';
 import type { MenuClickEventHandler } from 'rc-menu/lib/interface';
 import { useCallback, useState } from 'react';
 
-export const useMenuList = (
+export const MenuList = (
   filterItems: ItemType[],
   handleMenuFilters: MenuClickEventHandler = () => null,
 ) => {

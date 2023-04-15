@@ -3,7 +3,7 @@ import { Dropdown, Space } from 'antd';
 import React, { useMemo } from 'react';
 import { FILTER_METHODS } from '../models';
 import s from './TeacherLessonsFilters.module.css';
-import { useMenuList } from '../../../helpers/useMenuList';
+import { MenuList } from '../../../components/MenuList';
 
 export const TeacherLessonsFilters = () => {
   const filterItems = useMemo(
@@ -21,7 +21,7 @@ export const TeacherLessonsFilters = () => {
     [],
   );
 
-  const menu = useMenuList(filterItems);
+  const menu = MenuList(filterItems);
 
   return (
     <div className={s.filter}>
